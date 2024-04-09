@@ -1,35 +1,33 @@
 <div class="dlabnav">
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
-            <li class="nav-label first">Main Menu</li>
-            <li><a class="" href="" aria-expanded="false">
+            <li class="nav-label first">Menu Principal</li>
+            <li><a class="" href="{{route('dashboard')}}" aria-expanded="false">
                     <i class="la la-home"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
-            <li><a class="ai-icon" href="event-management.html" aria-expanded="false">
+            <li><a class="ai-icon" href="{{route('atendimento.escola')}}" aria-expanded="false">
                     <i class="la la-calendar"></i>
                     <span class="nav-text">Atendimento as Escolas</span>
                 </a>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <li><a class="has-arrow"  href="javascript:void()">
                     <i class="la la-book"></i>
                     <span class="nav-text">Protocolos de Entrada</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="all-professors.html">Cadastrar</a></li>
-                    <li><a href="add-professor.html">Ver Tudo</a></li>
+                <ul>
+                    <li><a href="{{route('create.protocolo')}}">Cadastrar</a></li>
+                    <li><a href="{{route('index.protocolo')}}">Ver Tudo</a></li>
 
                 </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+            <li><a class="has-arrow" href="javascript:void()">
                     <i class="la la-users"></i>
-                    <span class="nav-text">Students</span>
+                    <span class="nav-text">Atendimento Interno</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="all-students.html">All Students</a></li>
-                    <li><a href="add-student.html">Add Students</a></li>
-                    <li><a href="edit-student.html">Edit Students</a></li>
-                    <li><a href="about-student.html">About Students</a></li>
+                <ul>
+                    <li><a href="all-students.html">Cadastrar</a></li>
+                    <li><a href="add-student.html">Ver Tudo</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">

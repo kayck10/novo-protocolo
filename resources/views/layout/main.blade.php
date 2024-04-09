@@ -9,9 +9,26 @@
     <title>TI - PROTOCOLO</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-	<link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
+    {{-- <link rel="styleshhet" href="{{asset('assets/vendor/fullcalendar/css/fullcalendar.min.css')}}"> --}}
+    <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.min.css')}}">
+    <link href="{{asset('assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('/assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Pick date -->
+    <link rel="stylesheet" href="{{asset('/assets/vendor/pickadate/themes/default.css')}}">
+    <link rel="stylesheet" href="{{asset('/assets/vendor/pickadate/themes/default.date.css')}}">
+
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-	<link rel="stylesheet" href="{{asset('assets/css/skin.css')}}">
+    <style>
+        .btn-primary{
+            background-color: #0d6efd !important;
+            border-color:  #0d6efd !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -40,8 +57,6 @@
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
                 <img class="logo-abbr" src="{{asset('assets/images/logo-white-2.png')}}" alt="">
-                <img class="logo-compact" src="{{asset('assets/images/logo-text-white.png')}}" alt="">
-                <img class="brand-title" src="{{asset('assets/images/logo-text-white.png')}}" alt="">
             </a>
 
             <div class="nav-control">
@@ -81,7 +96,6 @@
             Content body start
         ***********************************-->
         <div class="content-body">
-
 
             @yield('content')
 
@@ -124,6 +138,20 @@
 	<script src="{{asset('assets/js/custom.min.js')}}"></script>
     <script src="{{asset('assets/js/dlabnav-init.js')}}"></script>
 
+	<!-- Svganimation scripts -->
+    <script src="{{asset('assets/vendor/svganimation/vivus.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/svganimation/svg.animation.js')}}"></script>
+
+    <script src="{{asset('assets/vendor/jqueryui/js/jquery-ui.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/moment/moment.min.js')}}"></script>
+
+    <script src="{{asset('/assets/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/assets/js/plugins-init/datatables.init.js')}}"></script>
+
+    <script src="{{asset('assets/vendor/fullcalendar/js/fullcalendar.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins-init/fullcalendar-init.js')}}"></script>
+
+
     <!-- Chart Morris plugin files -->
     <script src="{{asset('assets/vendor/raphael/raphael.min.js')}}"></script>
     <script src="{{asset('assets/vendor/morris/morris.min.js')}}"></script>
@@ -139,13 +167,29 @@
 		<!-- Demo scripts -->
     <script src="{{asset('assets/js/dashboard/dashboard-2.js')}}"></script>
 
-	<!-- Svganimation scripts -->
-    <script src="{{asset('assets/vendor/svganimation/vivus.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/svganimation/svg.animation.js')}}"></script>
+
+
+<!-- pickdate -->
+<script src="{{asset('/assets/vendor/pickadate/picker.js')}}"></script>
+<script src="{{asset('/assets/vendor/pickadate/picker.time.js')}}"></script>
+<script src="{{asset('/assets/vendor/pickadate/picker.date.js')}}"></script>
+
+<!-- Pickdate -->
+<script src="{{asset('/assets/js/plugins-init/pickadate-init.js')}}"></script>
+
 
     <!-- Chart ChartJS plugin files -->
     <script src="{{asset('assets/vendor/chart.js/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins-init/chartjs-init.js')}}"></script>
+
+
+
+
+
+
+
+
+
 
 
 

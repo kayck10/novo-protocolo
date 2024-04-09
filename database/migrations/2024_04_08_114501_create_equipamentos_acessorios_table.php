@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('equipamentos_acessorios', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->unsignedBigInteger('id_equipamento');
+            $table->foreign('id_equipamento')->references('id')->on('equipamentos');
+            $table->unsignedBigInteger('id_acessorio');
+            $table->foreign('id_acessorio')->references('id')->on('acessorios');
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('equipamentos_acessorios');
     }
 };
