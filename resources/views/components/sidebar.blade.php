@@ -37,13 +37,12 @@
             </a>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-book"></i>
-                    <span class="nav-text">Library</span>
+                <i class="bi bi-front"></i>
+                    <span class="nav-text">Inservível</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="all-library.html">All Library</a></li>
-                    <li><a href="add-library.html">Add Library</a></li>
-                    <li><a href="edit-library.html">Edit Library</a></li>
+                    <li><a href="{{route('inservivel.index')}}">Ver Tudo</a></li>
+                    <li><a href="{{route('inservivel.create')}}">Criar Laudo</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">

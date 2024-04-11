@@ -4,6 +4,8 @@ use App\Http\Controllers\AtendimentoEscolasController;
 use App\Http\Controllers\AtendimentoInternoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstanteController;
+use App\Http\Controllers\GraficosController;
+use App\Http\Controllers\InservivelController;
 use App\Http\Controllers\ProtocoloEntradaController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +47,17 @@ Route::prefix('/estante')->group(function(){
     Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
     Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
 });
+Route::prefix('/inservivel')->group(function(){
+    Route::get('/index', [InservivelController::class, 'index'])->name('inservivel.index');
+    Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
+});
+Route::prefix('/graficos')->group(function(){
+    Route::get('/anual', [GraficosController::class, 'anual'])->name('graficos.anual');
+    Route::get('/participacoes', [GraficosController::class, 'participacoes'])->name('graficos.participacoes');
+    Route::post('/store', [GraficosController::class, 'store'])->name('graficos.store');
+    Route::get('/inserviveis', [GraficosController::class, 'inserviveis'])->name('graficos.inserviveis');
+});
+
 
 
 
