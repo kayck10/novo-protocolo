@@ -2,44 +2,39 @@
     <div class="dlabnav-scroll">
         <ul class="metismenu" id="menu">
             <li class="nav-label first">Menu Principal</li>
-            <li><a class="" href="{{route('dashboard')}}" aria-expanded="false">
+            <li>
+                <a class="" href="{{ route('dashboard') }}" aria-expanded="false">
                     <i class="la la-home"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>
-            <li><a class="ai-icon" href="{{route('atendimento.escola')}}" aria-expanded="false">
+            <li><a class="ai-icon" href="{{ route('atendimento.escola') }}" aria-expanded="false">
                     <i class="la la-calendar"></i>
                     <span class="nav-text">Atendimento as Escolas</span>
                 </a>
             </li>
-            <li><a class="has-arrow"  href="javascript:void()">
+            <li><a class="has-arrow" href="javascript:void()">
                     <i class="la la-book"></i>
                     <span class="nav-text">Protocolos de Entrada</span>
                 </a>
                 <ul>
-                    <li><a href="{{route('create.protocolo')}}">Cadastrar</a></li>
-                    <li><a href="{{route('index.protocolo')}}">Ver Tudo</a></li>
+                    <li><a href="{{ route('create.protocolo') }}">Cadastrar</a></li>
+                    <li><a href="{{ route('index.protocolo') }}">Ver Tudo</a></li>
 
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()">
-                    <i class="la la-users"></i>
+                    <i class="la la-building"></i>
                     <span class="nav-text">Atendimento Interno</span>
                 </a>
                 <ul>
-                    <li><a href="all-students.html">Cadastrar</a></li>
-                    <li><a href="add-student.html">Ver Tudo</a></li>
+                    <li><a href="{{ route('atendimento-interno.create') }}">Cadastrar</a></li>
+                    <li><a href="{{ route('atendimento-interno.index') }}">Ver Tudo</a></li>
                 </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-graduation-cap"></i>
-                    <span class="nav-text">Courses</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="all-courses.html">All Courses</a></li>
-                    <li><a href="add-courses.html">Add Courses</a></li>
-                    <li><a href="edit-courses.html">Edit Courses</a></li>
-                    <li><a href="about-courses.html">About Courses</a></li>
-                </ul>
+            <li> <a class="" href="{{ route('dashboard') }}" aria-expanded="false">
+                <i class="bi bi-columns"></i>
+                <span class="nav-text">Estante</span>
+            </a>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                     <i class="la la-book"></i>

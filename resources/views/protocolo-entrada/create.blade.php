@@ -28,17 +28,20 @@
                 <div class="card-body">
                     <form action="#" method="post">
                         <div class="col-12 mx-auto p-5">
-                            <div >
+                            <div>
                                 <div class="form-group">
                                     <label class="form-label">Origem:<i class="fa fa-asterisk text-danger"></i></label>
-                                    <input type="text" class="form-control">
+                                    <select class="form-control">
+                                        <option value="Gender">Selecione uma Escola | Prédio</option>
+                                    </select>
                                 </div>
-                            </div>
-                           	<div >
+                           	<div>
 											<div class="form-group">
 												<label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
 												<input name="datepicker" class="datepicker-default form-control" id="datepicker1">
 											</div>
+
+
 							</div>
                             <div class="d-grid gap-2 col-6 mx-auto mt-5 ">
                                 <button type="submit" class="btn btn-primary">Cadastrar <i class="bi bi-check color-white"></i> </button>
