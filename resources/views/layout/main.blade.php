@@ -14,7 +14,6 @@
     <link href="{{asset('assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('/assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
 
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -132,13 +131,20 @@
     <!--**********************************
         Scripts
     ***********************************-->
+
     <!-- Required vendors -->
     <script src="{{asset('assets/vendor/global/global.min.js')}}"></script>
 	<script src="{{asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
 	<script src="{{asset('assets/js/custom.min.js')}}"></script>
     <script src="{{asset('assets/js/dlabnav-init.js')}}"></script>
 
-	<!-- Svganimation scripts -->
+    <!-- Chart Morris plugin files -->
+    <script src="{{asset('assets/vendor/raphael/raphael.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/morris/morris.min.js')}}"></script>
+    <script src="{{asset('/assets/js/plugins-init/morris-init.js')}}"></script>
+
+
+    <!-- Svganimation scripts -->
     <script src="{{asset('assets/vendor/svganimation/vivus.min.js')}}"></script>
     <script src="{{asset('assets/vendor/svganimation/svg.animation.js')}}"></script>
 
@@ -153,12 +159,10 @@
 
 
     <!-- Chart Morris plugin files -->
-    <script src="{{asset('assets/vendor/raphael/raphael.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/morris/morris.min.js')}}"></script>
-    <script src="{{asset('assets/vendor/chartist/js/chartist.min.js')}} "></script>
     <script src="{{asset('assets/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins-init/chartist-init.js')}}"></script>
 
+    <script src="{{asset('assets/vendor/chartist/js/chartist.min.js')}} "></script>
 
 
 	<!-- Chart piety plugin files -->
@@ -169,30 +173,18 @@
 
 
 
-<!-- pickdate -->
-<script src="{{asset('/assets/vendor/pickadate/picker.js')}}"></script>
-<script src="{{asset('/assets/vendor/pickadate/picker.time.js')}}"></script>
-<script src="{{asset('/assets/vendor/pickadate/picker.date.js')}}"></script>
+    <!-- pickdate -->
+    <script src="{{asset('/assets/vendor/pickadate/picker.js')}}"></script>
+    <script src="{{asset('/assets/vendor/pickadate/picker.time.js')}}"></script>
+    <script src="{{asset('/assets/vendor/pickadate/picker.date.js')}}"></script>
 
-<!-- Pickdate -->
-<script src="{{asset('/assets/js/plugins-init/pickadate-init.js')}}"></script>
+    <!-- Pickdate -->
+    <script src="{{asset('/assets/js/plugins-init/pickadate-init.js')}}"></script>
 
 
     <!-- Chart ChartJS plugin files -->
     <script src="{{asset('assets/vendor/chart.js/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins-init/chartjs-init.js')}}"></script>
-
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>

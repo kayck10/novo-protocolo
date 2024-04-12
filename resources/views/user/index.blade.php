@@ -51,12 +51,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Problema:<i
-                                                class="fa fa-asterisk text-danger"></i></label>
+                                                    class="fa fa-asterisk text-danger"></i></label>
                                             <textarea class="form-control" rows="3"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Solução:<i
-                                                class="fa fa-asterisk text-danger"></i></label>
+                                                    class="fa fa-asterisk text-danger"></i></label>
                                             <textarea class="form-control" rows="3"></textarea>
                                         </div>
                                     </div>

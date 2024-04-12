@@ -60,8 +60,8 @@
                     <span class="nav-text">Usuários</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="all-departments.html">Adicionar Novo</a></li>
-                    <li><a href="add-departments.html">Ver Todos</a></li>
+                    <li><a href="{{route('user.create')}}">Adicionar Novo</a></li>
+                    <li><a href="{{route('user.index')}}">Ver Todos</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
