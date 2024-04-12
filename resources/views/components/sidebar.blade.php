@@ -31,28 +31,37 @@
                     <li><a href="{{ route('atendimento-interno.index') }}">Ver Tudo</a></li>
                 </ul>
             </li>
-            <li> <a class="" href="{{ route('dashboard') }}" aria-expanded="false">
+            <li> <a class="" href="{{ route('estante.index') }}" aria-expanded="false">
                 <i class="bi bi-columns"></i>
                 <span class="nav-text">Estante</span>
             </a>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                <i class="bi bi-front"></i>
-                    <span class="nav-text">Inservível</span>
+                <i class="bi bi-box-seam-fill"></i>
+                <span class="nav-text">Inservível</span>
+            </a>
+            <ul aria-expanded="false">
+                <li><a href="{{route('inservivel.index')}}">Ver Tudo</a></li>
+                <li><a href="{{route('inservivel.create')}}">Criar Laudo</a></li>
+            </ul>
+        </li>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                <i class="bi bi-clipboard-data"></i>
+                    <span class="nav-text">Gráficos</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{route('inservivel.index')}}">Ver Tudo</a></li>
-                    <li><a href="{{route('inservivel.create')}}">Criar Laudo</a></li>
+                    <li><a href="{{route('graficos.anual')}}">Anual</a></li>
+                    <li><a href="{{route('graficos.inserviveis')}}">Inservíveis</a></li>
+                    <li><a href="{{route('graficos.participacoes')}}">Participações</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-building"></i>
-                    <span class="nav-text">Departments</span>
+                <i class="la la-users"></i>
+                    <span class="nav-text">Usuários</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="all-departments.html">All Departments</a></li>
-                    <li><a href="add-departments.html">Add Departments</a></li>
-                    <li><a href="edit-departments.html">Edit Departments</a></li>
+                    <li><a href="all-departments.html">Adicionar Novo</a></li>
+                    <li><a href="add-departments.html">Ver Todos</a></li>
                 </ul>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">

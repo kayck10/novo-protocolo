@@ -1,6 +1,18 @@
 @extends('layout.main')
 
 @section('content')
+<style>
+    .zoom {
+
+  transition: transform .1s;
+
+}
+.zoom:hover {
+
+  transform: scale(1.1);
+}
+</style>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-xl-3 col-xxl-3 col-sm-6">
@@ -8,15 +20,15 @@
                     <div class="card-body">
                         <div class="media">
                             <span class="mr-3">
-                                <i class="la la-users"></i>
+                                <i class="bi bi-calendar2-check zoom"></i>
                             </span>
                             <div class="media-body text-white">
-                                <p class="mb-1">Total Students</p>
+                                <p class="mb-1">Atendimentos a Escolas</p>
                                 <h3 class="text-white">3280</h3>
                                 <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-light" style="width: 80%"></div>
                                 </div>
-                                <small>80% Increase in 20 Days</small>
+                                <small>Mais Informações</small>
                             </div>
                         </div>
                     </div>
@@ -27,15 +39,15 @@
                     <div class="card-body">
                         <div class="media">
                             <span class="mr-3">
-                                <i class="la la-user"></i>
+                                <i class="la la-building zoom"></i>
                             </span>
                             <div class="media-body text-white">
-                                <p class="mb-1">New Students</p>
+                                <p class="mb-1">Atendimentos Internos</p>
                                 <h3 class="text-white">245</h3>
                                 <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-light" style="width: 50%"></div>
                                 </div>
-                                <small>50% Increase in 25 Days</small>
+                                <small>Mais Informações</small>
                             </div>
                         </div>
                     </div>
@@ -46,15 +58,15 @@
                     <div class="card-body">
                         <div class="media">
                             <span class="mr-3">
-                                <i class="la la-graduation-cap"></i>
+                                <i class="bi bi-box-seam-fill zoom"></i>
                             </span>
                             <div class="media-body text-white">
-                                <p class="mb-1">Total Course</p>
+                                <p class="mb-1">Laudos de Inservível</p>
                                 <h3 class="text-white">28</h3>
                                 <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-light" style="width: 76%"></div>
                                 </div>
-                                <small>76% Increase in 20 Days</small>
+                                <small>Mais Informações</small>
                             </div>
                         </div>
                     </div>
@@ -65,15 +77,15 @@
                     <div class="card-body">
                         <div class="media">
                             <span class="mr-3">
-                                <i class="la la-dollar"></i>
+                                <i class="bi bi-journal-check zoom"></i>
                             </span>
                             <div class="media-body text-white">
-                                <p class="mb-1">Fees Collection</p>
+                                <p class="mb-1">Protocolos Finalizados</p>
                                 <h3 class="text-white">25160$</h3>
                                 <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-light" style="width: 30%"></div>
                                 </div>
-                                <small>30% Increase in 30 Days</small>
+                                <small>Mais Informações</small>
                             </div>
                         </div>
                     </div>

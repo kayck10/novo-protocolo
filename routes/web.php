@@ -7,6 +7,7 @@ use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\GraficosController;
 use App\Http\Controllers\InservivelController;
 use App\Http\Controllers\ProtocoloEntradaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -56,6 +57,13 @@ Route::prefix('/graficos')->group(function(){
     Route::get('/participacoes', [GraficosController::class, 'participacoes'])->name('graficos.participacoes');
     Route::post('/store', [GraficosController::class, 'store'])->name('graficos.store');
     Route::get('/inserviveis', [GraficosController::class, 'inserviveis'])->name('graficos.inserviveis');
+});
+Route::prefix('/usuarios')->group(function(){
+    Route::get('/create', [UserController::class, 'create'])->name('user.create');
+    Route::post('/store', [UserController::class, 'store'])->name('user.store');
+    Route::get('/index', [UserController::class, 'index'])->name('user.index');
+    Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
+    Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
 });
 
 
