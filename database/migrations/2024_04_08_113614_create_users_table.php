@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('id_tipos_usuarios');
             $table->foreign('id_tipos_usuarios')->references('id')->on('tipos_usuarios');
+            $table->unsignedBigInteger('id_funcoes');
+            $table->foreign('id_funcoes')->references('id')->on('funcoes');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('usuario');
