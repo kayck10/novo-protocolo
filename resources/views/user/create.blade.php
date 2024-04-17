@@ -27,59 +27,64 @@
                         <h5 class="card-title">Cadastrar Usuário <i class="bi bi-person-add"></i></h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="post">
-                            <div class="col-12 mx-auto p-5">
+                        <div class="col-12 mx-auto p-5">
+                            <div>
                                 <div>
-
-                                    <div>
-                                        <form>
-                                            <!-- 2 column grid layout with text inputs for the first and last names -->
-                                            <div class="row mb-4">
-                                                <div class="">
-                                                    <div data-mdb-input-init class="form-outline">
-                                                        <label class="form-label" for="form6Example1">Nome:</label>
-                                                        <input type="text" id="form6Example1" class="form-control" />
-                                                    </div>
+                                    <form action="{{ route('user.store') }}" method="POST">
+                                        @csrf
+                                        <!-- 2 column grid layout with text inputs for the first and last names -->
+                                        <div class="row mb-4">
+                                            <div class="">
+                                                <div data-mdb-input-init class="form-outline">
+                                                    <label class="form-label" for="form6Example1">Nome:</label>
+                                                    <input type="text" name="name" id="form6Example1"
+                                                        class="form-control" />
                                                 </div>
-
                                             </div>
 
-                                            <!-- Text input -->
-                                            <div data-mdb-input-init class="form-outline mb-4">
-                                                <label class="form-label" for="form6Example3">Usuário:</label>
-                                                <input type="text" id="form6Example3" class="form-control" />
-                                            </div>
+                                        </div>
 
-                                            <!-- Email input -->
-                                            <div data-mdb-input-init class="form-outline mb-4">
-                                                <label class="form-label" for="form6Example5">E-mail:</label>
-                                                <input type="email" id="form6Example5" class="form-control" />
-                                            </div>
+                                        <!-- Text input -->
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            <label class="form-label" for="form6Example3">Usuário:</label>
+                                            <input type="text" name="usuario" id="form6Example3" class="form-control" />
+                                        </div>
 
-                                            <div class="form-group">
-                                                <label class="form-label">Função:</label>
-                                                <select class="form-control">
-                                                    <option value="Gender">Selecione uma Função</option>
-                                                </select>
-                                            </div>
+                                        <!-- Email input -->
+                                        <div data-mdb-input-init class="form-outline mb-4">
+                                            <label class="form-label" for="form6Example5">E-mail:</label>
+                                            <input type="email" name="email" id="form6Example5" class="form-control" />
+                                        </div>
 
-                                            <div class="form-group">
-                                                <label class="form-label">Setor:<i></i></label>
-                                                <select class="form-control">
-                                                    <option value="Gender">Selecione um tipo de perfil</option>
-                                                </select>
-                                            </div>
-                                            <div class="d-grid gap-2 col-6 mx-auto mt-5">
-                                                <button type="submit" class="btn btn-primary">Cadastrar <i
-                                                        class="bi bi-check color-white"></i> </button>
-                                            </div>
-                                          </form>
+                                        <div class="form-group">
+                                            <label class="form-label">Função:</label>
+                                            <select name="id_funcoes" class="form-control">
+                                                <option value="Gender">Selecione uma Função</option>
+                                                @foreach ($funcoes as $funcao)
+                                                    <option value="{{ $funcao->id }}">{{ $funcao->desc }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="form-label">Setor:<i></i></label>
+                                            <select name="id_tipos_usuarios" class="form-control">
+                                                <option value="Gender">Selecione um tipo de perfil</option>
+                                                @foreach ($tipos as $tipo)
+                                                    <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="d-grid gap-2 col-6 mx-auto mt-5">
+                                            <button type="submit" class="btn btn-primary">Cadastrar <i
+                                                    class="bi bi-check color-white"></i> </button>
+                                        </div>
+                                    </form>
                                 </div>
-                        </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-@endsection
+    @endsection
