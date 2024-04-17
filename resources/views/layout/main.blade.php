@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
     {{-- <link rel="styleshhet" href="{{asset('assets/vendor/fullcalendar/css/fullcalendar.min.css')}}"> --}}
     <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/toastr.min.css')}}">
     <link href="{{asset('assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('/assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
 
@@ -55,7 +56,8 @@
         ***********************************-->
         <div class="nav-header">
             <a href="index.html" class="brand-logo">
-                <img class="logo-abbr" src="{{asset('assets/images/logo-white-2.png')}}" alt="">
+                {{-- <img class="logo-abbr" src="" alt=""> --}}
+                <div class="log-abbr"></div>
             </a>
 
             <div class="nav-control">
@@ -133,6 +135,9 @@
     ***********************************-->
 
     <!-- Required vendors -->
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
     <script src="{{asset('assets/vendor/global/global.min.js')}}"></script>
 	<script src="{{asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
 	<script src="{{asset('assets/js/custom.min.js')}}"></script>
@@ -186,5 +191,6 @@
     <script src="{{asset('assets/vendor/chart.js/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins-init/chartjs-init.js')}}"></script>
 
+    {!! Toastr::message() !!}
 </body>
 </html>

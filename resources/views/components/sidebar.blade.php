@@ -64,41 +64,16 @@
                     <li><a href="{{route('user.index')}}">Ver Todos</a></li>
                 </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-users"></i>
-                    <span class="nav-text">Staff</span>
+            <li><a href="javascript:void()" aria-expanded="false">
+                <i class="fa fa-building"></i>
+                    <span class="nav-text">Escolas</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="all-staff.html">All Staff</a></li>
-                    <li><a href="add-staff.html">Add Staff</a></li>
-                    <li><a href="edit-staff.html">Edit Staff</a></li>
-                    <li><a href="staff-profile.html">Staff Profile</a></li>
-                </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-gift"></i>
-                    <span class="nav-text">Holiday</span>
+            <li><a href="javascript:void()" aria-expanded="false">
+                <i class="bi bi-clock-history"></i>
+                    <span class="nav-text">Histórico de Máquinas</span>
                 </a>
-                <ul aria-expanded="false">
-                    <li><a href="all-holiday.html">All Holiday</a></li>
-                    <li><a href="add-holiday.html">Add Holiday</a></li>
-                    <li><a href="edit-holiday.html">Edit Holiday</a></li>
-                    <li><a href="holiday-calendar.html">Holiday Calendar</a></li>
-                </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                    <i class="la la-dollar"></i>
-                    <span class="nav-text">Fees</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="fees-collection.html">Fees Collection</a></li>
-                    <li><a href="add-fees.html">Add Fees</a></li>
-                    <li><a href="fees-receipt.html">Fees Receipt</a></li>
-                </ul>
-            </li>
-
-
-
 
     </div>
 </div>

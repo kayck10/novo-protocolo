@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Funcoes;
 use App\Models\TiposUsuarios;
 use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -33,7 +34,7 @@ class UserController extends Controller
             'id_funcoes' => $request->id_funcoes,
             'id_tipos_usuarios' => $request->id_tipos_usuarios,
         ]);
-
+        Toastr::success('Usuário Cadastrado com Sucesso', 'Concluído!', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
 }
