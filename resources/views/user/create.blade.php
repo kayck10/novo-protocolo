@@ -12,8 +12,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('atendimento-interno.index') }};">Usuário
-                            Interno</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('atendimento-interno.index') }};">Usuário</a></li>
                     <li class="breadcrumb-item active"><a href="{{ route('create.protocolo') }}">Cadastrar Usuário </a>
                     </li>
                 </ol>

@@ -22,10 +22,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-route::get('/login', [LoginController::class, 'create'])->name('login.create');
+Route::get('/login', [LoginController::class, 'create'])->name('login.create');
 Route::post('/login/store', [LoginController::class, 'store'])->name('login.store');
 
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
 
 Route::prefix('/dashboard')->group(function(){
     Route::get('/index', [DashboardController::class, 'index'])->name('dashboard');
@@ -72,4 +72,4 @@ Route::prefix('/usuarios')->group(function(){
     Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
 });
 
-
+});
