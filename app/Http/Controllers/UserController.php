@@ -12,11 +12,15 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('user.index');
+        $users = User::all();
+        $funcoes = Funcoes::all();
+
+        return view('user.index', compact('users', 'funcoes'));
     }
 
     public function create()
     {
+        $user = User::all();
         $funcoes = Funcoes::all();
         $tipos = TiposUsuarios::all();
         return view('user.create', compact('funcoes', 'tipos'));
@@ -37,4 +41,5 @@ class UserController extends Controller
         Toastr::success('Usuário Cadastrado com Sucesso', 'Concluído!', ["positionClass" => "toast-top-center"]);
         return redirect()->back();
     }
+
 }
