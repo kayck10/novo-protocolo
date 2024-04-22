@@ -33,7 +33,7 @@
                                     <h3 class="mt-3 mb-1 text-white"></h3>
                                     <p class="text-white mb-0">{{ $user->name }}</p>
                                     @foreach ($funcoes as $funcao)
-                                    <p class="text-white mb-0">{{ $funcao->desc}}</p>
+                                    <p class="text-white mb-0"></p>
                                     @endforeach
 
                                 </div>

@@ -41,11 +41,6 @@
                             <div class="external-event" data-class="bg-primary"><i class="fa fa-move"></i>Em Aberto</div>
                             <div class="external-event" data-class="bg-warning"><i class="fa fa-move"></i>Em Andamento</div>
                         </div>
-                        <!-- checkbox -->
-
-                        <a href="javascript:void()" data-toggle="modal" data-target="#add-category" class="btn btn-primary btn-event w-100">
-                            <span class="align-middle"><i class="ti-plus"></i></span> Criar Atendimento
-                        </a>
                     </div>
                 </div>
             </div>
@@ -55,51 +50,51 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><strong>Add New Event</strong></h4>
+                        <h4 class="modal-title"><strong>Agendar Atendimento</strong></h4>
                     </div>
                     <div class="modal-body"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success save-event waves-effect waves-light">Create
-                            event</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
 
                         <button type="button" class="btn btn-danger delete-event waves-effect waves-light" data-dismiss="modal">Delete</button>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+        function changeEvent() {
+            var newEventChange = document.getElementById('newEventChange').value;
+            $.ajax({
+                type: "GET",
+                url: "/teste",  // Altere para o URL apropriado
+                data: {
+                    newEventChange,
+                },
+                success: function (response){
+                    console.log(response);
+                }
+            })
+            .done(function() {
+                // Esta função é chamada quando a requisição AJAX é bem-sucedida
+                alert("tudo certo");
+            })
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                // Esta função é chamada quando a requisição AJAX falha
+                console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+            })
+        }
+        </script>
         <!-- Modal Add Category -->
         <div class="modal fade none-border" id="add-category">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title"><strong>Add a category</strong></h4>
+                        <h4 class="modal-title"><strong>Adicionar Categoria</strong></h4>
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label class="control-label">Category Name</label>
-                                    <input class="form-control form-white" placeholder="Enter name" type="text" name="category-name">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="control-label">Choose Category Color</label>
-                                    <select class="form-control form-white" data-placeholder="Choose a color..." name="category-color">
-                                        <option value="success">Success</option>
-                                        <option value="danger">Danger</option>
-                                        <option value="info">Info</option>
-                                        <option value="pink">Pink</option>
-                                        <option value="primary">Primary</option>
-                                        <option value="warning">Warning</option>
-                                    </select>
-                                </div>
-                            </div>
                         </form>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger waves-effect waves-light save-category" data-dismiss="modal">Save</button>
-                    </div>
+
                 </div>
             </div>
         </div>

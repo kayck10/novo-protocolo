@@ -13,6 +13,11 @@ class LoginController extends Controller
         return view('login.login');
     }
 
+    public function teste()
+    {
+        dd('teste1');
+    }
+
     public function store(Request $request)
     {
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
