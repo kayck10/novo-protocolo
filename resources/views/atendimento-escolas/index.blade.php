@@ -63,28 +63,33 @@
             </div>
         </div>
         <script>
+
+
+
         function changeEvent() {
             var newEventChange = document.getElementById('newEventChange').value;
             $.ajax({
-                type: "GET",
-                url: "/teste",  // Altere para o URL apropriado
-                data: {
-                    newEventChange,
+                type: "POST",
+                url: "{{route('teste.ajax')}}",  // Altere para o URL apropriado
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function (response){
-                    console.log(response);
+                data: {
+                    'evento': newEventChange,
+                },
+                success: function(response) {
+
                 }
-            })
-            .done(function() {
+            }).done(function() {
                 // Esta função é chamada quando a requisição AJAX é bem-sucedida
-                alert("tudo certo");
-            })
-            .fail(function(jqXHR, textStatus, errorThrown) {
+                // alert("tudo certo");
+            }).fail(function(jqXHR, textStatus, errorThrown) {
                 // Esta função é chamada quando a requisição AJAX falha
                 console.log("Erro na requisição AJAX:", textStatus, errorThrown);
             })
         }
         </script>
+
         <!-- Modal Add Category -->
         <div class="modal fade none-border" id="add-category">
             <div class="modal-dialog">

@@ -13,9 +13,10 @@ class LoginController extends Controller
         return view('login.login');
     }
 
-    public function teste()
+    public function teste(Request $request)
     {
-        dd('teste1');
+
+        return response()->json(['error' => false,'message' => $request->evento]);
     }
 
     public function store(Request $request)

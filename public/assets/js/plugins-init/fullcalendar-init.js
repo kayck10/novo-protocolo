@@ -1,19 +1,23 @@
 ! function(e) {
+
     "use strict";
     var t = function() {
         this.$body = e("body"), this.$modal = e("#event-modal"), this.$event = "#external-events div.external-event", this.$calendar = e("#calendar"), this.$saveCategoryBtn = e(".save-category"), this.$categoryForm = e("#add-category form"), this.$extEvents = e("#external-events"), this.$calendarObj = null
     };
     t.prototype.onDrop = function(t, n) {
+
+
         var a = t.data("eventObject"),
             o = t.attr("data-class"),
             i = e.extend({}, a);
         i.start = n, o && (i.className = [o]), this.$calendar.fullCalendar("renderEvent", i, !0), e("#drop-remove").is(":checked") && t.remove()
+
     }, t.prototype.onEventClick = function(t, n, a) {
         var o = this,
-            i = e("<form></form>");
+            i = e("<form id='formChange'></form>");
         i.append("<label>Change event name</label>"), i.append(`
             <div class='input-group'>
-                <input id='newEventChange' class='form-control' type=text value='"` + t.title + `"' />
+                <input id='newEventChange' name="" class='form-control' type=text value='"` + t.title + `"' />
                 <span class='input-group-btn'>
                     <button type='button' onclick='changeEvent()' class='btn btn-success waves-effect waves-light'>
                     <i class='fa fa-check'></i> Save
@@ -22,7 +26,8 @@
             </div>`), o.$modal.modal({
             backdrop: "static"
         }), o.$modal.find(".delete-event").show().end().find(".save-event").hide().end().find(".modal-body").empty().prepend(i).end().find(".delete-event").unbind("click").on("click", function() {
-            o.$calendarObj.fullCalendar("removeEvents", function(e) {
+            o.$calendarObj.fullCalendar("removeEvents", function(e) {96
+                console.log(o);
                 return e._id == t._id
             }), o.$modal.modal("hide")
         }), o.$modal.find("form").on("submit", function() {
@@ -66,27 +71,28 @@
             })
         })
     }, t.prototype.init = function() {
+
         this.enableDrag();
         var t = new Date,
             n = (t.getDate(), t.getMonth(), t.getFullYear(), new Date(e.now())),
             a = [{
-                title: "Chicken Burger",
+                title: "teste",
                 start: new Date(e.now() + 158e6),
                 className: "bg-dark"
             }, {
-                title: "Soft drinks",
+                title: "",
                 start: n,
                 end: n,
                 className: "bg-danger"
             }, {
-                title: "Hot dog",
+                title: "",
                 start: new Date(e.now() + 338e6),
                 className: "bg-primary"
             }],
             o = this;
         o.$calendarObj = o.$calendar.fullCalendar({
             slotDuration: "00:15:00",
-            minTime: "08:00:00",
+            minTime: "07:00:00",
             maxTime: "19:00:00",
             defaultView: "month",
             handleWindowResize: !0,
@@ -121,3 +127,5 @@ function(e) {
     "use strict";
     e.CalendarApp.init()
 }(window.jQuery);
+
+

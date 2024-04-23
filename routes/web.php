@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [LoginController::class, 'create'])->name('login.create');
 Route::post('/login/store', [LoginController::class, 'store'])->name('login.store');
 
-Route::get('/teste', [LoginController::class, 'teste'])->name('teste.ajax');
+Route::post('/teste', [LoginController::class, 'teste'])->name('teste.ajax');
 
 Route::middleware(['auth'])->group(function () {
 
