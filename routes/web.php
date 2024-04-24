@@ -25,8 +25,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [LoginController::class, 'create'])->name('login.create');
 Route::post('/login/store', [LoginController::class, 'store'])->name('login.store');
 
-Route::post('/teste', [LoginController::class, 'teste'])->name('teste.ajax');
-
 Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/dashboard')->group(function () {
@@ -35,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/atendimento-escola')->group(function () {
         Route::get('/index', [AtendimentoEscolasController::class, 'index'])->name('atendimento.escola');
+        Route::post('/atendimento/store', [AtendimentoEscolasController::class, 'store'])->name('atendimento.store');
     });
 
     Route::prefix('/protocolo-entrada')->group(function () {

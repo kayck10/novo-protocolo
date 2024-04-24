@@ -40,7 +40,7 @@
         });
         var i = e("<form></form>");
         i.append("<div class='row'></div>"), i.find(".row").append(`
-            <div class='col-md-6'>
+            <div class='col-12 mx-auto'>
                 <div class='form-group'>
                     <label class='control-label'>Teste</label>
                     <input class='form-control' placeholder='Insert Event Name' type='text' name='title'/>

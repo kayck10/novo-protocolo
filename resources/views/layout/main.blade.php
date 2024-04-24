@@ -10,8 +10,7 @@
     <title>TI - PROTOCOLO</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
-    {{-- <link rel="styleshhet" href="{{asset('assets/vendor/fullcalendar/css/fullcalendar.min.css')}}"> --}}
-    <link rel="stylesheet" href="{{asset('assets/css/fullcalendar.min.css')}}">
+
     <link rel="stylesheet" href="{{asset('assets/css/toastr.min.css')}}">
     <link href="{{asset('assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('/assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}">
@@ -30,6 +29,7 @@
             border-color:  #0d6efd !important;
         }
     </style>
+
 </head>
 <body>
 
@@ -135,9 +135,13 @@
         Scripts
     ***********************************-->
 
+
+
     <!-- Required vendors -->
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
+
 
     <script src="{{asset('assets/vendor/global/global.min.js')}}"></script>
 	<script src="{{asset('assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
@@ -162,8 +166,6 @@
 
 
 
-    <script src="{{asset('assets/vendor/fullcalendar/js/fullcalendar.min.js')}}"></script>
-    <script src="{{asset('assets/js/plugins-init/fullcalendar-init.js')}}"></script>
 
 
     <!-- Chart Morris plugin files -->
@@ -193,6 +195,10 @@
     <!-- Chart ChartJS plugin files -->
     <script src="{{asset('assets/vendor/chart.js/Chart.bundle.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins-init/chartjs-init.js')}}"></script>
+
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script src='{{asset('assets/js/core/locales-all.global.min.js')}}'></script>
 
     {!! Toastr::message() !!}
 </body>
