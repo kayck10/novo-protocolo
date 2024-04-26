@@ -64,7 +64,7 @@
                     <li><a href="{{route('user.index')}}">Ver Todos</a></li>
                 </ul>
             </li>
-            <li><a href="javascript:void()" aria-expanded="false">
+            <li><a href="{{route('local.create')}}" aria-expanded="false">
                 <i class="fa fa-building"></i>
                     <span class="nav-text">Escolas</span>
                 </a>

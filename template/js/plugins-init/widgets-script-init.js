@@ -699,7 +699,7 @@ if(jQuery('#chart_widget_8').length > 0 ){
     new Chart(chart_widget_9, {
         type: "line",
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "January", "February", "March", "April"],
+            labels: ["January", "February", "March", "Abril", "May", "June", "July", "August", "September", "October", "January", "February", "March", "Abril", "May", "June", "July", "August", "September", "October", "January", "February", "March", "Abril", "May", "June", "July", "August", "September", "October", "January", "February", "March", "Abril"],
             datasets: [{
                 label: "Sales Stats",
                 backgroundColor: "#2F4CDD",
@@ -785,7 +785,7 @@ if(jQuery('#chart_widget_8').length > 0 ){
     new Chart(chart_widget_10, {
         type: "line",
         data: {
-            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            labels: ["January", "February", "March", "Abril", "May", "June", "July", "August", "September", "October", "November", "December"],
             datasets: [{
                 label: "Sales Stats",
                 backgroundColor: "#e4386a",
@@ -871,7 +871,7 @@ if(jQuery('#chart_widget_8').length > 0 ){
     new Chart(chart_widget_11, {
         type: "line",
         data: {
-            labels: ["January", "February", "March", "April", "May", "June"],
+            labels: ["January", "February", "March", "Abril", "May", "June"],
             datasets: [{
                 label: "Sales Stats",
                 backgroundColor: "rgba(43, 193, 85, .5)",

@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\GraficosController;
 use App\Http\Controllers\InservivelController;
+use App\Http\Controllers\LocalController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\UserController;
@@ -71,5 +72,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/index', [UserController::class, 'index'])->name('user.index');
         Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
         Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
+    });
+    Route::prefix('/local')->group(function () {
+        Route::get('/anual', [LocalController::class, 'create'])->name('local.create');
     });
 });

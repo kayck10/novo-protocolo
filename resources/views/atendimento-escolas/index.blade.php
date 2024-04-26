@@ -28,143 +28,143 @@
                 </div>
             </div>
         </div>
-        <!-- BEGIN MODAL -->
-        <div class="modal fade none-border" id="event-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title ">
-                            <strong>Agendar Atendimento <i class="bi bi-calendar3"></i>
-                            </strong>
-                        </h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            
-                            <label class="form-label">Escola:</label>
-                            <select name="id_local" class="form-control">
-                                <option value="Gender">Selecione uma Escola</option>
-                            </select>
-                            <div class="form-check mt-3">
-                                <label class="form-check-label mx-1" for="flexCheckDefault">Prioridade?</label>
-                                <input class="form-check-input mx-2" type="checkbox" value="" id="flexCheckDefault" />
-                            </div>
+
+    </div>
+    <!-- Modal Add Category -->
+    <div class="modal fade none-border" id="add-category">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><strong>Adicionar Categoria</strong></h4>
+                </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- BEGIN MODAL -->
+    <div class="modal fade none-border" id="event-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title ">
+                        <strong>Agendar Atendimento <i class="bi bi-calendar3"></i>
+                        </strong>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <label class="form-label">Escola:</label>
+                        <select name="id_local" class="form-control">
+                            <option value="Gender">Selecione uma Escola</option>
+                            @foreach ($escolas as $escola)
+                            <option value="{{$escola->id}}">{{$escola->desc}}</option>
+                            @endforeach
+                        </select>
+                        <div class="form-check mt-3">
+                            <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
+                            <input class="form-check-input mx-2" type="checkbox" value="" id="prioridade" />
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
-                            <input name="datepicker" class="datepicker-default form-control" id="datepicker1">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Problema:</label>
-                            <input class="form-control" type="text" name="desc_problema" id="problema" disabled>
-                        </div>
-                        <p id="selected-date"></p>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-success save-event waves-effect waves-light">Criar
-                            Evento</button>
+                    <div class="form-group">
+                        <label class="form-label">Data:</label>
+                        <input name="datepicker" class="datepicker-default form-control" id="datepicker1">
                     </div>
+                    <div class="form-group">
+                        <label class="form-label">Problema:</label>
+                        <input class="form-control" type="text" name="desc_problema" id="desc_problema" disabled>
+                    </div>
+                    <p id="selected-date"></p>
+                </div
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar
+                        Evento</button>
                 </div>
             </div>
         </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'pt-br',
+                eventClick: function(info) {
+                    ªªªª // Exemplo de mudança de cor para eventos
+                    info.el.style.borderColor = 'red';
+                },
+                dateClick: function(info) {
+                    // Atualize o texto na modal para mostrar a data clicada
+                    document.getElementById('selected-date');
 
-                var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'dayGridMonth',
-                    locale: 'pt-br',
-                    eventClick: function(info) {
-                        ªªªª // Exemplo de mudança de cor para eventos
-                        info.el.style.borderColor = 'red';
+                    // Abra a modal quando uma data é clicada
+                    $('#event-modal').modal('show');
+                },
+                events: [{
+                        title: 'simple event',
+                        start: '2024-04-02'
                     },
-                    dateClick: function(info) {
-                        // Atualize o texto na modal para mostrar a data clicada
-                        document.getElementById('selected-date');
-
-                        // Abra a modal quando uma data é clicada
-                        $('#event-modal').modal('show');
-                    },
-                    events: [{
-                            title: 'simple event',
-                            start: '2024-04-02'
-                        },
-                        {
-                            title: 'event with URL',
-                            start: '2024-04-03'
-                        }
-                    ]
-                });
-
-
-                calendar.render();
-
-
-                function changeEvent() {
-                    let resp = $('#responsavel').val();
-                    let data = $('#data').val();
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('atendimento.store') }}", // Altere para o URL apropriado
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            'resp': resp,
-                            'date': data
-                        },
-                        success: function(response) {
-                            console.log(response.error)
-                        }
-                    }).done(function() {
-                        // Esta função é chamada quando a requisição AJAX é bem-sucedida
-                        // alert("tudo certo");
-                    }).fail(function(jqXHR, textStatus, errorThrown) {
-                        // Esta função é chamada quando a requisição AJAX falha
-                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                    })
-                }
+                    {
+                        title: 'event with URL',
+                        start: '2024-04-03'
+                    }
+                ]
             });
-        </script>
 
-        <script>
-            function checkFields() {
-                var escola = $('#escola').val(); // Valor selecionado do campo "Escola"
-                var dataEvento = $('#data-evento').val(); // Valor do campo "Data"
 
-                // Desabilita ou habilita o campo "Problema" com base nos outros campos
-                if (escola && dataEvento) {
-                    $('#problema').prop('disabled', false); // Habilita se ambos os campos estiverem preenchidos
-                } else {
-                    $('#problema').prop('disabled', true); // Desabilita se algum campo estiver vazio
-                }
+            calendar.render();
+
+
+            function changeEvent() {
+                let resp = $('#responsavel').val();
+                let data = $('#data').val();
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.store') }}", // Altere para o URL apropriado
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'resp': resp,
+                        'date': data
+                    },
+                    success: function(response) {
+                        console.log(response.error)
+                    }
+                }).done(function() {
+                    // Esta função é chamada quando a requisição AJAX é bem-sucedida
+                    // alert("tudo certo");
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    // Esta função é chamada quando a requisição AJAX falha
+                    console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+                })
             }
+        });
+    </script>
 
-            // Adiciona eventos de mudança para os campos que precisamos verificar
-            $('#escola, #data-evento').on('change', checkFields);
+    <script>
+        function checkFields() {
+            var escola = $('#escola').val(); // Valor selecionado do campo "Escola"
+            var dataEvento = $('#data-evento').val(); // Valor do campo "Data"
 
-            // Garante que o campo "Problema" esteja desabilitado ao abrir a modal
-            $('#event-modal').on('show.bs.modal', function() {
-                checkFields(); // Chama para garantir que o campo "Problema" esteja no estado certo
-            });
-        </script>
+            // Desabilita ou habilita o campo "Problema" com base nos outros campos
+            if (escola && dataEvento) {
+                $('#problema').prop('disabled', false); // Habilita se ambos os campos estiverem preenchidos
+            } else {
+                $('#problema').prop('disabled', true); // Desabilita se algum campo estiver vazio
+            }
+        }
 
-        <!-- Modal Add Category -->
-        <div class="modal fade none-border" id="add-category">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"><strong>Adicionar Categoria</strong></h4>
-                    </div>
-                    </form>
-                </div>
+        // Adiciona eventos de mudança para os campos que precisamos verificar
+        $('#escola, #data-evento').on('change', checkFields);
 
-            </div>
-        </div>
-    </div>
-    </div>
-
-    </div>
+        // Garante que o campo "Problema" esteja desabilitado ao abrir a modal
+        $('#event-modal').on('show.bs.modal', function() {
+            checkFields(); // Chama para garantir que o campo "Problema" esteja no estado certo
+        });
+    </script>
 @endsection
