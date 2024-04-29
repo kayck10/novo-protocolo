@@ -32,7 +32,11 @@
                                 <div class="form-group">
                                     <label class="form-label">Origem:<i class="fa fa-asterisk text-danger"></i></label>
                                     <select class="form-control">
+
                                         <option value="Gender">Selecione uma Escola | Prédio</option>
+                                        @foreach ($escolas as $escola)
+                                        <option value="{{$escola->id}}">{{$escolas->desc}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                            	<div>

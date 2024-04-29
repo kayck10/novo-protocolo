@@ -18,42 +18,34 @@
                 </ol>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
+        <div class="container">
+            @php
+                $count = 0;
+            @endphp
+            <div class="row">
                 @foreach ($users as $user)
-
-
-
-                    <div class="card">
-                        <div class="">
-                                <div class="text-center p-4 overlay-box" style="background-color:blue;">
-                                    <div class="">
-                                    </div>
-                                    <h3 class="mt-3 mb-1 text-white"></h3>
-                                    <p class="text-white mb-0">{{ $user->name }}</p>
-                                    @foreach ($funcoes as $funcao)
-                                    <p class="text-white mb-0"></p>
-                                    @endforeach
-
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between"><span
-                                            class="mb-0">Atendimentos Internos</span> <strong class="text-muted">1204
-                                        </strong></li>
-                                    <li class="list-group-item d-flex justify-content-between"><span
-                                            class="mb-0">Atendimentos a Escolas</span> <strong class="text-muted">2540
-                                        </strong></li>
-                                    <li class="list-group-item d-flex justify-content-between"><span
-                                            class="mb-0">Consertos em Máquinas</span> <strong
-                                            class="text-muted">2540</strong></li>
-                                    <li class="list-group-item d-flex justify-content-between"><span
-                                            class="mb-0">Perfil</span> <strong class="text-muted">2540</strong></li>
-                                </ul>
+                    @php
+                        $count++;
+                    @endphp
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="text-center p-4 overlay-box" style="background-color: blue;">
+                                <h3 class="mt-3 mb-1 text-white"></h3>
+                                <p class="text-white mb-0">{{ $user->name }}</p>
                             </div>
-
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <span class="mb-0">Atendimentos Internos</span>
+                                    <strong class="text-muted">1204</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    @if ($count % 3 == 0)
+            </div>
+            <div class="row">
+                @endif
                 @endforeach
             </div>
         </div>
-    </div>
-@endsection
+    @endsection

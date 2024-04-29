@@ -74,6 +74,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
     });
     Route::prefix('/local')->group(function () {
-        Route::get('/anual', [LocalController::class, 'create'])->name('local.create');
+        Route::get('/create', [LocalController::class, 'create'])->name('local.create');
     });
 });

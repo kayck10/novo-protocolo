@@ -1,4 +1,4 @@
-@extends('layout.template')
+@extends('layout.main')
 @section('content')
 @section('title')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -25,7 +25,6 @@
                     </h5>
                     <p class="mb-0">
                       <span class="text-success text-sm font-weight-bolder"></span>
-                        {{ $aberto }}
                     </p>
                   </div>
                 </div>
@@ -49,7 +48,7 @@
                     </h5>
                     <p class="mb-0">
                       <span class="text-success text-sm font-weight-bolder"></span>
-                        {{ $andamento }}
+
                     </p>
                   </div>
                 </div>
@@ -73,7 +72,6 @@
                     </h5>
                     <p class="mb-0">
                       <span class="text-danger text-sm font-weight-bolder"></span>
-                        {{ $saida }}
                     </p>
                   </div>
                 </div>
@@ -114,22 +112,7 @@
                     </div>
 
                 </div>
-                {{-- EQUIPAMENTOS --}}
-                <div class="container" id="tabela-equipamentos">
-                    <div class="row">
-                        @foreach ($protocolos as $protocolo)
-                            <div id="equipamento-{{$protocolo->id}}" class="col-md-4 text-center mt-5">
-                                <img onclick="visualizarEquipamento({{ $protocolo->id }})" type="button"
-                                    data-bs-toggle="modal" data-bs-target="#modalEquipamentos" style="width:100px"
-                                    src="{{ URL::asset('assets/img/' . $protocolo->tipo . '.png') }}"><br>
-                                @if ($protocolo->prioridade == 1)
-                                    <span style="color: red"><strong>{{ $protocolo->tombamento }}</strong></span><br>
-                                @else
-                                    <span><strong>{{ $protocolo->tombamento }}</strong></span><br>
-                                @endif
-                                <span><strong>{{ date('d/m/Y', strtotime($protocolo->created_at)) }}</strong></span>
-                            </div>
-                        @endforeach
+
                     </div>
                 </div>
             </div>
@@ -213,9 +196,7 @@
                             <label for="exampleFormControlSelect1"><strong>Atribuir a um funcionário:</strong></label>
                             <select id="funcionario" class="form-control" id="exampleFormControlSelect1">
                                 <option disabled selected>Selecione um funcionario</option>
-                                @foreach ($funcionarios as $funcionario)
-                                    <option value="{{ $funcionario->id }}">{{ $funcionario->nome }}</option>
-                                @endforeach
+
                             </select>
                         </div>
                     </span>
@@ -239,10 +220,7 @@
     </div>
 
     <div class="fixed-plugin">
-        <a href="{{route('protocolo.create')}}" class="fixed-plugin-button text-dark position-fixed px-3 py-2">
-            <i class="bi bi-plus-lg"></i>
-        </a>
-    </div>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
