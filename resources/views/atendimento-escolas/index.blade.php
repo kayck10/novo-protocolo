@@ -6,8 +6,7 @@
         <div class="col-lg-9">
             <div class="card">
                 <div class="card-body">
-                    <input type="text" id="responsavel">
-                    <input type="date" id="data">
+
                     <div id="calendar" class="app-fullcalendar"></div>
                 </div>
             </div>
@@ -37,7 +36,6 @@
                 <div class="modal-header">
                     <h4 class="modal-title"><strong>Adicionar Categoria</strong></h4>
                 </div>
-                </form>
             </div>
 
         </div>
@@ -74,14 +72,13 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Problema:</label>
-                        <input class="form-control" type="text" name="desc_problema" id="desc_problema" disabled>
+                        <input class="form-control" type="text" name="desc_problema" id="desc_problema" >
                     </div>
                     <p id="selected-date"></p>
                 </div
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar
-                        Evento</button>
+                    <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar  Evento</button>
                 </div>
             </div>
         </div>
@@ -120,8 +117,9 @@
 
 
             function changeEvent() {
-                let resp = $('#responsavel').val();
-                let data = $('#data').val();
+                let local = $('#id_local').val();
+                let prioridade = $('#prioridade').val();
+                let problema = $('#desc_problema').val();
                 $.ajax({
                     type: "POST",
                     url: "{{ route('atendimento.store') }}", // Altere para o URL apropriado
@@ -129,8 +127,9 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: {
-                        'resp': resp,
-                        'date': data
+                        'local': local,
+                        'prioridade': prioridade,
+                        'problema' : problema
                     },
                     success: function(response) {
                         console.log(response.error)
@@ -146,25 +145,5 @@
         });
     </script>
 
-    <script>
-        function checkFields() {
-            var escola = $('#escola').val(); // Valor selecionado do campo "Escola"
-            var dataEvento = $('#data-evento').val(); // Valor do campo "Data"
 
-            // Desabilita ou habilita o campo "Problema" com base nos outros campos
-            if (escola && dataEvento) {
-                $('#problema').prop('disabled', false); // Habilita se ambos os campos estiverem preenchidos
-            } else {
-                $('#problema').prop('disabled', true); // Desabilita se algum campo estiver vazio
-            }
-        }
-
-        // Adiciona eventos de mudança para os campos que precisamos verificar
-        $('#escola, #data-evento').on('change', checkFields);
-
-        // Garante que o campo "Problema" esteja desabilitado ao abrir a modal
-        $('#event-modal').on('show.bs.modal', function() {
-            checkFields(); // Chama para garantir que o campo "Problema" esteja no estado certo
-        });
-    </script>
 @endsection

@@ -23,7 +23,7 @@ return new class extends Migration
                 $table->foreign('id_user')->references('id')->on('users');
                 $table->text('desc_problema')->nullable();
                 $table->boolean('prioridade')->default(false);
-                $table->boolean('externo')->default(false);
+                $table->date('data');
                 $table->timestamps();
             });
     }

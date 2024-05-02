@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('local', function (Blueprint $table) {
             $table->id();
             $table->text('desc');
+            $table->boolean('externo');
             $table->timestamps();
         });
     }

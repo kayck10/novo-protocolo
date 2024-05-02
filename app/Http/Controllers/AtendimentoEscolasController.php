@@ -21,7 +21,7 @@ class AtendimentoEscolasController extends Controller
             'externo' => 'required|boolean',
         ]);
         $local = Local::find($request->input('id_local'));
-        if ($local->nome === 'Secretaria de Educacao') {
+        if ($local->desc === 'Secretaria de Educacao') {
             if ($request->input('externo')) {
                 return response()->json([
                     'message' => 'Para Secretaria de Educacao, "externo" não deve ser marcado'
@@ -30,7 +30,7 @@ class AtendimentoEscolasController extends Controller
         } else {
             if (!$request->input('externo')) {
                 return response()->json([
-                    'message' => ''
+                    'message' => 'Para locais que não sejam na Secretária de Educação externo deverá ser marcado'
                 ], 400);
             }
         }
