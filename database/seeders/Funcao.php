@@ -17,7 +17,7 @@ class Funcao extends Seeder
         Funcoes::create(['desc' => 'Técnico de Suporte']);
         Funcoes::create(['desc' => 'Programador']);
         Funcoes::create(['desc' => 'Estagiário Superior']);
-        Funcoes::create(['desc' => 'estagiário Técnico']);
-        Funcoes::create(['desc' => 'estagiário Médio']);
+        Funcoes::create(['desc' => 'Estagiário Técnico']);
+        Funcoes::create(['desc' => 'Estagiário Médio']);
     }
 }

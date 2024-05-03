@@ -55,81 +55,52 @@
                     <div class="form-group">
 
                         <label class="form-label">Escola:</label>
-                        <select name="id_local" class="form-control">
-                            <option value="Gender">Selecione uma Escola</option>
+                        <select id="id_local" class="form-control">
+                            <option value="">Selecione uma Escola</option>
                             @foreach ($escolas as $escola)
-                            <option value="{{$escola->id}}">{{$escola->desc}}</option>
+                                <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
                             @endforeach
                         </select>
                         <div class="form-check mt-3">
                             <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
-                            <input class="form-check-input mx-2" type="checkbox" value="" id="prioridade" />
+                            <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Data:</label>
-                        <input name="datepicker" class="datepicker-default form-control" id="datepicker1">
+                        <input name="datepicker" id="data" class="datepicker-default form-control" id="datepicker1">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Problema:</label>
-                        <input class="form-control" type="text" name="desc_problema" id="desc_problema" >
+                        <input class="form-control" type="text" name="desc_problema" id="desc_problema">
                     </div>
                     <p id="selected-date"></p>
-                </div
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar  Evento</button>
-                </div>
+                </div class="modal-footer">
+                <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success save-event waves-effect waves-light" onclick="changeEvent()">Criar Evento</button>
             </div>
         </div>
     </div>
+    </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                locale: 'pt-br',
-                eventClick: function(info) {
-                    ªªªª // Exemplo de mudança de cor para eventos
-                    info.el.style.borderColor = 'red';
-                },
-                dateClick: function(info) {
-                    // Atualize o texto na modal para mostrar a data clicada
-                    document.getElementById('selected-date');
-
-                    // Abra a modal quando uma data é clicada
-                    $('#event-modal').modal('show');
-                },
-                events: [{
-                        title: 'simple event',
-                        start: '2024-04-02'
-                    },
-                    {
-                        title: 'event with URL',
-                        start: '2024-04-03'
-                    }
-                ]
-            });
 
 
-            calendar.render();
-
-
-            function changeEvent() {
+        function changeEvent() {
                 let local = $('#id_local').val();
-                let prioridade = $('#prioridade').val();
+                let prioridade = $('#prioridade').is(':checked');
                 let problema = $('#desc_problema').val();
+                let data = $('#data').val();
                 $.ajax({
                     type: "POST",
-                    url: "{{ route('atendimento.store') }}", // Altere para o URL apropriado
+                    url: "{{ route('atendimento.store') }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: {
                         'local': local,
                         'prioridade': prioridade,
-                        'problema' : problema
+                        'problema': problema,
+                        'data': data,
                     },
                     success: function(response) {
                         console.log(response.error)
@@ -142,8 +113,33 @@
                     console.log("Erro na requisição AJAX:", textStatus, errorThrown);
                 })
             }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'pt-br',
+                dateClick: function(info) {
+                    // Atualize o texto na modal para mostrar a data clicada
+                    document.getElementById('selected-date');
+
+                    // Abra a modal quando uma data é clicada
+                    $('#event-modal').modal('show');
+                },
+                // events: [{
+                //         title: 'simple event',
+                //         start: '2024-04-02'
+                //     },
+                //     {
+                //         title: 'event with URL',
+                //         start: '2024-04-03'
+                //     }
+                // ]
+            });
+            calendar.render();
+
+
         });
     </script>
-
-
 @endsection

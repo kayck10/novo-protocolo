@@ -6,7 +6,7 @@ use App\Models\TiposUsuarios;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TiposUsuarios extends Seeder
+class TiposUsuario extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,7 @@ class TiposUsuarios extends Seeder
     public function run(): void
     {
         TiposUsuarios::create(['desc' => 'Administrador do Sistema']);
-
+        TiposUsuarios::create(['desc' => 'Programador do Sistema']);
+        TiposUsuarios::create(['desc' => 'Usuário Comum']);
     }
 }
