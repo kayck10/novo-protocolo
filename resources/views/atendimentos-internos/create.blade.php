@@ -40,6 +40,9 @@
                                         <label class="form-label">Setor:<i class="fa fa-asterisk text-danger"></i></label>
                                         <select class="form-control">
                                             <option value="Gender">Selecione um Setor</option>
+                                            @foreach ($setores as $setor)
+                                            <option value="{{ $setor->id }}">{{ $setor->desc }}</option>
+                                        @endforeach
                                         </select>
                                     </div>
                                     <div>

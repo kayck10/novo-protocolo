@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/atendimento-escola')->group(function () {
         Route::get('/index', [AtendimentoEscolasController::class, 'index'])->name('atendimento.escola');
-        Route::post('/atendimento/store', [AtendimentoEscolasController::class, 'store'])->name('atendimento.store');
+        Route::post('/store', [AtendimentoEscolasController::class, 'store'])->name('atendimento.store');
     });
 
     Route::prefix('/protocolo-entrada')->group(function () {
@@ -45,6 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/atendimento-interno')->group(function () {
         Route::get('/index', [AtendimentoInternoController::class, 'index'])->name('atendimento-interno.index');
         Route::get('/create', [AtendimentoInternoController::class, 'create'])->name('atendimento-interno.create');
+        Route::post('/store', [AtendimentoInternoController::class, 'store'])->name('atendimentointerno.store');
     });
     Route::prefix('/estante')->group(function () {
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');

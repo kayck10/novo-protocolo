@@ -35,7 +35,7 @@
 
                                         <option value="Gender">Selecione uma Escola | Prédio</option>
                                         @foreach ($escolas as $escola)
-                                        <option value="{{$escola->id}}">{{$escolas->desc}}</option>
+                                        <option value="{{$escola->id}}">{{$escola->desc}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -48,7 +48,7 @@
 
 							</div>
                             <div class="d-grid gap-2 col-6 mx-auto mt-5 ">
-                                <button type="submit" class="btn btn-primary">Cadastrar <i class="bi bi-check color-white"></i> </button>
+                                <button type="button" class="btn btn-primary" onclick="teste()">Cadastrar <i class="bi bi-check color-white"></i> </button>
                             </div>
                         </div>
                     </form>
@@ -58,4 +58,9 @@
     </div>
 </div>
 </div>
+<script>
+    function teste(){
+        success.
+    }
+</script>
 @endsection

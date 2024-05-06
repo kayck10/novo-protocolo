@@ -22,6 +22,7 @@ return new class extends Migration
                 $table->unsignedBigInteger('id_user');
                 $table->foreign('id_user')->references('id')->on('users');
                 $table->text('desc_problema')->nullable();
+                $table->text('solucao')->nullable();
                 $table->boolean('prioridade')->default(false);
                 $table->date('data');
                 $table->timestamps();

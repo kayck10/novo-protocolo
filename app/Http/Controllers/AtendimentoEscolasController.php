@@ -11,7 +11,7 @@ class AtendimentoEscolasController extends Controller
 {
     public function index()
     {
-        $escolas = Local::all();
+        $escolas = Local::where('externo', 1)->get();
         return view('atendimento-escolas.index', compact('escolas'));
     }
 
@@ -44,6 +44,8 @@ class AtendimentoEscolasController extends Controller
             }
         }
 
+
+
         // Cria um objeto DateTime com a data corrigida
         $data = DateTime::createFromFormat('j F, Y', $data_entrada);
         $prioridade =  (int) $request->prioridade;
@@ -67,10 +69,6 @@ class AtendimentoEscolasController extends Controller
             'data' => $data_formatada,
             'prioridade' => $prioridade,
         ]);
-
-
-
-
         return response()->json($atendimento, 201);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Local;
 use Illuminate\Http\Request;
 
 class AtendimentoInternoController extends Controller
@@ -11,6 +12,11 @@ class AtendimentoInternoController extends Controller
     }
 
     public function create () {
-        return view('atendimentos-internos.create');
+        $setores = Local::where('externo', 0)->get();
+        return view('atendimentos-internos.create', compact('setores'));
+    }
+
+    public function store (Request $request) {
+        
     }
 }

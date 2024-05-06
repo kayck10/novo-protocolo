@@ -103,15 +103,25 @@
                         'data': data,
                     },
                     success: function(response) {
+                        iziToast.success({
+                            title: 'Cadastrado',
+                            message: 'Atendimento cadastrado com sucesso!',
+                        });
+                        $('#event-modal').modal('hide');
+
                         console.log(response.error)
                     }
-                }).done(function() {
-                    // Esta função é chamada quando a requisição AJAX é bem-sucedida
-                    // alert("tudo certo");
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    // Esta função é chamada quando a requisição AJAX falha
-                    console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                })
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        // Esta função é chamada quando a requisição AJAX falha
+                        if (jqXHR.status == 500) {
+                            iziToast.error({
+                                title: 'Erro',
+                                message: `Status: Voce nao permissao!`,
+                            });
+                        }
+
+                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+                    })
             }
 
         document.addEventListener('DOMContentLoaded', function() {
