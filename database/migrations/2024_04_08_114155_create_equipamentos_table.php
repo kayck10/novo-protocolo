@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_tipo');
             $table->foreign('id_tipo')->references('id')->on('tipos_equipamentos');
-            $table->text('desc');
-            $table->text('tombamento');
+            $table->text('desc')->nullable();
+            $table->text('tombamento')->nullable();
             $table->text('local');
-            $table->text('acessorios');
-            $table->boolean('inservivel');
+            $table->text('acessorios')->nullable();
+            $table->boolean('inservivel')->nullable();
+            $table->date('data_entrada');
             $table->timestamps();
         });
     }

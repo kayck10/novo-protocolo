@@ -77,52 +77,51 @@
                     <p id="selected-date"></p>
                 </div class="modal-footer">
                 <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-success save-event waves-effect waves-light" onclick="changeEvent()">Criar Evento</button>
+                <button type="button" class="btn btn-success save-event waves-effect waves-light"
+                    onclick="changeEvent()">Criar Evento</button>
             </div>
         </div>
     </div>
     </div>
     <script>
-
-
         function changeEvent() {
-                let local = $('#id_local').val();
-                let prioridade = $('#prioridade').is(':checked');
-                let problema = $('#desc_problema').val();
-                let data = $('#data').val();
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('atendimento.store') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        'local': local,
-                        'prioridade': prioridade,
-                        'problema': problema,
-                        'data': data,
-                    },
-                    success: function(response) {
-                        iziToast.success({
-                            title: 'Cadastrado',
-                            message: 'Atendimento cadastrado com sucesso!',
-                        });
-                        $('#event-modal').modal('hide');
+            let local = $('#id_local').val();
+            let prioridade = $('#prioridade').is(':checked');
+            let problema = $('#desc_problema').val();
+            let data = $('#data').val();
+            $.ajax({
+                type: "POST",
+                url: "{{ route('atendimento.store') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    'local': local,
+                    'prioridade': prioridade,
+                    'problema': problema,
+                    'data': data,
+                },
+                success: function(response) {
+                    iziToast.success({
+                        title: 'Cadastrado',
+                        message: 'Atendimento cadastrado com sucesso!',
+                    });
+                    $('#event-modal').modal('hide');
 
-                        console.log(response.error)
-                    }
-                    }).fail(function(jqXHR, textStatus, errorThrown) {
-                        // Esta função é chamada quando a requisição AJAX falha
-                        if (jqXHR.status == 500) {
-                            iziToast.error({
-                                title: 'Erro',
-                                message: `Status: Voce nao permissao!`,
-                            });
-                        }
+                    console.log(response.error)
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // Esta função é chamada quando a requisição AJAX falha
+                if (jqXHR.status == 500) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: `Status: Voce nao permissao!`,
+                    });
+                }
 
-                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                    })
-            }
+                console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+            })
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');

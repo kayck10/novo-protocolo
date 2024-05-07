@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/protocolo-entrada')->group(function () {
         Route::get('/index', [ProtocoloEntradaController::class, 'index'])->name('index.protocolo');
         Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('create.protocolo');
+        Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
     });
 
     Route::prefix('/atendimento-interno')->group(function () {
