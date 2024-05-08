@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             Funcao::class,
             TiposUsuario::class,
             StatusAtendimentos::class,
+            Equipamentos::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

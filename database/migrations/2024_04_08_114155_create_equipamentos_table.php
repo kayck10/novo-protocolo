@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('equipamentos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_tipo');
+            $table->unsignedBigInteger('id_tipo')->nullable();
             $table->foreign('id_tipo')->references('id')->on('tipos_equipamentos');
             $table->text('desc')->nullable();
             $table->text('tombamento')->nullable();

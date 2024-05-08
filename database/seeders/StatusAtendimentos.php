@@ -15,6 +15,6 @@ class StatusAtendimentos extends Seeder
     {
         StatusAtendimento::create(['desc' => 'Em Aberto']);
         StatusAtendimento::create(['desc' => 'Em Andamento']);
-        StatusAtendimento::create(['desc' => 'Finzalizado']);
+        StatusAtendimento::create(['desc' => 'Finalizado']);
     }
 }
