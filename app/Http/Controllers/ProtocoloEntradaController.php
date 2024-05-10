@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipamentos;
 use App\Models\Local;
+use App\Models\SetorEscola;
+use App\Models\TiposEquipamentos;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -14,14 +16,14 @@ class ProtocoloEntradaController extends Controller
     }
 
     public function create() {
+       $tiposequipamentos = TiposEquipamentos::all();
+        $setorEscolas = SetorEscola::all();
+        $protocolos = Equipamentos::all();
         $escolas = Local::all();
-        return view('protocolo-entrada.create', compact('escolas'));
+        return view('protocolo-entrada.create', compact('escolas', 'protocolos', 'setorEscolas', 'tiposequipamentos'));
     }
 
     public function store (Request $request) {
-
-        
-
         $local = Local::find($request->input('local'));
         $meses_traducao = array(
             "Janeiro" => "January",
@@ -68,12 +70,18 @@ class ProtocoloEntradaController extends Controller
 
 
         $protocolos = Equipamentos::create([
-            'local' => $request->input('local'),
+            'id_local' => $request->input('local'),
             'data_entrada' => $data_formatada,
         ]);
 
 
-
         return response()->json($protocolos, 201);
+    }
+
+    public function update($id ,Request $request) {
+
+        $protocolos = Equipamentos::find($id);
+        $protocolos->update($request->all());
+        return redirect()->back();
     }
 }

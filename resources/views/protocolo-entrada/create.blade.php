@@ -26,7 +26,7 @@
                         <h5 class="card-title">Cadastrar Protocolo</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="post">
+
                             <div class="col-12 mx-auto p-5">
                                 <div>
                                     <div class="form-group">
@@ -60,50 +60,77 @@
                                             onclick="cadastrarProtocolo()">Cadastrar <i class="bi bi-check color-white"></i>
                                         </button>
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Equipamento</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="form-group">
 
-                                                            <label class="form-label">Escola:</label>
-                                                            <select id="id_local" class="form-control">
-                                                                <option value="">Selecione uma Escola</option>
-
-                                                            </select>
-                                                            <div class="form-check mt-3">
-                                                                <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
-                                                                <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="form-label">Problema:</label>
-                                                            <input class="form-control" type="text" name="desc_problema" id="desc_problema">
-                                                        </div>
-                                                    </div class="modal-footer">
-                                                    <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
-                                                    <button type="button" class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
-                                                </div>
-                                            </div>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
-                        </form>
+                            </div>
                     </div>
                 </div>
+
+
+                <form id="form-protocolo" action="{{route('protocolo.update')}}" method="post">
+                    @method('put') @csrf
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar
+                                        Equipamento</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div class="form-group">
+                                        <label class="form-label">Tombamento:</label>
+                                        <input class="form-control" type="text" name="tombamento">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Tipo de Equipamento:</label>
+                                        <select name="id_tipo_equipamentos" class="form-control">
+                                            <option value="">Selecione um Equipamento</option>
+                                            @foreach ($tiposequipamentos as $tipoequipamento)
+                                            <option value="{{$tipoequipamento->id}}">{{$tipoequipamento->desc}}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="form-check">
+                                            <label class="form-check-label" for="flexCheckDefault">Acessórios?</label>
+                                            <input name="acessorios" class="form-check-input mx-2" type="checkbox" id="prioridade" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Locais:</label>
+                                        <select name="id_setor_escolas" class="form-control">
+                                            <option value="">Selecione um Local</option>
+                                            @foreach ($setorEscolas as $setorescolas)
+                                            <option value="{{$setorescolas->id}}">{{$setorescolas->desc}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
+                                        <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Descrição do Problema:</label>
+                                        <textarea cols="30" rows="3" class="form-control" type="text" name="desc_problema" id="desc_problema"></textarea>
+                                    </div>
+                                </div class="modal-footer">
+                                <button type="submit" class="btn btn-default waves-effect"
+                                    data-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar
+                                    Evento</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
+    </div>
     </div>
     </div>
     <script>
@@ -123,6 +150,7 @@
                     'data_entrada': data,
                 },
                 success: function(response) {
+                    $('#form-protocolo').attr('action', `/protocolo-entrada/update/${response.id}`)
                     iziToast.success({
                         title: 'Cadastrado',
                         message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',

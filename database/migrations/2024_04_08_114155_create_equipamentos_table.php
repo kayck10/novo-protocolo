@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('equipamentos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_tipo')->nullable();
-            $table->foreign('id_tipo')->references('id')->on('tipos_equipamentos');
+            $table->unsignedBigInteger('id_tipo_equipamentos')->nullable();
+            $table->foreign('id_tipo_equipamentos')->references('id')->on('tipos_equipamentos');
+            $table->unsignedBigInteger('id_local');
+            $table->foreign('id_local')->references('id')->on('local');
+            $table->unsignedBigInteger('id_setor_escolas')->nullable();
+            $table->foreign('id_setor_escolas')->references('id')->on('setor_escolas');
             $table->text('desc')->nullable();
             $table->text('tombamento')->nullable();
-            $table->text('local');
             $table->text('acessorios')->nullable();
             $table->boolean('inservivel')->nullable();
             $table->date('data_entrada');

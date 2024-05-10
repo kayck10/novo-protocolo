@@ -8,6 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Equipamentos extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_tipo', 'desc', 'tombamento', 'local', 'acessorios', 'inservivel', 'data_entrada'];
-
+    protected $fillable = [
+        'id_tipo_equipamento',
+        'desc',
+        'tombamento',
+        'id_local',
+        'acessorios',
+        'inservivel',
+        'data_entrada',
+        'id_setor_escola'
+    ];
 }

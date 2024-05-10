@@ -44,6 +44,6 @@ class UserController extends Controller
 
     //protocolos de entrada
 
-    
+
 
 }
