@@ -9,13 +9,13 @@ class Equipamentos extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'id_tipo_equipamento',
+        'id_tipos_equipamentos',
         'desc',
         'tombamento',
         'id_local',
         'acessorios',
         'inservivel',
         'data_entrada',
-        'id_setor_escola'
+        'id_setor_escolas'
     ];
 }

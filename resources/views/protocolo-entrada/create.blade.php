@@ -27,48 +27,47 @@
                     </div>
                     <div class="card-body">
 
-                            <div class="col-12 mx-auto p-5">
+                        <div class="col-12 mx-auto p-5">
+                            <div>
+                                <div class="form-group">
+                                    <label class="form-label">Origem:<i class="fa fa-asterisk text-danger"></i></label>
+                                    <select id="local" class="form-control">
+
+                                        <option value="Gender">Selecione uma Escola | Prédio</option>
+                                        @foreach ($escolas as $escola)
+                                            <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div>
                                     <div class="form-group">
-                                        <label class="form-label">Origem:<i class="fa fa-asterisk text-danger"></i></label>
-                                        <select id="local" class="form-control">
-
-                                            <option value="Gender">Selecione uma Escola | Prédio</option>
-                                            @foreach ($escolas as $escola)
-                                                <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <div class="form-group">
-                                            <label class="form-label">Data:<i
-                                                    class="fa fa-asterisk text-danger"></i></label>
-                                            <input id="data_entrada" name="datepicker"
-                                                class="datepicker-default form-control" id="datepicker1">
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <button style=" display:none;" type="button" class="btn btn-primary buttons"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar
-                                            Equipamento <i class="bi bi-plus"></i> </button>
-
-                                        <button style=" display:none;" type="button"
-                                            class="btn btn-primary buttons">Imprimir <i class="fa fa-print"></i></i>
-                                        </button>
-
-                                        <button type="button" class="btn btn-primary"
-                                            onclick="cadastrarProtocolo()">Cadastrar <i class="bi bi-check color-white"></i>
-                                        </button>
-                                        <!-- Modal -->
-
+                                        <label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
+                                        <input id="data_entrada" name="datepicker" class="datepicker-default form-control"
+                                            id="datepicker1">
                                     </div>
                                 </div>
+                                <div>
+                                    <button style=" display:none;" type="button" class="btn btn-primary buttons"
+                                        data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar
+                                        Equipamento <i class="bi bi-plus"></i> </button>
+
+                                    <button style=" display:none;" type="button" class="btn btn-primary buttons">Imprimir
+                                        <i class="fa fa-print"></i></i>
+                                    </button>
+
+                                    <button type="button" class="btn btn-primary" onclick="cadastrarProtocolo()">Cadastrar
+                                        <i class="bi bi-check color-white"></i>
+                                    </button>
+                                    <!-- Modal -->
+
+                                </div>
                             </div>
+                        </div>
                     </div>
                 </div>
 
 
-                <form id="form-protocolo" action="{{route('protocolo.update')}}" method="post">
+                <form id="form-protocolo" action="" method="post">
                     @method('put') @csrf
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                         aria-hidden="true">
@@ -88,15 +87,17 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Tipo de Equipamento:</label>
-                                        <select name="id_tipo_equipamentos" class="form-control">
+                                        <select name="id_tipos_equipamentos" class="form-control">
                                             <option value="">Selecione um Equipamento</option>
                                             @foreach ($tiposequipamentos as $tipoequipamento)
-                                            <option value="{{$tipoequipamento->id}}">{{$tipoequipamento->desc}}</option>
+                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <div class="form-check">
                                             <label class="form-check-label" for="flexCheckDefault">Acessórios?</label>
-                                            <input name="acessorios" class="form-check-input mx-2" type="checkbox" id="prioridade" />
+                                            <input name="acessorios" class="form-check-input mx-2" type="checkbox"
+                                                id="prioridade" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -104,7 +105,7 @@
                                         <select name="id_setor_escolas" class="form-control">
                                             <option value="">Selecione um Local</option>
                                             @foreach ($setorEscolas as $setorescolas)
-                                            <option value="{{$setorescolas->id}}">{{$setorescolas->desc}}</option>
+                                                <option value="{{ $setorescolas->id }}">{{ $setorescolas->desc }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -116,7 +117,7 @@
 
                                     <div class="form-group">
                                         <label class="form-label">Descrição do Problema:</label>
-                                        <textarea cols="30" rows="3" class="form-control" type="text" name="desc_problema" id="desc_problema"></textarea>
+                                        <textarea cols="30" rows="3" class="form-control" type="text" name="desc" id="desc_problema"></textarea>
                                     </div>
                                 </div class="modal-footer">
                                 <button type="submit" class="btn btn-default waves-effect"

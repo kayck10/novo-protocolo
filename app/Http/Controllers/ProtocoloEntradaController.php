@@ -6,6 +6,7 @@ use App\Models\Equipamentos;
 use App\Models\Local;
 use App\Models\SetorEscola;
 use App\Models\TiposEquipamentos;
+use Brian2694\Toastr\Facades\Toastr;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -81,7 +82,14 @@ class ProtocoloEntradaController extends Controller
     public function update($id ,Request $request) {
 
         $protocolos = Equipamentos::find($id);
-        $protocolos->update($request->all());
+        $protocolos->update([
+           'tombamento' => $request->tombamento,
+           'id_tipos_equipamentos' => $request->id_tipos_equipamentos,
+           'id_setor_escolas' => $request->id_setor_escolas,
+           'desc' => $request->desc,
+            'acessorios' => $request->acessorios
+         ]);
+         Toastr::success('Equipamentos cadastrados com sucesso', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->back();
     }
 }

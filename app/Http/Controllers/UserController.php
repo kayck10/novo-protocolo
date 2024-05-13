@@ -38,7 +38,7 @@ class UserController extends Controller
             'id_funcoes' => $request->id_funcoes,
             'id_tipos_usuarios' => $request->id_tipos_usuarios,
         ]);
-        Toastr::success('Usuário Cadastrado com Sucesso', 'Concluído!', ["positionClass" => "toast-top-center"]);
+        Toastr::success('Usuário Cadastrado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->back();
     }
 

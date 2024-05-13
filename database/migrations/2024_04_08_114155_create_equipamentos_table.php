@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('equipamentos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_tipo_equipamentos')->nullable();
-            $table->foreign('id_tipo_equipamentos')->references('id')->on('tipos_equipamentos');
+            $table->unsignedBigInteger('id_tipos_equipamentos')->nullable();
+            $table->foreign('id_tipos_equipamentos')->references('id')->on('tipos_equipamentos');
             $table->unsignedBigInteger('id_local');
             $table->foreign('id_local')->references('id')->on('local');
             $table->unsignedBigInteger('id_setor_escolas')->nullable();

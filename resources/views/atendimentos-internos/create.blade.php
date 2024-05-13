@@ -34,6 +34,9 @@
                                         <label class="form-label">Técnico:<i class="fa fa-asterisk text-danger"></i></label>
                                         <select class="form-control">
                                             <option value="Gender">Selecione um Técnico</option>
+                                            @foreach ($tecnicos as $tecnico)
+                                                <option value="{{ $tecnico->id }}">{{ $tecnico->name}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -41,8 +44,8 @@
                                         <select class="form-control">
                                             <option value="Gender">Selecione um Setor</option>
                                             @foreach ($setores as $setor)
-                                            <option value="{{ $setor->id }}">{{ $setor->desc }}</option>
-                                        @endforeach
+                                                <option value="{{ $setor->id }}">{{ $setor->desc }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div>
@@ -54,12 +57,12 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Problema:<i
-                                                class="fa fa-asterisk text-danger"></i></label>
+                                                    class="fa fa-asterisk text-danger"></i></label>
                                             <textarea class="form-control" rows="3"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Solução:<i
-                                                class="fa fa-asterisk text-danger"></i></label>
+                                                    class="fa fa-asterisk text-danger"></i></label>
                                             <textarea class="form-control" rows="3"></textarea>
                                         </div>
                                     </div>
