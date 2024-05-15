@@ -55,7 +55,7 @@
                                         <i class="fa fa-print"></i></i>
                                     </button>
 
-                                    <button type="button" class="btn btn-primary" onclick="cadastrarProtocolo()">Cadastrar
+                                    <button id="btnCadastrar" type="button" class="btn btn-primary" onclick="cadastrarProtocolo()">Cadastrar
                                         <i class="bi bi-check color-white"></i>
                                     </button>
                                     <!-- Modal -->
@@ -156,7 +156,11 @@
                         title: 'Cadastrado',
                         message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
                     });
+
                     $('.buttons').show('hide');
+
+                    $('#btnCadastrar').hide();
+
                 }
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 // Esta função é chamada quando a requisição AJAX falha
