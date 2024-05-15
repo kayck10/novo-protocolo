@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container-fluid">
-
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
@@ -26,61 +25,74 @@
                         <h5 class="card-title">Cadastrar Protocolo</h5>
                     </div>
                     <div class="card-body">
-
                         <div class="col-12 mx-auto p-5">
-                            <div>
-                                <div class="form-group">
-                                    <label class="form-label">Origem:<i class="fa fa-asterisk text-danger"></i></label>
-                                    <select id="local" class="form-control">
+                            <div class="form-group">
+                                <label class="form-label">Origem:<i class="fa fa-asterisk text-danger"></i></label>
+                                <select id="local" class="form-control">
+                                    <option value="Gender">Selecione uma Escola | Prédio</option>
+                                    @foreach ($escolas as $escola)
+                                        <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
+                                <input id="data_entrada" name="datepicker" class="datepicker-default form-control"
+                                    id="datepicker1">
+                            </div>
+                            <button style=" display:none;" type="button" class="btn btn-primary buttons"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar
+                                Equipamento <i class="bi bi-plus"></i> </button>
+                            <button style=" display:none;" type="button" class="btn btn-primary buttons">Imprimir
+                                <i class="fa fa-print"></i></i>
+                            </button>
+                            <button id="btnCadastrar" type="button" class="btn btn-primary"
+                                onclick="cadastrarProtocolo()">Cadastrar
+                                <i class="bi bi-check color-white"></i>
+                            </button>
+                        </div>
+                        <hr>
+                        <div class="col-12" id="tabela-equipamentos-div" style="display: none;">
+                            <div class="table-responsive">
+                                <table id="tableEquipamentos" class="display" style="min-width: 845px">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Gender</th>
+                                            <th>Education</th>
+                                            <th>Mobile</th>
+                                            <th>Email</th>
+                                            <th>Joining Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dadosTbody">
 
-                                        <option value="Gender">Selecione uma Escola | Prédio</option>
-                                        @foreach ($escolas as $escola)
-                                            <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div>
-                                    <div class="form-group">
-                                        <label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
-                                        <input id="data_entrada" name="datepicker" class="datepicker-default form-control"
-                                            id="datepicker1">
-                                    </div>
-                                </div>
-                                <div>
-                                    <button style=" display:none;" type="button" class="btn btn-primary buttons"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar
-                                        Equipamento <i class="bi bi-plus"></i> </button>
 
-                                    <button style=" display:none;" type="button" class="btn btn-primary buttons">Imprimir
-                                        <i class="fa fa-print"></i></i>
-                                    </button>
-
-                                    <button id="btnCadastrar" type="button" class="btn btn-primary" onclick="cadastrarProtocolo()">Cadastrar
-                                        <i class="bi bi-check color-white"></i>
-                                    </button>
-                                    <!-- Modal -->
-
-                                </div>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
 
-                <form id="form-protocolo" action="" method="post">
-                    @method('put') @csrf
-                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar
-                                        Equipamento</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar
+                                    Equipamento
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form method="post" action="{{ route('teste') }}" id="form-protocolo">
                                 <div class="modal-body">
-
                                     <div class="form-group">
                                         <label class="form-label">Tombamento:</label>
                                         <input class="form-control" type="text" name="tombamento">
@@ -109,37 +121,38 @@
                                             @endforeach
                                         </select>
                                     </div>
-
                                     <div class="form-check">
                                         <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
                                         <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
                                     </div>
-
                                     <div class="form-group">
                                         <label class="form-label">Descrição do Problema:</label>
                                         <textarea cols="30" rows="3" class="form-control" type="text" name="desc" id="desc_problema"></textarea>
                                     </div>
-                                </div class="modal-footer">
-                                <button type="submit" class="btn btn-default waves-effect"
-                                    data-dismiss="modal">Fechar</button>
-                                <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar
-                                    Evento</button>
-                            </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default waves-effect"
+                                            data-dismiss="modal">Fechar</button>
+                                        <button type="submit"
+                                            class="btn btn-success save-event waves-effect waves-light">Criar
+                                            Evento</button>
+                                    </div>
+                            </form>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
     </div>
-    </div>
-    </div>
+@endsection
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script>
         function cadastrarProtocolo() {
-
             let local = $('#local').val();
             let data = $('#data_entrada').val();
-
             $.ajax({
                 type: 'POST',
                 url: '{{ route('protocolo.store') }}',
@@ -151,14 +164,14 @@
                     'data_entrada': data,
                 },
                 success: function(response) {
-                    $('#form-protocolo').attr('action', `/protocolo-entrada/update/${response.id}`)
+
                     iziToast.success({
                         title: 'Cadastrado',
                         message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
                     });
 
-                    $('.buttons').show('hide');
 
+                    $('.buttons').show('hide');
                     $('#btnCadastrar').hide();
 
                 }
@@ -172,8 +185,42 @@
                 }
             })
         }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        $(document).ready(function() {
+            $("#form-protocolo").on("submit", function(e) {
+                e.preventDefault();
+
+                dados = "";
+
+                dados += `
+                    <tr>
+                        <td><img class="rounded-circle" width="35" src="images/profile/small/pic1.jpg" alt=""></td>
+                                                    <td>Tiger Nixon</td>
+                                                    <td>Architect</td>
+                                                    <td>Male</td>
+                                                    <td>M.COM., P.H.D.</td>
+                                                    <td><a href="javascript:void(0);"><strong>123 456 7890</strong></a></td>
+                                                    <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td>
+                                                    <td>2011/04/25</td>
+                                                    <td>
+                                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
+                                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+                                                    </td>
+                    </tr>
+                `;
+
+                $('#dadosTbody').html(dados);
+                $('#tabela-equipamentos-div').show('hide');
+
+                $("#exampleModal").modal('hide')
+
+
+            })
+        });
+
+
+
+
+
+
     </script>
 @endsection

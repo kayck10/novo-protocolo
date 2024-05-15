@@ -79,4 +79,5 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/local')->group(function () {
         Route::get('/create', [LocalController::class, 'create'])->name('local.create');
     });
+    Route::post('/asdsad')->name('teste');
 });
