@@ -54,19 +54,13 @@
                         <hr>
                         <div class="col-12" id="tabela-equipamentos-div" style="display: none;">
                             <div class="table-responsive">
-                                <table id="tableEquipamentos" class="display" style="min-width: 845px">
+                                <table id="tableEquipamentos" class="display table" style="min-width: 845px">
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th>Name</th>
-                                            <th>Department</th>
-                                            <th>Gender</th>
-                                            <th>Education</th>
-                                            <th>Mobile</th>
-                                            <th>Email</th>
-                                            <th>Joining Date</th>
-                                            <th>Action</th>
-                                        </tr>
+                                            <th>Tombamento</th>
+                                            <th>Problema</th>
+                                            <th>Excluir</th>
+
                                     </thead>
                                     <tbody id="dadosTbody">
 
@@ -77,8 +71,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
@@ -91,11 +83,11 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
-                            <form method="post" action="{{ route('teste') }}" id="form-protocolo">
+                            <form id="form-protocolo">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label class="form-label">Tombamento:</label>
-                                        <input class="form-control" type="text" name="tombamento">
+                                        <input class="form-control" type="text" id="tombamento">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Tipo de Equipamento:</label>
@@ -127,11 +119,10 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Descrição do Problema:</label>
-                                        <textarea cols="30" rows="3" class="form-control" type="text" name="desc" id="desc_problema"></textarea>
+                                        <textarea cols="30" rows="3" class="form-control" type="text" id="desc"></textarea>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default waves-effect"
-                                            data-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn" data-bs-dismiss="modal">Fechar</button>
                                         <button type="submit"
                                             class="btn btn-success save-event waves-effect waves-light">Criar
                                             Evento</button>
@@ -189,38 +180,43 @@
             $("#form-protocolo").on("submit", function(e) {
                 e.preventDefault();
 
-                dados = "";
+                let equipamentos = $('#id_tiposequipamentos').val();
+                let tombamento = $('#tombamento').val();
+                let setor = $('#id_setor_escolas').val();
+                let problema = $('#desc').val();
 
-                dados += `
+                let settings = {
+                    url: '{{route ('store.equipamento')}}',
+                    method: 'POST',
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                };
+
+                let data = {
+                    equipamentos: equipamentos,
+                    tombamento: tombamento,
+                    setor: setor,
+                    problema: problema
+                };
+
+                let dados = `
                     <tr>
                         <td><img class="rounded-circle" width="35" src="images/profile/small/pic1.jpg" alt=""></td>
-                                                    <td>Tiger Nixon</td>
-                                                    <td>Architect</td>
-                                                    <td>Male</td>
-                                                    <td>M.COM., P.H.D.</td>
-                                                    <td><a href="javascript:void(0);"><strong>123 456 7890</strong></a></td>
-                                                    <td><a href="javascript:void(0);"><strong>info@example.com</strong></a></td>
-                                                    <td>2011/04/25</td>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="la la-pencil"></i></a>
-                                                        <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
-                                                    </td>
+                                                    <td>  </td>
+                                                    <td>    </td>
+                                                    <td><i class="bi bi-trash3-fill text-danger"></i></td>
+
                     </tr>
                 `;
 
-                $('#dadosTbody').html(dados);
+                $('#dadosTbody').append(dados);
                 $('#tabela-equipamentos-div').show('hide');
-
                 $("#exampleModal").modal('hide')
 
 
             })
         });
-
-
-
-
-
-
     </script>
 @endsection

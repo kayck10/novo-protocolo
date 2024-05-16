@@ -79,17 +79,12 @@ class ProtocoloEntradaController extends Controller
         return response()->json($protocolos, 201);
     }
 
-    public function update($id ,Request $request) {
-
-        $protocolos = Equipamentos::find($id);
-        $protocolos->update([
-           'tombamento' => $request->tombamento,
-           'id_tipos_equipamentos' => $request->id_tipos_equipamentos,
-           'id_setor_escolas' => $request->id_setor_escolas,
-           'desc' => $request->desc,
-            'acessorios' => $request->acessorios
-         ]);
-         Toastr::success('Equipamentos cadastrados com sucesso', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
-        return redirect()->back();
+    public function equipamentos (Request $request) {
+        $equipamentos = Equipamentos::create([
+            'tombamento' => $request->tombamento,
+            'id_setor_escolas' => $request->input('setor'),
+            'id_tipos_equipamentos' => $request->input('equipamentos'),
+            'desc' => $request->problema
+        ]);
     }
 }
