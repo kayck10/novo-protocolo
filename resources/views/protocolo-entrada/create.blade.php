@@ -46,10 +46,10 @@
                             <button style=" display:none;" type="button" class="btn btn-primary buttons">Imprimir
                                 <i class="fa fa-print"></i></i>
                             </button>
-                            <button id="btnCadastrar" type="button" class="btn btn-primary"
-                                onclick="cadastrarProtocolo()">Cadastrar
+                            <button id="btnCadastrar" type="button" class="btn btn-primary">Cadastrar
                                 <i class="bi bi-check color-white"></i>
                             </button>
+
                         </div>
                         <hr>
                         <div class="col-12" id="tabela-equipamentos-div" style="display: none;">
@@ -91,22 +91,21 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Tipo de Equipamento:</label>
-                                        <select name="id_tipos_equipamentos" class="form-control">
+                                        <select id="id_tipos_equipamentos" class="form-control">
                                             <option value="">Selecione um Equipamento</option>
                                             @foreach ($tiposequipamentos as $tipoequipamento)
-                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}
-                                                </option>
+                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}</option>
                                             @endforeach
                                         </select>
                                         <div class="form-check">
                                             <label class="form-check-label" for="flexCheckDefault">Acessórios?</label>
-                                            <input name="acessorios" class="form-check-input mx-2" type="checkbox"
-                                                id="prioridade" />
+                                            <input name="acessorios" class="form-check-input mx-2" type="checkbox" id="prioridade" />
                                         </div>
+                                        <input type="hidden" name="id_protocolo" id="id_protocolo">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Locais:</label>
-                                        <select name="id_setor_escolas" class="form-control">
+                                        <select id="id_setor_escolas" class="form-control">
                                             <option value="">Selecione um Local</option>
                                             @foreach ($setorEscolas as $setorescolas)
                                                 <option value="{{ $setorescolas->id }}">{{ $setorescolas->desc }}</option>
@@ -123,10 +122,9 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn" data-bs-dismiss="modal">Fechar</button>
-                                        <button type="submit"
-                                            class="btn btn-success save-event waves-effect waves-light">Criar
-                                            Evento</button>
+                                        <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
                                     </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -141,7 +139,16 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script>
+        $(document).ready(function() {
+            // Adiciona o evento de clique no botão de cadastro
+            $('#btnCadastrar').on('click', function() {
+                cadastrarProtocolo();
+            });
+        });
+
         function cadastrarProtocolo() {
+            $('#btnCadastrar').hide();
+
             let local = $('#local').val();
             let data = $('#data_entrada').val();
             $.ajax({
@@ -155,38 +162,46 @@
                     'data_entrada': data,
                 },
                 success: function(response) {
-
                     iziToast.success({
                         title: 'Cadastrado',
                         message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
                     });
-
-
-                    $('.buttons').show('hide');
-                    $('#btnCadastrar').hide();
-
+                    $('#id_protocolo').val(response.id);
+                    $('#btnCadastrar').show();
+                    $('.buttons').show();
                 }
             }).fail(function(jqXHR, textStatus, errorThrown) {
-                // Esta função é chamada quando a requisição AJAX falha
                 if (jqXHR.status == 400) {
                     iziToast.error({
                         title: 'Erro',
                         message: jqXHR.responseJSON.message,
                     });
                 }
-            })
+                $('#btnCadastrar').show();
+            });
         }
+
+
         $(document).ready(function() {
             $("#form-protocolo").on("submit", function(e) {
                 e.preventDefault();
 
-                let equipamentos = $('#id_tiposequipamentos').val();
+                let equipamentos = $('#id_tipos_equipamentos').val();
+                let id_protocolo = $('#id_protocolo').val();
                 let tombamento = $('#tombamento').val();
                 let setor = $('#id_setor_escolas').val();
                 let problema = $('#desc').val();
 
+                let data = {
+                    equipamentos: equipamentos,
+                    id_protocolo: id_protocolo,
+                    tombamento: tombamento,
+                    setor: setor,
+                    problema: problema
+                };
+
                 let settings = {
-                    url: '{{route ('store.equipamento')}}',
+                    url: '{{ route('store.equipamento') }}',
                     method: 'POST',
                     data: data,
                     headers: {
@@ -194,29 +209,23 @@
                     }
                 };
 
-                let data = {
-                    equipamentos: equipamentos,
-                    tombamento: tombamento,
-                    setor: setor,
-                    problema: problema
-                };
+                $.ajax(settings).done(function(response) {
+                    let dados = `
+                <tr>
+                    <td><img class="rounded-circle" width="35" alt=""></td>
+                    <td></td>
+                    <td></td>
+                    <td><i class="bi bi-trash3-fill text-danger"></i></td>
+                </tr>
+            `;
 
-                let dados = `
-                    <tr>
-                        <td><img class="rounded-circle" width="35" src="images/profile/small/pic1.jpg" alt=""></td>
-                                                    <td>  </td>
-                                                    <td>    </td>
-                                                    <td><i class="bi bi-trash3-fill text-danger"></i></td>
-
-                    </tr>
-                `;
-
-                $('#dadosTbody').append(dados);
-                $('#tabela-equipamentos-div').show('hide');
-                $("#exampleModal").modal('hide')
-
-
-            })
+                    $('#dadosTbody').append(dados);
+                    $('#tabela-equipamentos-div').show();
+                    $("#exampleModal").modal('hide');
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.log("Request failed: " + textStatus + ", " + errorThrown);
+                });
+            });
         });
     </script>
 @endsection

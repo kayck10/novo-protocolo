@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipamentos;
 use App\Models\Local;
+use App\Models\ProtocoloEntrada;
 use App\Models\SetorEscola;
 use App\Models\TiposEquipamentos;
 use Brian2694\Toastr\Facades\Toastr;
@@ -25,7 +26,11 @@ class ProtocoloEntradaController extends Controller
     }
 
     public function store (Request $request) {
+
+        // dd($request->all());
+
         $local = Local::find($request->input('local'));
+
         $meses_traducao = array(
             "Janeiro" => "January",
             "Fevereiro" => "February",
@@ -59,7 +64,6 @@ class ProtocoloEntradaController extends Controller
         // Verifica se a criação foi bem-sucedida
 
 
-
         if ($data === false) {
             // Se houver erro, mostra uma mensagem de erro
             $errors = DateTime::getLastErrors();
@@ -70,7 +74,8 @@ class ProtocoloEntradaController extends Controller
         }
 
 
-        $protocolos = Equipamentos::create([
+
+        $protocolos = ProtocoloEntrada::create([
             'id_local' => $request->input('local'),
             'data_entrada' => $data_formatada,
         ]);
@@ -81,10 +86,12 @@ class ProtocoloEntradaController extends Controller
 
     public function equipamentos (Request $request) {
         $equipamentos = Equipamentos::create([
+            'id_protocolo' => $request->id_protocolo,
             'tombamento' => $request->tombamento,
             'id_setor_escolas' => $request->input('setor'),
             'id_tipos_equipamentos' => $request->input('equipamentos'),
-            'desc' => $request->problema
+            'desc' => $request->problema,
         ]);
+        return response()->json($equipamentos, 201);
     }
 }

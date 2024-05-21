@@ -179,7 +179,7 @@
 	<!-- Chart piety plugin files -->
     <script src="{{asset('assets/vendor/peity/jquery.peity.min.js')}}"></script>
 
-		<!-- Demo scripts -->
+    <!-- Demo scripts -->
     <script src="{{asset('assets/js/dashboard/dashboard-2.js')}}"></script>
 
 
