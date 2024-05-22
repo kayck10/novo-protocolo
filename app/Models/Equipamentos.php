@@ -11,11 +11,13 @@ class Equipamentos extends Model
     protected $fillable = [
         'id_tipos_equipamentos',
         'desc',
+        'id_protocolo',
         'tombamento',
         'id_local',
         'acessorios',
         'inservivel',
         'data_entrada',
-        'id_setor_escolas'
+        'id_setor_escolas',
+        'prioridade'
     ];
 }

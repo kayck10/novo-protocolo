@@ -166,7 +166,7 @@
                         title: 'Cadastrado',
                         message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
                     });
-                    $('#id_protocolo').val(response.id);
+                    $('#id_protocolo').val(response);
                     $('#btnCadastrar').show();
                     $('.buttons').show();
                 }
@@ -191,13 +191,16 @@
                 let tombamento = $('#tombamento').val();
                 let setor = $('#id_setor_escolas').val();
                 let problema = $('#desc').val();
+                let prioridade = $('#prioridade').val();
 
                 let data = {
                     equipamentos: equipamentos,
                     id_protocolo: id_protocolo,
                     tombamento: tombamento,
                     setor: setor,
-                    problema: problema
+                    problema: problema,
+                    prioridade: prioridade,
+
                 };
 
                 let settings = {

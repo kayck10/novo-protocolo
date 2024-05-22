@@ -75,13 +75,13 @@ class ProtocoloEntradaController extends Controller
 
 
 
-        $protocolos = ProtocoloEntrada::create([
+        $protocolo = ProtocoloEntrada::create([
             'id_local' => $request->input('local'),
             'data_entrada' => $data_formatada,
         ]);
 
 
-        return response()->json($protocolos, 201);
+        return response()->json($protocolo->id, 201);
     }
 
     public function equipamentos (Request $request) {
@@ -91,6 +91,7 @@ class ProtocoloEntradaController extends Controller
             'id_setor_escolas' => $request->input('setor'),
             'id_tipos_equipamentos' => $request->input('equipamentos'),
             'desc' => $request->problema,
+            'prioridade' => $request->prioridade == 'on' ? 1 : 0,   
         ]);
         return response()->json($equipamentos, 201);
     }
