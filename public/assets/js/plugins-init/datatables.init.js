@@ -97,7 +97,6 @@ let dataSet = [
         paging: false, // Desativa a paginação
         ordering: false, // Desativa a ordenação
         info: false,
-
         // Outras opções de configuração...
     });
 	$('#example tbody').on('click', 'tr', function () {

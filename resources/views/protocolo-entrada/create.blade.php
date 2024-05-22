@@ -60,11 +60,8 @@
                                             <th>Tombamento</th>
                                             <th>Problema</th>
                                             <th>Excluir</th>
-
                                     </thead>
                                     <tbody id="dadosTbody">
-
-
                                     </tbody>
                                 </table>
                             </div>
@@ -94,12 +91,14 @@
                                         <select id="id_tipos_equipamentos" class="form-control">
                                             <option value="">Selecione um Equipamento</option>
                                             @foreach ($tiposequipamentos as $tipoequipamento)
-                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}</option>
+                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <div class="form-check">
                                             <label class="form-check-label" for="flexCheckDefault">Acessórios?</label>
-                                            <input name="acessorios" class="form-check-input mx-2" type="checkbox" id="prioridade" />
+                                            <input name="acessorios" class="form-check-input mx-2" type="checkbox"
+                                                id="prioridade" />
                                         </div>
                                         <input type="hidden" name="id_protocolo" id="id_protocolo">
                                     </div>
@@ -122,7 +121,9 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn" data-bs-dismiss="modal">Fechar</button>
-                                        <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
+                                        <button type="submit"
+                                            class="btn btn-success save-event waves-effect waves-light">Criar
+                                            Evento</button>
                                     </div>
                                 </div>
                             </form>
@@ -131,7 +132,6 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection
 @section('scripts')
@@ -167,7 +167,7 @@
                         message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
                     });
                     $('#id_protocolo').val(response);
-                    $('#btnCadastrar').show();
+                    $('#btnCadastrar').hide();
                     $('.buttons').show();
                 }
             }).fail(function(jqXHR, textStatus, errorThrown) {
@@ -200,7 +200,6 @@
                     setor: setor,
                     problema: problema,
                     prioridade: prioridade,
-
                 };
 
                 let settings = {
@@ -213,11 +212,13 @@
                 };
 
                 $.ajax(settings).done(function(response) {
+                    console.log(response);
+                    // Destroy the old Datatable
+                    $('#tableEquipamentos').DataTable().clear().destroy();
                     let dados = `
                 <tr>
-                    <td><img class="rounded-circle" width="35" alt=""></td>
-                    <td></td>
-                    <td></td>
+                    <td>${response.tombamento}</td>
+                    <td>${response.desc}</td>
                     <td><i class="bi bi-trash3-fill text-danger"></i></td>
                 </tr>
             `;
@@ -225,8 +226,22 @@
                     $('#dadosTbody').append(dados);
                     $('#tabela-equipamentos-div').show();
                     $("#exampleModal").modal('hide');
+
+                    // Create new Datatable
+                    $('#tableEquipamentos').DataTable();
+
+
+                    iziToast.success({
+                        title: 'Sucesso',
+                        message: 'Equipamento cadastrado com sucesso!',
+                    });
+
                 }).fail(function(jqXHR, textStatus, errorThrown) {
                     console.log("Request failed: " + textStatus + ", " + errorThrown);
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Ocorreu um erro ao cadastrar o equipamento.',
+                    });
                 });
             });
         });

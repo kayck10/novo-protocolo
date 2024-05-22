@@ -14,7 +14,9 @@ use Illuminate\Http\Request;
 class ProtocoloEntradaController extends Controller
 {
     public function index () {
-        return view('protocolo-entrada.index');
+        $protocolos = ProtocoloEntrada::all();
+        $equipamentos = Equipamentos::all();
+        return view('protocolo-entrada.index', compact('protocolos'));
     }
 
     public function create() {
@@ -91,7 +93,7 @@ class ProtocoloEntradaController extends Controller
             'id_setor_escolas' => $request->input('setor'),
             'id_tipos_equipamentos' => $request->input('equipamentos'),
             'desc' => $request->problema,
-            'prioridade' => $request->prioridade == 'on' ? 1 : 0,   
+            'prioridade' => $request->prioridade == 'on' ? 1 : 0,
         ]);
         return response()->json($equipamentos, 201);
     }

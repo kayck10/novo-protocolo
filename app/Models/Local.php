@@ -11,4 +11,8 @@ class Local extends Model
     protected $table = "local";
     protected $fillable = ['desc'];
 
+    public function ProtocoloEntrada () {
+        return $this->hasMany(ProtocoloEntrada::class); 
+    }
+
 }
