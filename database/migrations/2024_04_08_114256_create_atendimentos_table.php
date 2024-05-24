@@ -13,13 +13,13 @@ return new class extends Migration
     {
             Schema::create('atendimentos', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('id_local');
+                $table->unsignedBigInteger('id_local')->nullable();
                 $table->foreign('id_local')->references('id')->on('local');
                 $table->unsignedBigInteger('id_equipamento')->nullable();
                 $table->foreign('id_equipamento')->references('id')->on('equipamentos');
-                $table->unsignedBigInteger('id_status')->default(1);
+                $table->unsignedBigInteger('id_status')->default(1)->nullable();
                 $table->foreign('id_status')->references('id')->on('status_atendimentos');
-                $table->unsignedBigInteger('id_user');
+                $table->unsignedBigInteger('id_user')->nullable();
                 $table->foreign('id_user')->references('id')->on('users');
                 $table->text('desc_problema')->nullable();
                 $table->text('solucao')->nullable();

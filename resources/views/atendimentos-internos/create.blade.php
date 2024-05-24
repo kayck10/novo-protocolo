@@ -27,12 +27,13 @@
                         <h5 class="card-title">Cadastrar Protocolo</h5>
                     </div>
                     <div class="card-body">
-                        <form action="#" method="post">
+                        <form action="{{route('atendimentointerno.store')}}" method="post">
+                            @csrf
                             <div class="col-12 mx-auto p-5">
                                 <div>
                                     <div class="form-group">
                                         <label class="form-label">Técnico:<i class="fa fa-asterisk text-danger"></i></label>
-                                        <select class="form-control">
+                                        <select name="id_user" class="form-control">
                                             <option value="Gender">Selecione um Técnico</option>
                                             @foreach ($tecnicos as $tecnico)
                                                 <option value="{{ $tecnico->id }}">{{ $tecnico->name}}</option>
@@ -41,7 +42,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Setor:<i class="fa fa-asterisk text-danger"></i></label>
-                                        <select class="form-control">
+                                        <select name="id_local" class="form-control">
                                             <option value="Gender">Selecione um Setor</option>
                                             @foreach ($setores as $setor)
                                                 <option value="{{ $setor->id }}">{{ $setor->desc }}</option>
@@ -52,18 +53,18 @@
                                         <div class="form-group">
                                             <label class="form-label">Data:<i
                                                     class="fa fa-asterisk text-danger"></i></label>
-                                            <input name="datepicker" class="datepicker-default form-control"
+                                            <input name="data" class="datepicker-default form-control"
                                                 id="datepicker1">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Problema:<i
                                                     class="fa fa-asterisk text-danger"></i></label>
-                                            <textarea class="form-control" rows="3"></textarea>
+                                            <textarea name="desc_problema" class="form-control" rows="3"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Solução:<i
                                                     class="fa fa-asterisk text-danger"></i></label>
-                                            <textarea class="form-control" rows="3"></textarea>
+                                            <textarea name="solucao" class="form-control" rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="d-grid gap-2 col-6 mx-auto mt-5">
