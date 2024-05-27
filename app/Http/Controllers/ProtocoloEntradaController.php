@@ -14,9 +14,10 @@ use Illuminate\Http\Request;
 class ProtocoloEntradaController extends Controller
 {
     public function index () {
-        $protocolos = ProtocoloEntrada::all();
+        $protocolos = ProtocoloEntrada::with('local')->get();
+        $locais = Local::whereHas('protocoloEntrada')->distinct()->get();
         $equipamentos = Equipamentos::all();
-        return view('protocolo-entrada.index', compact('protocolos'));
+        return view('protocolo-entrada.index', compact('protocolos', 'equipamentos', 'locais'));
     }
 
     public function create() {
@@ -96,5 +97,11 @@ class ProtocoloEntradaController extends Controller
             'prioridade' => $request->prioridade == 'on' ? 1 : 0,
         ]);
         return response()->json($equipamentos, 201);
+    }
+
+    public function destroy ($id, Request $request) {
+        $protocolos = ProtocoloEntrada::find($id);
+        $protocolos->delete();
+        return redirect()->back();
     }
 }

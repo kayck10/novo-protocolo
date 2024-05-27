@@ -12,7 +12,7 @@ class Local extends Model
     protected $fillable = ['desc'];
 
     public function ProtocoloEntrada () {
-        return $this->hasMany(ProtocoloEntrada::class); 
+        return $this->hasMany(ProtocoloEntrada::class, 'id_local');
     }
 
 }

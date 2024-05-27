@@ -13,6 +13,7 @@ class AtendimentoInternoController extends Controller
 {
     public function index()
     {
+        $atendimentos = Atendimentos::all();
         return view('atendimentos-internos.index');
     }
 

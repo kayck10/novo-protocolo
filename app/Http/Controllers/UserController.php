@@ -42,7 +42,6 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    //protocolos de entrada
 
 
 

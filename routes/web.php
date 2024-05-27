@@ -10,6 +10,7 @@ use App\Http\Controllers\LocalController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\UserController;
+use App\Models\ProtocoloEntrada;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,8 +42,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/index', [ProtocoloEntradaController::class, 'index'])->name('index.protocolo');
         Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('create.protocolo');
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
-        route::post('store/equipamento', [ProtocoloEntradaController::class, 'equipamentos'])->name('store.equipamento');
+        Route::post('store/equipamento', [ProtocoloEntradaController::class, 'equipamentos'])->name('store.equipamento');
         Route::put('/update/{id}', [ProtocoloEntradaController::class, 'update'])->name('protocolo.update');
+        Route::post('/destroy{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
     });
 
     Route::prefix('/atendimento-interno')->group(function () {
