@@ -6,7 +6,6 @@
         <div class="col-lg-9">
             <div class="card">
                 <div class="card-body">
-
                     <div id="calendar" class="app-fullcalendar"></div>
                 </div>
             </div>
@@ -27,8 +26,8 @@
                 </div>
             </div>
         </div>
-
     </div>
+
     <!-- Modal Add Category -->
     <div class="modal fade none-border" id="add-category">
         <div class="modal-dialog">
@@ -37,7 +36,6 @@
                     <h4 class="modal-title"><strong>Adicionar Categoria</strong></h4>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -53,7 +51,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-
                         <label class="form-label">Escola:</label>
                         <select id="id_local" class="form-control">
                             <option value="">Selecione uma Escola</option>
@@ -68,7 +65,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Data:</label>
-                        <input name="datepicker" id="data" class="datepicker-default form-control" id="datepicker1">
+                        <input name="datepicker" id="data_entrada" class="datepicker-default form-control" id="datepicker1">
                     </div>
                     <div class="form-group">
                         <label class="form-label">Problema:</label>
@@ -77,18 +74,17 @@
                     <p id="selected-date"></p>
                 </div class="modal-footer">
                 <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-success save-event waves-effect waves-light"
-                    onclick="changeEvent()">Criar Evento</button>
+                <button type="button" class="btn btn-success save-event waves-effect waves-light" onclick="changeEvent()">Criar Evento</button>
             </div>
         </div>
     </div>
-    </div>
+
     <script>
         function changeEvent() {
             let local = $('#id_local').val();
             let prioridade = $('#prioridade').is(':checked');
             let problema = $('#desc_problema').val();
-            let data = $('#data').val();
+            let data_entrada = $('#data_entrada').val();
             $.ajax({
                 type: "POST",
                 url: "{{ route('atendimento.store') }}",
@@ -99,7 +95,7 @@
                     'local': local,
                     'prioridade': prioridade,
                     'problema': problema,
-                    'data': data,
+                    'data_entrada': data_entrada,
                 },
                 success: function(response) {
                     iziToast.success({
@@ -107,18 +103,16 @@
                         message: 'Atendimento cadastrado com sucesso!',
                     });
                     $('#event-modal').modal('hide');
-
+                    calendar.refetchEvents(); // Atualizar o calendário para mostrar o novo evento
                     console.log(response.error)
                 }
             }).fail(function(jqXHR, textStatus, errorThrown) {
-                // Esta função é chamada quando a requisição AJAX falha
                 if (jqXHR.status == 500) {
                     iziToast.error({
                         title: 'Erro',
                         message: `Status: Voce nao permissao!`,
                     });
                 }
-
                 console.log("Erro na requisição AJAX:", textStatus, errorThrown);
             })
         }
@@ -129,26 +123,20 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'pt-br',
+                events: @json($eventos->map(function($evento) {
+                    return [
+                        'title' => $evento->desc_problema,
+                        'start' => $evento->data,
+                        // Adicione outros atributos conforme necessário
+                    ];
+                })),
                 dateClick: function(info) {
-                    // Atualize o texto na modal para mostrar a data clicada
-                    document.getElementById('selected-date');
-
-                    // Abra a modal quando uma data é clicada
+                    document.getElementById('selected-date').innerText = info.dateStr;
                     $('#event-modal').modal('show');
                 },
-                // events: [{
-                //         title: 'simple event',
-                //         start: '2024-04-02'
-                //     },
-                //     {
-                //         title: 'event with URL',
-                //         start: '2024-04-03'
-                //     }
-                // ]
             });
+
             calendar.render();
-
-
         });
     </script>
 @endsection
