@@ -15,4 +15,9 @@ class Local extends Model
         return $this->hasMany(ProtocoloEntrada::class, 'id_local');
     }
 
+    public function atendimentos()
+    {
+        return $this->hasMany(Atendimentos::class, 'id_user');
+    }
+
 }

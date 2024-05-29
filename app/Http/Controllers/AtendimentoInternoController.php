@@ -13,8 +13,13 @@ class AtendimentoInternoController extends Controller
 {
     public function index()
     {
-        $atendimentos = Atendimentos::all();
-        return view('atendimentos-internos.index');
+        $atendimentos = Atendimentos::with(['tecnico', 'setor'])->get();
+
+        // Buscar técnicos e setores
+        $tecnicos = User::where('id_funcoes', 2)->get();
+        $setores = Local::where('externo', 0)->get();
+
+        return view('atendimentos-internos.index', compact('atendimentos', 'tecnicos', 'setores'));
     }
 
     public function create()

@@ -35,26 +35,24 @@
                                             <th>Técnico</th>
                                             <th>Data</th>
                                             <th>Opções</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
-
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-sm btn-primary mx-1"
-                                                        data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                        <i class="bi bi-eye"></i>
-                                                    </button>
-                                                    <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i
-                                                            class="la la-trash-o"></i></a>
-                                                </td>
-                                            </tr>
-
+                                        @foreach ($atendimentos as $atendimento)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{$atendimento->setor->desc}}</td>
+                                            <td>{{ $atendimento->tecnico ? $atendimento->tecnico->name : 'N/A' }}</td>
+                                            <td>{{ $atendimento->data }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-primary mx-1"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModal{{ $atendimento->id }}">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                                 <!-- Modal -->
