@@ -24,6 +24,8 @@ return new class extends Migration
             $table->boolean('prioridade');
             $table->text('acessorios')->nullable();
             $table->boolean('inservivel')->nullable();
+            $table->unsignedBigInteger('id_status')->nullable();
+            $table->foreign('id_status')->references('id')->on('status_atendimentos');
             $table->timestamps();
         });
     }
