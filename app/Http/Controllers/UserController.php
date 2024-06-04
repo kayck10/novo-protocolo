@@ -6,6 +6,7 @@ use App\Models\Funcoes;
 use App\Models\TiposUsuarios;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
+use Database\Seeders\Funcao;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -42,7 +43,28 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+    public function show(Request $request, $id)
+    {
+        $user = User::with(['tipoUsuario', 'funcao'])->findOrFail($id);
 
+        return view('user.show', compact('user'));
+    }
 
+    public function update(Request $request, $id)
+    {
+
+            $user = User::findOrFail($id);
+
+        $user->name = $request->input('name');
+        $user->usuario = $request->input('usuario');
+        $user->email = $request->input('email');
+        $user->tipoUsuario->desc = $request->input('tipo_usuario');
+        $user->funcao->desc = $request->input('funcao');
+        $user->situacao = $request->input('situacao');
+
+        $user->save();
+        Toastr::success('Usuário atualizado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
+        return redirect()->route('user.index');
+    }
 
 }
