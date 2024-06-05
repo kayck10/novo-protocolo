@@ -77,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store', [UserController::class, 'store'])->name('user.store');
         Route::get('/index', [UserController::class, 'index'])->name('user.index');
         Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
-        Route::post('/update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
     });
     Route::prefix('/local')->group(function () {
         Route::get('/create', [LocalController::class, 'create'])->name('local.create');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Funcoes;
+use App\Models\Situacao;
 use App\Models\TiposUsuarios;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
@@ -38,6 +39,7 @@ class UserController extends Controller
             'password' => $senha,
             'id_funcoes' => $request->id_funcoes,
             'id_tipos_usuarios' => $request->id_tipos_usuarios,
+            'id_situacao' => 1,
         ]);
         Toastr::success('Usuário Cadastrado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->back();
@@ -45,9 +47,12 @@ class UserController extends Controller
 
     public function show(Request $request, $id)
     {
-        $user = User::with(['tipoUsuario', 'funcao'])->findOrFail($id);
+        $funcoes = Funcoes::all();
+        $user = User::with(['tipoUsuario', 'funcao', 'situacao'])->findOrFail($id);
+        $tipos = TiposUsuarios::all();
+        $situacoes = Situacao::all();
 
-        return view('user.show', compact('user'));
+        return view('user.show', compact('user', 'funcoes', 'tipos', 'situacoes'));
     }
 
     public function update(Request $request, $id)
@@ -64,7 +69,7 @@ class UserController extends Controller
 
         $user->save();
         Toastr::success('Usuário atualizado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
-        return redirect()->route('user.index');
+        return redirect()->back();
     }
 
 }

@@ -25,6 +25,7 @@ class User extends Authenticatable
         'id_tipos_usuarios',
         'id_funcoes',
         'password',
+        'id_situacao',
     ];
 
     /**
@@ -59,6 +60,10 @@ class User extends Authenticatable
     public function funcao()
     {
         return $this->belongsTo(Funcoes::class, 'id_funcoes');
+    }
+
+    public function situacao () {
+        return $this->belongsTo(Situacao::class, 'id_situacao');
     }
 
 }

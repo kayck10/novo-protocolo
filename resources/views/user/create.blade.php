@@ -66,9 +66,9 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="form-label">Setor:<i></i></label>
+                                            <label class="form-label">Tipo de Usuário:<i></i></label>
                                             <select name="id_tipos_usuarios" class="form-control">
-                                                <option value="Gender">Selecione um tipo de perfil</option>
+                                                <option value="Gender">Selecione um tipo de usuário</option>
                                                 @foreach ($tipos as $tipo)
                                                     <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
                                                 @endforeach

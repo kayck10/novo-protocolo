@@ -54,30 +54,42 @@
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <div data-mdb-input-init class="form-outline">
-                                                    <label class="form-label" for="tipo_usuario">Tipo de Usuário:</label>
-                                                    <input type="text" name="tipo_usuario" id="tipo_usuario" class="form-control" value="{{ $user->tipoUsuario->desc }}" readonly />
-                                                </div>
+                                                <label class="form-label">Tipo de Usuário:<i></i></label>
+                                                <select name="id_tipos_usuarios" class="form-control">
+                                                    <option value="Gender">{{$user->tipoUsuario->desc}}</option>
+                                                    @foreach ($tipos as $tipo)
+                                                        <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
                                             </div>
                                         </div>
 
                                         <div class="row mb-4">
                                             <div class="col">
-                                                <div data-mdb-input-init class="form-outline">
-                                                    <label class="form-label" for="funcao">Função:</label>
-                                                    <input type="text" name="funcao" id="funcao" class="form-control" value="{{ $user->funcao->desc }}" readonly />
-                                                </div>
+                                                <label class="form-label">Função:</label>
+                                                <select name="id_funcoes" class="form-control">
+                                                    <option value="Gender">{{ $user->funcao->desc }}</option readonly>
+                                                    @foreach ($funcoes as $funcao)
+                                                        <option value="{{ $funcao->id }}">{{ $funcao->desc }}</option >
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="col">
-                                                <div data-mdb-input-init class="form-outline">
-                                                    <label class="form-label" for="situacao">Situação:</label>
-                                                    <input type="text" name="situacao" id="situacao" class="form-control" value="{{ $user->situacao }}" readonly />
-                                                </div>
+                                                <label class="form-label">Situação:</label>
+                                                <select name="id_funcoes" class="form-control">
+                                                    <option value="Gender">{{ $user->situacao->desc }}</option readonly>
+                                                    @foreach ($situacoes as $situacao)
+                                                        <option value="{{ $situacao->id }}">{{ $situacao->desc }}</option >
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
 
                                         <button type="button" class="btn btn-primary mt-3" id="edit-button">Editar <i class="bi bi-pencil-square"></i></button>
-                                        <button type="submit" class="btn btn-warning mt-3">Resetar Senha <i class="bi bi-arrow-clockwise"></i></button>
+                                        <button type="submit" class="btn btn-warning mt-3" id="reset-button">Resetar Senha <i class="bi bi-arrow-clockwise"></i></button>
+                                        <button type="submit" class="btn btn-success mt-3" id="update-button" style="display: none;">Atualizar <i class="bi bi-check-square"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -94,6 +106,9 @@
             inputs.forEach(function(input) {
                 input.removeAttribute('readonly');
             });
+            document.getElementById('reset-button').style.display = 'none';
+            document.getElementById('update-button').style.display = 'inline-block';
+            this.style.display = 'none';
         });
     </script>
 @endsection
