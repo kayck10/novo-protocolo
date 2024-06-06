@@ -54,34 +54,32 @@
                                                 </div>
                                             </div>
                                             <div class="col">
-                                                <label class="form-label">Tipo de Usuário:<i></i></label>
-                                                <select name="id_tipos_usuarios" class="form-control">
-                                                    <option value="Gender">{{$user->tipoUsuario->desc}}</option>
+                                                <label class="form-label">Tipo de Usuário:</label>
+                                                <select name="id_tipos_usuarios" class="form-control selects" disabled="true">
+                                                    <option value="{{ $user->id_tipos_usuarios }}">{{ $user->tipoUsuario->desc }}</option>
                                                     @foreach ($tipos as $tipo)
                                                         <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
                                                     @endforeach
                                                 </select>
-                                            </div>
-
                                             </div>
                                         </div>
 
                                         <div class="row mb-4">
                                             <div class="col">
                                                 <label class="form-label">Função:</label>
-                                                <select name="id_funcoes" class="form-control">
-                                                    <option value="Gender">{{ $user->funcao->desc }}</option readonly>
+                                                <select name="id_funcoes" class="form-control selects"  disabled="true">
+                                                    <option value="{{ $user->id_funcoes }}">{{ $user->funcao->desc }}</option>
                                                     @foreach ($funcoes as $funcao)
-                                                        <option value="{{ $funcao->id }}">{{ $funcao->desc }}</option >
+                                                        <option value="{{ $funcao->id }}">{{ $funcao->desc }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col">
                                                 <label class="form-label">Situação:</label>
-                                                <select name="id_funcoes" class="form-control">
-                                                    <option value="Gender">{{ $user->situacao->desc }}</option readonly>
+                                                <select name="id_situacao" class="form-control selects" disabled="true">
+                                                    <option value="{{ $user->id_situacao }}">{{ $user->situacao->desc }}</option>
                                                     @foreach ($situacoes as $situacao)
-                                                        <option value="{{ $situacao->id }}">{{ $situacao->desc }}</option >
+                                                        <option value="{{ $situacao->id }}">{{ $situacao->desc }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -100,15 +98,29 @@
         </div>
     </div>
 
+    @section('scripts')
+
     <script>
-        document.getElementById('edit-button').addEventListener('click', function() {
-            var inputs = document.querySelectorAll('#user-form input');
-            inputs.forEach(function(input) {
-                input.removeAttribute('readonly');
+        $('#edit-button').on('click', function() {
+            var inputs = $('#user-form input');
+            var selects = $('.selects');
+
+            inputs.each(function() {
+                $(this).removeAttr('readonly');
             });
-            document.getElementById('reset-button').style.display = 'none';
-            document.getElementById('update-button').style.display = 'inline-block';
-            this.style.display = 'none';
+
+            $.each($(".selects"), function (indexInArray, valueOfElement) {
+                $(valueOfElement).attr('disabled', false);
+            });
+
+
+            $('#reset-button').hide();
+            $('#update-button').show();
+            $('#edit-button').hide();
         });
+
+
+
     </script>
+    @endsection
 @endsection

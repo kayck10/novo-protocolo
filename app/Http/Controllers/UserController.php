@@ -7,7 +7,6 @@ use App\Models\Situacao;
 use App\Models\TiposUsuarios;
 use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
-use Database\Seeders\Funcao;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -47,6 +46,7 @@ class UserController extends Controller
 
     public function show(Request $request, $id)
     {
+
         $funcoes = Funcoes::all();
         $user = User::with(['tipoUsuario', 'funcao', 'situacao'])->findOrFail($id);
         $tipos = TiposUsuarios::all();
@@ -58,8 +58,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-            $user = User::findOrFail($id);
-
+        $user = User::findOrFail($id);
         $user->name = $request->input('name');
         $user->usuario = $request->input('usuario');
         $user->email = $request->input('email');
