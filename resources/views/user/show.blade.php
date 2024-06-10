@@ -79,7 +79,13 @@
                                                 <select name="id_situacao" class="form-control selects" disabled="true">
                                                     <option value="{{ $user->id_situacao }}">{{ $user->situacao->desc }}</option>
                                                     @foreach ($situacoes as $situacao)
-                                                        <option value="{{ $situacao->id }}">{{ $situacao->desc }}</option>
+                                                    @if ($situacao->id == $user->id_situacao) {
+                                                        <option selected value="{{ $situacao->id }}">{{ $situacao->desc }}</option>
+                                                    }  @else {
+                                                        <option selected value="{{ $situacao->id }}">{{ $situacao->desc }}</option>
+                                                    }
+
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -87,7 +93,7 @@
 
                                         <button type="button" class="btn btn-primary mt-3" id="edit-button">Editar <i class="bi bi-pencil-square"></i></button>
                                         <button type="submit" class="btn btn-warning mt-3" id="reset-button">Resetar Senha <i class="bi bi-arrow-clockwise"></i></button>
-                                        <button type="submit" class="btn btn-success mt-3" id="update-button" style="display: none;">Atualizar <i class="bi bi-check-square"></i></button>
+                                        <button type="submit" class="btn btn-success mt-3" id="update-button" style="display: none;">Atualizar <i class="bi bi-check2-all"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -109,17 +115,40 @@
                 $(this).removeAttr('readonly');
             });
 
-            $.each($(".selects"), function (indexInArray, valueOfElement) {
-                $(valueOfElement).attr('disabled', false);
+            selects.each(function() {
+                $(this).removeAttr('disabled');
             });
-
 
             $('#reset-button').hide();
             $('#update-button').show();
             $('#edit-button').hide();
         });
 
+        function updateSelectOptions() {
+            var selectedValues = [];
+            $('.selects').each(function() {
+                selectedValues.push($(this).val());
+            });
 
+            $('.selects').each(function() {
+                var currentSelect = $(this);
+                currentSelect.find('option').each(function() {
+                    var option = $(this);
+                    if (selectedValues.includes(option.val()) && option.val() != currentSelect.val()) {
+                        option.hide();
+                    } else {
+                        option.show();
+                    }
+                });
+            });
+        }
+
+        $('.selects').on('change', updateSelectOptions);
+
+        // Trigger change event to initialize the options hiding correctly on page load
+        $(document).ready(function() {
+            updateSelectOptions();
+        });
 
     </script>
     @endsection

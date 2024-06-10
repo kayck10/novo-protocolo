@@ -51,20 +51,20 @@ class UserController extends Controller
         $user = User::with(['tipoUsuario', 'funcao', 'situacao'])->findOrFail($id);
         $tipos = TiposUsuarios::all();
         $situacoes = Situacao::all();
-
         return view('user.show', compact('user', 'funcoes', 'tipos', 'situacoes'));
     }
 
     public function update(Request $request, $id)
     {
 
+        // dd($request->all());
         $user = User::findOrFail($id);
         $user->name = $request->input('name');
         $user->usuario = $request->input('usuario');
         $user->email = $request->input('email');
-        $user->tipoUsuario->desc = $request->input('tipo_usuario');
-        $user->funcao->desc = $request->input('funcao');
-        $user->situacao = $request->input('situacao');
+        $user->id_tipos_usuarios = $request->input('id_tipos_usuarios');
+        $user->id_funcoes = $request->input('id_funcoes');
+        $user->id_situacao = $request->input('id_situacao');
 
         $user->save();
         Toastr::success('Usuário atualizado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
