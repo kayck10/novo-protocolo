@@ -1,127 +1,147 @@
 @extends('layout.main')
-@section('content')
+
 @section('title')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Estante</li>
-        </ol>
-        <h6 class="font-weight-bolder text-white mb-0">Estante</h6>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <li class="breadcrumb-item text-sm text-white active" aria-current="page">Estante</li>
+    </ol>
+    <h6 class="font-weight-bolder text-white mb-0">Estante</h6>
 @endsection
+
+@section('content')
     <style>
         .back-btn {
             background-color: #024f9b;
         }
     </style>
-    <input type="hidden" id="_token" value="{{ csrf_token() }}">
-    <div class="row mb-5">
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Em aberto - {{ date('Y') }}</p>
-                    <h5 class="font-weight-bolder">
 
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder"></span>
-                    </p>
-                  </div>
+    <div class="container-fluid">
+        <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Estante de Equipamentos</h4>
                 </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4  mx-auto">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Em andamento - {{ date('Y') }}</p>
-                    <h5 class="font-weight-bolder">
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-success text-sm font-weight-bolder"></span>
-
-                    </p>
-                  </div>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
+            <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('user.index') }}">Usuário</a></li>
+                    <li class="breadcrumb-item active"><a href="">Cadastrar Usuário</a></li>
+                </ol>
             </div>
-          </div>
         </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4  mx-auto">
-          <div class="card">
-            <div class="card-body p-3">
-              <div class="row">
-                <div class="col-8">
-                  <div class="numbers">
-                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Saída - {{ date('Y') }}</p>
-                    <h5 class="font-weight-bolder">
-                    </h5>
-                    <p class="mb-0">
-                      <span class="text-danger text-sm font-weight-bolder"></span>
-                    </p>
-                  </div>
-                </div>
-                <div class="col-4 text-end">
-                  <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <input type="hidden" id="_token" value="{{ csrf_token() }}">
 
-      </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header pb-0">
-                    <h6>Estante de Equipamentos</h6>
-                    <ul style="text-align: center" class="list-group list-group-horizontal active">
-                        <button onclick="exibirPorStatus(1)" data-status="1" id="aberto" style="width: 500px"
-                            class="list-group-item aberto btn-menu">Em aberto</button>
-                        <button onclick="exibirPorStatus(2)" data-status="2" id="andamento" style="width: 500px"
-                            class="list-group-item andamento btn-menu">Em andamento</button>
-                        <button onclick="exibirPorStatus(3)" data-status="3" id="saida" style="width: 500px"
-                            class="list-group-item saida btn-menu">Saída</button>
-                    </ul>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3 offset-md-1 mt-3">
-                        {{-- PESQUISA --}}
-                        <input id="pesquisa" type="text" class="form-control" placeholder="Pesquisa">
-
+        <div class="row mb-5">
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Em aberto - {{ date('Y') }}</p>
+                                    <h5 class="font-weight-bolder">{{ $aberto }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
+                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-3 mt-3">
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#modalFiltros"
-                            class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Em andamento - {{ date('Y') }}</p>
+                                    <h5 class="font-weight-bolder">{{ $andamento }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Saída - {{ date('Y') }}</p>
+                                    <h5 class="font-weight-bolder">{{ $saida }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-4 text-end">
+                                <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
+                                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h6>Estante de Equipamentos</h6>
+                        <ul class="list-group list-group-horizontal active text-center">
+                            <button onclick="exibirPorStatus(1)" data-status="1" id="aberto" class="list-group-item aberto btn-menu" style="width: 500px">Em aberto</button>
+                            <button onclick="exibirPorStatus(2)" data-status="2" id="andamento" class="list-group-item andamento btn-menu" style="width: 500px">Em andamento</button>
+                            <button onclick="exibirPorStatus(3)" data-status="3" id="saida" class="list-group-item saida btn-menu" style="width: 500px">Saída</button>
+                        </ul>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3 offset-md-1 mt-3">
+                            {{-- PESQUISA --}}
+                            <input id="pesquisa" type="text" class="form-control" placeholder="Pesquisa">
+                        </div>
+                        <div class="col-sm-3 mt-3">
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#modalFiltros" class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
+                        </div>
+                    </div>
                 </div>
 
+                <div class="card-body px-0 pt-0 pb-2">
+                    <div class="table-responsive p-0">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nome</th>
+                                    <th>Descrição</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($equipamentos as $equipamento)
+                                    <tr>
+                                        <td>{{ $equipamento->id }}</td>
+                                        <td>{{ $equipamento->nome }}</td>
+                                        <td>{{ $equipamento->descricao }}</td>
+                                        <td>{{ $equipamento->status->nome }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-    <!-- Button trigger modal -->
+    <!-- Modal de Filtros -->
     <div class="modal fade" id="modalFiltros" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -131,10 +151,9 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-sm-6 mt-3">
-
                         {{-- ANO --}}
                         <div class="form-group">
-                            <select class="form-control ano" id="exampleFormControlSelect1 ">
+                            <select class="form-control ano">
                                 <option>Selecione o ano</option>
                                 <option value="2021">2021</option>
                                 <option value="2022">2022</option>
@@ -146,7 +165,7 @@
                     <div class="col-sm-6 mt-4">
                         {{-- STATUS --}}
                         <div class="form-group">
-                            <select class="form-control status" id="exampleFormControlSelect1">
+                            <select class="form-control status">
                                 <option>Selecione o status</option>
                                 <option value="1">Em aberto</option>
                                 <option value="2">Em andamento</option>
@@ -154,7 +173,6 @@
                                 <option value="0">Todos</option>
                             </select>
                         </div>
-
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -165,65 +183,10 @@
         </div>
     </div>
 
-
-
-    <!-- Modal -->
+    <!-- Modal de Equipamentos -->
     <div class="modal fade" id="modalEquipamentos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                  <input type="hidden" id="pdf-id">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Dados do Equipamento</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="id-equipamento">
-                    <span id="statusModal" class="badge badge-sm bg-gradient-success"></span><br><br>
-                    <span>
-                        <strong>Origem: </strong> <span id="origemModal"></span>
-                    </span>
-                    <span><br><br>
-                        <strong>Data de entrada: </strong> <span id="dataModal"></span>
-                    </span><br><br>
-                    <span>
-                        <strong>Tombamento: </strong> <span id="tombamentoModal"></span>
-                    </span><br><br>
-                    <span>
-                        <strong>Problema: </strong> <span id="problemaModal"></span>
-                    </span><br><br>
-                    <span>
-                        <div id="selecionarFuncionario" class="form-group">
-                            <label for="exampleFormControlSelect1"><strong>Atribuir a um funcionário:</strong></label>
-                            <select id="funcionario" class="form-control" id="exampleFormControlSelect1">
-                                <option disabled selected>Selecione um funcionario</option>
-
-                            </select>
-                        </div>
-                    </span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="btn-pdf" type="button" class="btn btn-secondary" data-bs-dismiss="modal">PDF</button>
-                    <button data-status="2" id="btn-andamento" type="button" class="btn btn-primary">Andamento <i
-                            class="bi bi-arrow-right"></i></button>
-                    <button onclick="equipamentoParaEntrada()" data-status="1" id="btn-entrada" type="button"
-                        class="btn btn-secondary">Entrada <i class="bi bi-arrow-left"></i></button>
-                    <button data-status="3" id="btn-saida" type="button" class="btn btn-success">Saída <i
-                            class="bi bi-arrow-right"></i></button>
-                    <button data-status="5" id="btn-inservivel" type="button" class="btn btn-secondary">Inservivel
-                        <i class="bi bi-arrow-down"></i></button>
-                    <button data-status="4" id="btn-retirar" type="button" class="btn btn-success">Retirar <i
-                            class="bi bi-arrow-up"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed-plugin">
-
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script src="{{ asset('/assets/js/estante/index.js') }}"></script>
-@endsection
+                    <input type="hidden" id="pdf-id">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Dados do Equipamento</h1

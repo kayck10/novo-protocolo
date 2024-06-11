@@ -14,13 +14,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-
             $table->unsignedBigInteger('id_tipos_usuarios');
             $table->foreign('id_tipos_usuarios')->references('id')->on('tipos_usuarios');
-
             $table->unsignedBigInteger('id_funcoes');
             $table->foreign('id_funcoes')->references('id')->on('funcoes');
-
             $table->unsignedBigInteger('id_situacao');
             $table->foreign('id_situacao')->references('id')->on('situacaos');
             $table->string('email')->unique();

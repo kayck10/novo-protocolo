@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             StatusAtendimentos::class,
             Equipamentos::class,
             SetorEscolas::class,
-            Situacao::class
+            Situacao::class,
+            statusManutencoes::class
         ]);
     }
 }
