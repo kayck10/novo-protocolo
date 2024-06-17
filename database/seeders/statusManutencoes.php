@@ -16,5 +16,7 @@ class statusManutencoes extends Seeder
         StatusManutecoes::create(['desc' => 'Em Aberto']);
         StatusManutecoes::create(['desc' => 'Em Andamento']);
         StatusManutecoes::create(['desc' => 'Finalizado']);
+        StatusManutecoes::create(['desc' => 'Prioridade']);
+
     }
 }

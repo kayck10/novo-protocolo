@@ -95,6 +95,7 @@ class ProtocoloEntradaController extends Controller
             'id_tipos_equipamentos' => $request->input('equipamentos'),
             'desc' => $request->problema,
             'prioridade' => $request->prioridade == 'on' ? 1 : 0,
+            'id_status' => 1
         ]);
         return response()->json($equipamentos, 201);
     }

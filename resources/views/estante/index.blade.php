@@ -1,13 +1,12 @@
 @extends('layout.main')
 
-@section('title')
+@section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <li class="breadcrumb-item text-sm text-white active" aria-current="page">Estante</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Estante</h6>
-@endsection
 
-@section('content')
+
     <style>
         .back-btn {
             background-color: #024f9b;
@@ -24,7 +23,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('user.index') }}">Usuário</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('user.index') }}">Estante de Equipamentos</a></li>
                     <li class="breadcrumb-item active"><a href="">Cadastrar Usuário</a></li>
                 </ol>
             </div>
@@ -33,75 +32,35 @@
 
         <div class="row mb-5">
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Em aberto - {{ date('Y') }}</p>
-                                    <h5 class="font-weight-bolder">{{ $aberto }}</h5>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                    <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Em andamento - {{ date('Y') }}</p>
-                                    <h5 class="font-weight-bolder">{{ $andamento }}</h5>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                                    <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
-                <div class="card">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold">Saída - {{ date('Y') }}</p>
-                                    <h5 class="font-weight-bolder">{{ $saida }}</h5>
-                                </div>
-                            </div>
-                            <div class="col-4 text-end">
-                                <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                    <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header pb-0">
-                        <h6>Estante de Equipamentos</h6>
-                        <ul class="list-group list-group-horizontal active text-center">
-                            <button onclick="exibirPorStatus(1)" data-status="1" id="aberto" class="list-group-item aberto btn-menu" style="width: 500px">Em aberto</button>
-                            <button onclick="exibirPorStatus(2)" data-status="2" id="andamento" class="list-group-item andamento btn-menu" style="width: 500px">Em andamento</button>
-                            <button onclick="exibirPorStatus(3)" data-status="3" id="saida" class="list-group-item saida btn-menu" style="width: 500px">Saída</button>
-                        </ul>
-                    </div>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                        </li>
+                      </ul>
+                      <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                      </div>
                     <div class="row">
                         <div class="col-sm-3 offset-md-1 mt-3">
                             {{-- PESQUISA --}}
@@ -117,12 +76,7 @@
                     <div class="table-responsive p-0">
                         <table class="table align-items-center mb-0">
                             <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>Descrição</th>
-                                    <th>Status</th>
-                                </tr>
+
                             </thead>
                             <tbody>
                                 @foreach($equipamentos as $equipamento)
@@ -183,10 +137,7 @@
         </div>
     </div>
 
-    <!-- Modal de Equipamentos -->
-    <div class="modal fade" id="modalEquipamentos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <input type="hidden" id="pdf-id">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Dados do Equipamento</h1
+
+
+
+@endsection
