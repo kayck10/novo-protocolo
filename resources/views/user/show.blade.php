@@ -67,8 +67,8 @@
                                         <div class="row mb-4">
                                             <div class="col">
                                                 <label class="form-label">Função:</label>
-                                                <select name="id_funcoes" class="form-control selects"  disabled="true">
-                                                    <option value="{{ $user->id_funcoes }}">{{ $user->funcao->desc }}</option>
+                                                <select name="id_funcoes" class="form-control">
+                                                    <option value="{{$user->id_funcoes}}">{{$user->funcao->desc}}</option>
                                                     @foreach ($funcoes as $funcao)
                                                         <option value="{{ $funcao->id }}">{{ $funcao->desc }}</option>
                                                     @endforeach
@@ -79,13 +79,7 @@
                                                 <select name="id_situacao" class="form-control selects" disabled="true">
                                                     <option value="{{ $user->id_situacao }}">{{ $user->situacao->desc }}</option>
                                                     @foreach ($situacoes as $situacao)
-                                                    @if ($situacao->id == $user->id_situacao) {
-                                                        <option selected value="{{ $situacao->id }}">{{ $situacao->desc }}</option>
-                                                    }  @else {
-                                                        <option selected value="{{ $situacao->id }}">{{ $situacao->desc }}</option>
-                                                    }
-
-                                                    @endif
+                                                        <option value="{{ $situacao->id }}">{{ $situacao->desc }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

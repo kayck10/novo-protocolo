@@ -1,11 +1,16 @@
 @extends('layout.main')
 
+<style>
+    .itens {
+        width: 100%;
+    }
+</style>
+
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <li class="breadcrumb-item text-sm text-white active" aria-current="page">Estante</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Estante</h6>
-
 
     <style>
         .back-btn {
@@ -32,38 +37,29 @@
 
         <div class="row mb-5">
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
-
             </div>
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
-
             </div>
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4 mx-auto">
-
             </div>
         </div>
 
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <ul class="nav nav-tabs itens" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                            <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Em Aberto</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Em Andamento</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Saída</button>
                         </li>
-                      </ul>
-                      <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-                      </div>
+                    </ul>
                     <div class="row">
                         <div class="col-sm-3 offset-md-1 mt-3">
-                            {{-- PESQUISA --}}
                             <input id="pesquisa" type="text" class="form-control" placeholder="Pesquisa">
                         </div>
                         <div class="col-sm-3 mt-3">
@@ -72,23 +68,15 @@
                     </div>
                 </div>
 
+                <div class="tab-content card" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Em Aberto</div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Em Andamento</div>
+                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Saída</div>
+                </div>
+
                 <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
-                        <table class="table align-items-center mb-0">
-                            <thead>
 
-                            </thead>
-                            <tbody>
-                                @foreach($equipamentos as $equipamento)
-                                    <tr>
-                                        <td>{{ $equipamento->id }}</td>
-                                        <td>{{ $equipamento->nome }}</td>
-                                        <td>{{ $equipamento->descricao }}</td>
-                                        <td>{{ $equipamento->status->nome }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -105,7 +93,6 @@
                 </div>
                 <div class="modal-body">
                     <div class="col-sm-6 mt-3">
-                        {{-- ANO --}}
                         <div class="form-group">
                             <select class="form-control ano">
                                 <option>Selecione o ano</option>
@@ -117,7 +104,6 @@
                         </div>
                     </div>
                     <div class="col-sm-6 mt-4">
-                        {{-- STATUS --}}
                         <div class="form-group">
                             <select class="form-control status">
                                 <option>Selecione o status</option>
@@ -136,8 +122,8 @@
             </div>
         </div>
     </div>
+@endsection
 
-
-
-
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 @endsection

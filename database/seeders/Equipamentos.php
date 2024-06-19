@@ -10,7 +10,7 @@ class Equipamentos extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
+    {   
         TiposEquipamentos::create(['desc' => 'Computador']);
         TiposEquipamentos::create(['desc' => 'Notebook']);
         TiposEquipamentos::create(['desc' => 'Impressora']);
