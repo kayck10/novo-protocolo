@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class EstanteController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         // Contagem de equipamentos por status (você pode ajustar conforme suas necessidades)
         $ativos = Equipamentos::where('id_status', 1)->count();
@@ -20,6 +20,13 @@ class EstanteController extends Controller
         $usuarios = User::where('id_situacao', 1)->orderBy('name', 'asc')->get();
 
         return view('estante.index', compact('equipamentos', 'usuarios', 'ativos', 'emManutencao', 'inativos'));
+    }
+
+    public function getStatus(Request $request)
+    {
+         $equipamentos = Equipamentos::where('id_status', $request->status)->get();
+         return view('estante.equipamentos-status', compact('equipamentos'));
+
     }
 }
 

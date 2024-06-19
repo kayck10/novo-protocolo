@@ -47,13 +47,13 @@
                 <div class="card mb-4">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Home</button>
+                          <button class="nav-link tab-estante"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" data-status="1" aria-selected="true">Em aberto</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                          <button class="nav-link tab-estante" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" data-status="2" aria-controls="profile" aria-selected="false">Em andamento</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+                          <button class="nav-link tab-estante" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" data-status="3" aria-controls="contact" aria-selected="false">Finalizado</button>
                         </li>
                       </ul>
                       <div class="tab-content" id="myTabContent">
@@ -78,15 +78,8 @@
                             <thead>
 
                             </thead>
-                            <tbody>
-                                @foreach($equipamentos as $equipamento)
-                                    <tr>
-                                        <td>{{ $equipamento->id }}</td>
-                                        <td>{{ $equipamento->nome }}</td>
-                                        <td>{{ $equipamento->descricao }}</td>
-                                        <td>{{ $equipamento->status->nome }}</td>
-                                    </tr>
-                                @endforeach
+                            <tbody id="tbody_equipamentos">
+
                             </tbody>
                         </table>
                     </div>
@@ -140,4 +133,23 @@
 
 
 
+@endsection
+
+@section('scripts')
+      <script>
+        $('.tab-estante').click(function(){
+            let status = $(this).data('status')
+            let _token = $('#_token').val();
+            $.ajax({
+                type: "post",
+                url: "{{route('estante.status')}}",
+                data: {status, _token},
+                success: function (response) {
+                    $('#tbody_equipamentos').empty()
+                    $('#tbody_equipamentos').html(response);
+                }
+            });
+        })
+
+      </script>
 @endsection
