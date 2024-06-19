@@ -18,6 +18,7 @@ class Equipamentos extends Model
         'inservivel',
         'data_entrada',
         'id_setor_escolas',
-        'prioridade'
+        'prioridade',
+        'id_status'
     ];
 }

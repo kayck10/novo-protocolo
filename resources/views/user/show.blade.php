@@ -56,9 +56,14 @@
                                             <div class="col">
                                                 <label class="form-label">Tipo de Usuário:</label>
                                                 <select name="id_tipos_usuarios" class="form-control selects" disabled="true">
-                                                    <option value="{{ $user->id_tipos_usuarios }}">{{ $user->tipoUsuario->desc }}</option>
-                                                    @foreach ($tipos as $tipo)
-                                                        <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
+                                                    @foreach ($tipos as $tipo )
+                                                    @if ($tipo->id == $user->id_tipos_usuarios)
+                                                    <option selected value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
+
+                                                    @else
+                                                    <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
+
+                                                    @endif
                                                     @endforeach
                                                 </select>
                                             </div>
