@@ -67,89 +67,57 @@
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modalFiltros" class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
                         </div>
                     </div>
-                </div>
-
-                <div class="tab-content card" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Em Aberto</div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Em Andamento</div>
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Saída</div>
-                </div>
-
-                <div class="card-body px-0 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-
-
-                            </thead>
-                            <tbody id="tbody_equipamentos">
-
-                            </tbody>
-                        </table>
+                    <div class="tab-content mb-5 mt-3 ms-3" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="row">
+                                <h1>teste</h1>
+                                <div class="col-12" id="tbody_equipamentos">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h1>Em andamento</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h1>Saída</h1>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
 
-    <!-- Modal de Filtros -->
-    <div class="modal fade" id="modalFiltros" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Filtros</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-sm-6 mt-3">
-                        <div class="form-group">
-                            <select class="form-control ano">
-                                <option>Selecione o ano</option>
-                                <option value="2021">2021</option>
-                                <option value="2022">2022</option>
-                                <option value="2023">2023</option>
-                                <option value="0">Todos</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mt-4">
-                        <div class="form-group">
-                            <select class="form-control status">
-                                <option>Selecione o status</option>
-                                <option value="1">Em aberto</option>
-                                <option value="2">Em andamento</option>
-                                <option value="3">Saída</option>
-                                <option value="0">Todos</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button id="filtro" type="button" class="btn btn-primary">Filtrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+
 @endsection
 
 @section('scripts')
+<script>
+    $('.tab-estante').click(function(){
+        let status = $(this).data('status')
+        let _token = $('#_token').val();
+        $.ajax({
+            type: "get",
+            url: "{{route('estante.status')}}",
+            data: {status, _token},
+            success: function (response) {
+                $('#tbody_equipamentos').empty()
+                $('#tbody_equipamentos').html(response);
+                console.log(response)
+            }
+        });
+    })
+  </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 @endsection
 
-@section('scripts')
-      <script>
-        $('.tab-estante').click(function(){
-            let status = $(this).data('status')
-            let _token = $('#_token').val();
-            $.ajax({
-                type: "post",
-                url: "{{route('estante.status')}}",
-                data: {status, _token},
-                success: function (response) {
-                    $('#tbody_equipamentos').empty()
-                    $('#tbody_equipamentos').html(response);
-                }
-            });
-        })
 
-      </script>
-@endsection
