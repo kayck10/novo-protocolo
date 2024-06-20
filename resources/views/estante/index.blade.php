@@ -70,7 +70,6 @@
                     <div class="tab-content mb-5 mt-3 ms-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="row">
-                                <h1>teste</h1>
                                 <div class="col-12" id="tbody_equipamentos">
                                 </div>
                             </div>

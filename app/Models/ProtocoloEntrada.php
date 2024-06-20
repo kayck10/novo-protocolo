@@ -16,4 +16,6 @@ class ProtocoloEntrada extends Model
     {
         return $this->belongsTo(Local::class, 'id_local');
     }
+
+    
 }
