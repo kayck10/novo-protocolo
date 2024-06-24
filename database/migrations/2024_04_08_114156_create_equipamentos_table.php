@@ -19,6 +19,9 @@ return new class extends Migration
             $table->foreign('id_protocolo')->references('id')->on('protocolo_entrada');
             $table->unsignedBigInteger('id_setor_escolas')->nullable();
             $table->foreign('id_setor_escolas')->references('id')->on('setor_escolas');
+            $table->unsignedBigInteger('id_users')->nullable();
+            $table->foreign('id_users')->references('id')->on('users');
+            $table->timestamps();
             $table->text('desc')->nullable();
             $table->text('tombamento')->nullable();
             $table->boolean('prioridade');
@@ -26,7 +29,6 @@ return new class extends Migration
             $table->boolean('inservivel')->nullable();
             $table->unsignedBigInteger('id_status')->nullable();
             $table->foreign('id_status')->references('id')->on('status_atendimentos');
-            $table->timestamps();
         });
     }
 

@@ -19,6 +19,7 @@ class Equipamentos extends Model
         'data_entrada',
         'id_setor_escolas',
         'prioridade',
-        'id_status'
+        'id_status',
+        'id_user'
     ];
 }

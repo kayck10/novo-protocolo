@@ -28,8 +28,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('user.index') }}">Estante de Equipamentos</a></li>
-                    <li class="breadcrumb-item active"><a href="">Cadastrar Usuário</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('estante.create') }}">Estante de Equipamentos</a></li>
                 </ol>
             </div>
         </div>
@@ -70,7 +69,7 @@
                     <div class="tab-content mb-5 mt-3 ms-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="row">
-                                <div class="col-12" id="tbody_equipamentos">
+                                <div id="tbody_equipamentos">
                                 </div>
                             </div>
                         </div>
@@ -111,12 +110,48 @@
             success: function (response) {
                 $('#tbody_equipamentos').empty()
                 $('#tbody_equipamentos').html(response);
-                console.log(response)
+
+
+                $(".abrirModal").off('click');
+                $(".abrirModal").on('click', function(e){
+                    abrirModal($(this).data('id'));
+                });
+
+                $("#fechar-modal").off('click');
+                $("#fechar-modal").on('click', function(e){
+                    $("#equipamentos_abertos").modal('hide');
+                });
             }
         });
     })
+
+    const abrirModal = (id) => {
+        $.ajax({
+            type: "get",
+            url: "{{ route('estante.status.modal') }}",
+            data: {id},
+            success: function (response) {
+                let usuarios = "<option>Selecione um Técnico</option>";
+
+                let dataDeEntrada = response.equipamento.created_at.split('T');
+                dataDeEntrada = dataDeEntrada[0].split('-');
+
+                $("#p-data").html(`<b>Data de entrada: </b> ${dataDeEntrada[2]}/${dataDeEntrada[1]}/${dataDeEntrada[0]}`);
+                $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
+                $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
+
+                $.each(response.usuarios, function (indexInArray, valueOfElement) {
+                    usuarios += `<option value="${valueOfElement.id}">${valueOfElement.name}</option>`
+                });
+                $("#select-tecnicos").html(usuarios);
+                $("#equipamentos_abertos").modal('show');
+
+            }
+        });
+    }
+
   </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
 
 

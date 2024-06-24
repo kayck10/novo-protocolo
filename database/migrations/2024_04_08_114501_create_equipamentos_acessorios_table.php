@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreign('id_equipamento')->references('id')->on('equipamentos');
             $table->unsignedBigInteger('id_acessorio');
             $table->foreign('id_acessorio')->references('id')->on('acessorios');
-            $table->timestamps();
         });
     }
 
