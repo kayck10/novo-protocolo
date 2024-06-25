@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipamentos;
+use App\Models\ProtocoloEntrada;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -34,10 +35,19 @@ class EstanteController extends Controller
 
     public function getStatusModal(Request $request)
     {
+        $equipamento = Equipamentos::with('protocolo.local')->find($request->id);
+        $protocoloEntrada = ProtocoloEntrada::find($equipamento->id_protocolo);
         $usuarios = User::where('id_funcoes', 2)->get();
-        $equipamento = Equipamentos::find($request->id);
-        return response()->json(['equipamento' => $equipamento, 'usuarios' => $usuarios]);
 
+        return response()->json([
+            'equipamento' => $equipamento,
+            'protocoloEntrada' => $protocoloEntrada,
+            'usuarios' => $usuarios
+        ]);
+    }
+
+    public function passar (Request $request) {
+        
     }
 }
 

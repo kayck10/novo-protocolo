@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/filtros', [EstanteController::class, 'filtros']);
         Route::get('/show/{id}', [EstanteController::class, 'show']);
         Route::get('/status', [EstanteController::class, 'getStatus'])->name('estante.status');
-        Route::get('/preencher-modal', [EstanteController::class, 'getStatusModal'])->name('estante.status.modal');
+        Route::get('/status/modal', [EstanteController::class, 'getStatusModal'])->name('estante.status.modal');
         Route::post('/passar', [EstanteController::class, 'passar']);
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
         Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');

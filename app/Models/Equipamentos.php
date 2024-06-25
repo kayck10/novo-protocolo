@@ -22,4 +22,8 @@ class Equipamentos extends Model
         'id_status',
         'id_user'
     ];
+
+    public function protocolo () {
+        return $this->belongsTo(ProtocoloEntrada::class, 'id_protocolo', 'id');
+    }
 }

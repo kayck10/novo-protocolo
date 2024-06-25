@@ -139,7 +139,7 @@
                 $("#p-data").html(`<b>Data de entrada: </b> ${dataDeEntrada[2]}/${dataDeEntrada[1]}/${dataDeEntrada[0]}`);
                 $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
                 $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
-
+                $("#p-local").html(`<b>Local:</b> ${response.equipamento.protocolo.local.desc}`);
                 $.each(response.usuarios, function (indexInArray, valueOfElement) {
                     usuarios += `<option value="${valueOfElement.id}">${valueOfElement.name}</option>`
                 });

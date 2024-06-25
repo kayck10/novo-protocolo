@@ -23,44 +23,36 @@
     </div>
     @endforeach
 </div>
-
 <!-- The Modal -->
 <div class="modal fade" id="equipamentos_abertos">
     <div class="modal-dialog">
         <div class="modal-content">
-
             <!-- Modal Header -->
             <div class="modal-header">
                 <h4 class="modal-title">Informações</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-
             <div class="modal-body">
                 <div style="font-size: 0.8rem" class="text-start">
-                    <p id="p-origem"><b>Origem: </b></p>
+                    <p id="p-local"><b>Origem: </b>$protocoloEntrada->id_local</p>
                     <p id="p-data"><b>Data de Entrada:</b> data</p>
-                    <p id="p-tombamento"><b>Tombamento|NS: </b> $equipamento->tombamento</p>
-                    <p id="p-problema"><b>Problema: $equipamento->desc</b></p>
+                    <p id="p-tombamento"><b>Tombamento|NS:</b> $equipamento->tombamento</p>
+                    <p id="p-problema"><b>Problema:</b> $equipamento->desc</p>
                     <div class="form-group">
                         <label class="form-label">
                             <b>Atribuir a um funcionário</b>
                         </label>
                         <select name="id_user" class="form-control" id="select-tecnicos">
                             <option>Selecione um Técnico</option>
-                            {{-- @foreach ($usuarios as $usuario)
-                            <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
-                        @endforeach --}}
                         </select>
                     </div>
                 </div>
             </div>
-
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="fechar-modal">Fechar</button>
                 <button type="button" class="btn btn-primary">Andamento <i class="bi bi-arrow-right"></i></button>
             </div>
-
         </div>
     </div>
 </div>
