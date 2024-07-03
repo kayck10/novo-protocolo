@@ -7,7 +7,9 @@
 </style>
 
 @section('content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
+        integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <li class="breadcrumb-item text-sm text-white active" aria-current="page">Estante</li>
     </ol>
     <h6 class="font-weight-bolder text-white mb-0">Estante</h6>
@@ -28,7 +30,8 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('estante.create') }}">Estante de Equipamentos</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('estante.create') }}">Estante de Equipamentos</a>
+                    </li>
                 </ol>
             </div>
         </div>
@@ -49,13 +52,19 @@
                     <ul class="nav nav-tabs itens" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
 
-                          <button class="nav-link tab-estante"  id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" data-status="1" aria-selected="true">Em aberto</button>
+                            <button class="nav-link tab-estante" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                                type="button" role="tab" aria-controls="home" data-status="1" aria-selected="true">Em
+                                aberto</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link tab-estante" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" data-status="2" aria-controls="profile" aria-selected="false">Em andamento</button>
+                            <button class="nav-link tab-estante" id="profile-tab" data-bs-toggle="tab"
+                                data-bs-target="#profile" type="button" role="tab" data-status="2"
+                                aria-controls="profile" aria-selected="false">Em andamento</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                          <button class="nav-link tab-estante" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" data-status="3" aria-controls="contact" aria-selected="false">Finalizado</button>
+                            <button class="nav-link tab-estante" id="contact-tab" data-bs-toggle="tab"
+                                data-bs-target="#contact" type="button" role="tab" data-status="3"
+                                aria-controls="contact" aria-selected="false">Finalizado</button>
                         </li>
                     </ul>
                     <div class="row">
@@ -63,7 +72,8 @@
                             <input id="pesquisa" type="text" class="form-control" placeholder="Pesquisa">
                         </div>
                         <div class="col-sm-3 mt-3">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#modalFiltros" class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#modalFiltros"
+                                class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
                         </div>
                     </div>
                     <div class="tab-content mb-5 mt-3 ms-3" id="myTabContent">
@@ -94,64 +104,96 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 
 @section('scripts')
-<script>
-    $('.tab-estante').click(function(){
-        let status = $(this).data('status')
-        let _token = $('#_token').val();
-        $.ajax({
-            type: "get",
-            url: "{{route('estante.status')}}",
-            data: {status, _token},
-            success: function (response) {
-                $('#tbody_equipamentos').empty()
-                $('#tbody_equipamentos').html(response);
+    <script>
+        let idEquipamento
+
+        function getIdEquipamento() {
+            return idEquipamento
+        }
+        $('.tab-estante').click(function() {
+            let status = $(this).data('status')
+            let _token = $('#_token').val();
+            $.ajax({
+                type: "get",
+                url: "{{ route('estante.status') }}",
+                data: {
+                    status,
+                    _token
+                },
+                success: function(response) {
+                    $('#tbody_equipamentos').empty()
+                    $('#tbody_equipamentos').html(response);
 
 
-                $(".abrirModal").off('click');
-                $(".abrirModal").on('click', function(e){
-                    abrirModal($(this).data('id'));
-                });
+                    $(".abrirModal").off('click');
+                    $(".abrirModal").on('click', function(e) {
+                        abrirModal($(this).data('id'));
+                    });
 
-                $("#fechar-modal").off('click');
-                $("#fechar-modal").on('click', function(e){
-                    $("#equipamentos_abertos").modal('hide');
-                });
-            }
-        });
-    })
+                    $("#fechar-modal").off('click');
+                    $("#fechar-modal").on('click', function(e) {
+                        $("#equipamentos_abertos").modal('hide');
+                    });
+                    $('#btn-andamento-passar').on('click', function() {
+                        let id = getIdEquipamento();
+                       andamento(id)
 
-    const abrirModal = (id) => {
-        $.ajax({
-            type: "get",
-            url: "{{ route('estante.status.modal') }}",
-            data: {id},
-            success: function (response) {
-                let usuarios = "<option>Selecione um Técnico</option>";
 
-                let dataDeEntrada = response.equipamento.created_at.split('T');
-                dataDeEntrada = dataDeEntrada[0].split('-');
+                    });
+                }
 
-                $("#p-data").html(`<b>Data de entrada: </b> ${dataDeEntrada[2]}/${dataDeEntrada[1]}/${dataDeEntrada[0]}`);
-                $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
-                $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
-                $("#p-local").html(`<b>Local:</b> ${response.equipamento.protocolo.local.desc}`);
-                $.each(response.usuarios, function (indexInArray, valueOfElement) {
-                    usuarios += `<option value="${valueOfElement.id}">${valueOfElement.name}</option>`
-                });
-                $("#select-tecnicos").html(usuarios);
-                $("#equipamentos_abertos").modal('show');
+            });
 
-            }
-        });
-    }
+        })
 
-  </script>
+        function andamento (id) {
+            let _token = $('#_token').val();
+            $.ajax({
+                type: "post",
+                url: "{{route('estante.passar')}}",
+                data: {
+                    id,
+                    status: 2,
+                },
+                success: function (response) {
+
+                }
+            });
+        }
+        const abrirModal = (id) => {
+            idEquipamento = id
+
+            $.ajax({
+                type: "get",
+                url: "{{ route('estante.status.modal') }}",
+                data: {
+                    id
+                },
+                success: function(response) {
+                    let usuarios = "<option>Selecione um Técnico</option>";
+
+                    let dataDeEntrada = response.equipamento.created_at.split('T');
+                    dataDeEntrada = dataDeEntrada[0].split('-');
+
+                    $("#p-data").html(
+                        `<b>Data de entrada: </b> ${dataDeEntrada[2]}/${dataDeEntrada[1]}/${dataDeEntrada[0]}`
+                        );
+                    $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
+                    $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
+                    $("#p-local").html(`<b>Local:</b> ${response.equipamento.protocolo.local.desc}`);
+                    $.each(response.usuarios, function(indexInArray, valueOfElement) {
+                        usuarios +=
+                            `<option value="${valueOfElement.id}">${valueOfElement.name}</option>`
+                    });
+                    $("#select-tecnicos").html(usuarios);
+                    $("#equipamentos_abertos").modal('show');
+
+                }
+            });
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 @endsection
-
-

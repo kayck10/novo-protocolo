@@ -47,7 +47,7 @@ class EstanteController extends Controller
     }
 
     public function passar (Request $request) {
-        
+        dd($request->all());
     }
 }
 

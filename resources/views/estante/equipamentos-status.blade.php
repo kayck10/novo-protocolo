@@ -7,7 +7,7 @@
     @endif
     <div class="col-md-3 text-center mb-4 abrirModal" data-id="{{ $equipamento->id }}">
         <div>
-            <img src="http://tiprotocolo.maracanau.ce.gov.br/imagens/estante/1.png" width="100" height="100"
+            <img src="http://tiprotocolo.maracanau.ce.gov.br/imagens/estante/{{$equipamento->id_tipos_equipamentos}}.png" width="100" height="100"
                 alt="Figura nao encontrada" class="mb-2">
         </div>
         <div class="text text-center">
@@ -51,8 +51,9 @@
             <!-- Modal footer -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="fechar-modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Andamento <i class="bi bi-arrow-right"></i></button>
+                <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i class="bi bi-arrow-right"></i></button>
             </div>
         </div>
     </div>
 </div>
+

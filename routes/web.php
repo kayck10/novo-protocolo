@@ -60,7 +60,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show/{id}', [EstanteController::class, 'show']);
         Route::get('/status', [EstanteController::class, 'getStatus'])->name('estante.status');
         Route::get('/status/modal', [EstanteController::class, 'getStatusModal'])->name('estante.status.modal');
-        Route::post('/passar', [EstanteController::class, 'passar']);
+        Route::post('/passar', [EstanteController::class, 'passar'])->name('estante.passar');
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
         Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
     });
