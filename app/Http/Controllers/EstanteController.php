@@ -11,8 +11,6 @@ class EstanteController extends Controller
 {
     public function index()
     {
-
-
         $ativos = Equipamentos::where('id_status', 1)->count();
         $emManutencao = Equipamentos::where('id_status', 2)->count();
         $inativos = Equipamentos::where('id_status', 3)->count();
@@ -28,9 +26,8 @@ class EstanteController extends Controller
     {
         $usuarios = User::where('id_funcoes', 2)->get();
         $equipamentos = Equipamentos::where('id_status', $request->status)->get();
-        //  dd($equipamentos);
-         return view('estante.equipamentos-status', compact('equipamentos', 'usuarios'));
 
+        return view('estante.equipamentos-status', compact('equipamentos', 'usuarios'));
     }
 
     public function getStatusModal(Request $request)
@@ -46,10 +43,14 @@ class EstanteController extends Controller
         ]);
     }
 
-    public function passar (Request $request) {
-        dd($request->all());
+    public function passar(Request $request)
+    {
+        $equipamento = Equipamentos::find($request->id);
+        $equipamento->id_status = $request->status;
+        $equipamento->save();
+
+        return response()->json(['success' => 'Status atualizado com sucesso!']);
     }
 }
-
 
 
