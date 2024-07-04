@@ -76,13 +76,13 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="row">
                                 <div id="tbody_equipamentos" class="col-12">
+                                    <!-- Conteúdo de equipamentos em aberto aqui -->
                                 </div>
                             </div>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             <div class="row">
-                                <div class="col-12">
-                                    <h1>Em andamento</h1>
+                                <div id="tbody_equipamentos_andamento" class="col-12">
                                     <!-- Conteúdo de equipamentos em andamento aqui -->
                                 </div>
                             </div>
@@ -157,7 +157,13 @@
                 url: "{{ route('estante.status') }}",
                 data: {status, _token},
                 success: function (response) {
-                    $('#tbody_equipamentos').empty().html(response);
+                    if (status == 1) {
+                        $('#tbody_equipamentos').empty().html(response);
+                    } else if (status == 2) {
+                        $('#tbody_equipamentos_andamento').empty().html(response);
+                    } else if (status == 3) {
+                        $('#contact').empty().html(response);
+                    }
 
                     $(".abrirModal").off('click').on('click', function (e) {
                         abrirModal($(this).data('id'));

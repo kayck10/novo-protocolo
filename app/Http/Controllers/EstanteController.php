@@ -52,5 +52,3 @@ class EstanteController extends Controller
         return response()->json(['success' => 'Status atualizado com sucesso!']);
     }
 }
-
-
