@@ -25,7 +25,8 @@ class EstanteController extends Controller
     public function getStatus(Request $request)
     {
         $usuarios = User::where('id_funcoes', 2)->get();
-        $equipamentos = Equipamentos::where('id_status', $request->status)->get();
+        $equipamentos = Equipamentos::where('id_status', $request->statusEq)->get();
+        // dd($equipamentos);
 
         return view('estante.equipamentos-status', compact('equipamentos', 'usuarios'));
     }

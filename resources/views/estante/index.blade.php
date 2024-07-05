@@ -143,6 +143,9 @@
             integrity="sha512-3l2QOFNBLXc3Gr+krSL6s6QfM7TH25G3+9h83ZK7cEr2QkZBqlrAEnu9jU6n7UnbS9+M14J8nMgCXuNGWU3H0A=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        $( document ).ready(function() {
+            pegarEquipamentos(1);
+        });
         let idEquipamento;
 
         function getIdEquipamento() {
@@ -151,17 +154,21 @@
 
         $('.tab-estante').click(function () {
             let status = $(this).data('status');
+            pegarEquipamentos(status);
+        });
+
+        const pegarEquipamentos = (statusEq) => {
             let _token = $('#_token').val();
             $.ajax({
                 type: "get",
                 url: "{{ route('estante.status') }}",
-                data: {status, _token},
+                data: {statusEq, _token},
                 success: function (response) {
-                    if (status == 1) {
+                    if (statusEq == 1) {
                         $('#tbody_equipamentos').empty().html(response);
-                    } else if (status == 2) {
+                    } else if (statusEq == 2) {
                         $('#tbody_equipamentos_andamento').empty().html(response);
-                    } else if (status == 3) {
+                    } else if (statusEq == 3) {
                         $('#contact').empty().html(response);
                     }
 
@@ -177,16 +184,19 @@
                         let id = getIdEquipamento();
                         andamento(id);
                     });
+                },
+                error: function (error) {
+                    alert(error)
                 }
             });
-        });
+        }
 
         function andamento(id) {
             let _token = $('#_token').val();
             $.ajax({
                 type: "post",
                 url: "{{ route('estante.passar') }}",
-                data: {id, status: 2, _token},
+                data: {id, statusEq: 2, _token},
                 success: function (response) {
                     iziToast.success({title: 'Sucesso', message: response.success});
                     $("#equipamentos_abertos").modal('hide');
