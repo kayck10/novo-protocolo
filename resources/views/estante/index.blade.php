@@ -2,8 +2,8 @@
 
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css"
-          integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        integrity="sha512-O03ntXoVqaGUTAeAmvQ2YSzkCvclZEcPQu1eqloPaHfJ5RuNGiS4l+3duaidD801P50J28EHyonCV06CUlTSag=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .itens {
             width: 100%;
@@ -46,20 +46,20 @@
                     <ul class="nav nav-tabs itens" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link tab-estante active" id="home-tab" data-bs-toggle="tab"
-                                    data-bs-target="#home" type="button" role="tab" aria-controls="home" data-status="1"
-                                    aria-selected="true">Em aberto
+                                data-bs-target="#home" type="button" role="tab" aria-controls="home" data-status="1"
+                                aria-selected="true">Em aberto
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link tab-estante" id="profile-tab" data-bs-toggle="tab"
-                                    data-bs-target="#profile" type="button" role="tab" data-status="2"
-                                    aria-controls="profile" aria-selected="false">Em andamento
+                                data-bs-target="#profile" type="button" role="tab" data-status="2"
+                                aria-controls="profile" aria-selected="false">Em andamento
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link tab-estante" id="contact-tab" data-bs-toggle="tab"
-                                    data-bs-target="#contact" type="button" role="tab" data-status="3"
-                                    aria-controls="contact" aria-selected="false">Finalizado
+                                data-bs-target="#contact" type="button" role="tab" data-status="3"
+                                aria-controls="contact" aria-selected="false">Finalizado
                             </button>
                         </li>
                     </ul>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-sm-3 mt-3">
                             <button type="button" data-bs-toggle="modal" data-bs-target="#modalFiltros"
-                                    class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
+                                class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
                         </div>
                     </div>
                     <div class="tab-content mb-5 mt-3 ms-3" id="myTabContent">
@@ -102,7 +102,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel"
+    {{-- <div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel"
          aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -120,7 +120,7 @@
                             <label class="form-label"><b>Atribuir a um funcionário</b></label>
                             <select name="id_user" class="form-control" id="select-tecnicos">
                                 <option>Selecione um Técnico</option>
-                                @foreach($usuarios as $usuario)
+                                @foreach ($usuarios as $usuario)
                                     <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
                                 @endforeach
                             </select>
@@ -134,16 +134,16 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
-            integrity="sha512-3l2QOFNBLXc3Gr+krSL6s6QfM7TH25G3+9h83ZK7cEr2QkZBqlrAEnu9jU6n7UnbS9+M14J8nMgCXuNGWU3H0A=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-3l2QOFNBLXc3Gr+krSL6s6QfM7TH25G3+9h83ZK7cEr2QkZBqlrAEnu9jU6n7UnbS9+M14J8nMgCXuNGWU3H0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $( document ).ready(function() {
+        $(document).ready(function() {
             pegarEquipamentos(1);
         });
         let idEquipamento;
@@ -152,7 +152,7 @@
             return idEquipamento;
         }
 
-        $('.tab-estante').click(function () {
+        $('.tab-estante').click(function() {
             let status = $(this).data('status');
             pegarEquipamentos(status);
         });
@@ -162,69 +162,111 @@
             $.ajax({
                 type: "get",
                 url: "{{ route('estante.status') }}",
-                data: {statusEq, _token},
-                success: function (response) {
+                data: {
+                    statusEq,
+                    _token
+                },
+                success: function(response) {
                     if (statusEq == 1) {
+                        $('#tbody_equipamentos_andamento').empty().html('');
                         $('#tbody_equipamentos').empty().html(response);
+
+                        $(".abrirModal").off('click').on('click', function(e) {
+                            abrirModal($(this).data('id'));
+                        });
                     } else if (statusEq == 2) {
+                        $('#tbody_equipamentos').empty().html('');
                         $('#tbody_equipamentos_andamento').empty().html(response);
+
+                        $(".abrirModal").off('click').on('click', function(e) {
+                            abrirModal($(this).data('id'));
+                        });
                     } else if (statusEq == 3) {
+                        $('#tbody_equipamentos_andamento').empty().html('');
+                        $('#tbody_equipamentos').empty().html('');
                         $('#contact').empty().html(response);
                     }
 
-                    $(".abrirModal").off('click').on('click', function (e) {
-                        abrirModal($(this).data('id'));
-                    });
 
-                    $("#fechar-modal").off('click').on('click', function (e) {
+
+                    $("#fechar-modal").off('click').on('click', function(e) {
                         $("#equipamentos_abertos").modal('hide');
                     });
 
-                    $('#btn-andamento-passar').off('click').on('click', function () {
+                    $('#btn-andamento-passar').off('click').on('click', function() {
                         let id = getIdEquipamento();
                         andamento(id);
                     });
                 },
-                error: function (error) {
+                error: function(error) {
                     alert(error)
                 }
             });
         }
 
         function andamento(id) {
+            let id_tecnico = $('#select-tecnicos').val();
             let _token = $('#_token').val();
             $.ajax({
                 type: "post",
                 url: "{{ route('estante.passar') }}",
-                data: {id, statusEq: 2, _token},
-                success: function (response) {
-                    iziToast.success({title: 'Sucesso', message: response.success});
+                data: {
+                    id,
+                    statusEq: 2,
+                    id_tecnico,
+                    _token
+                },
+                success: function(response) {
+                    iziToast.success({
+                        title: 'Sucesso',
+                        message: response.success
+                    });
                     $("#equipamentos_abertos").modal('hide');
-                    $('#profile-tab').click(); // Atualiza a lista de equipamentos em andamento
+                    $('#profile-tab').click();
                 }
             });
         }
 
-        const abrirModal = (id) => {
+        const abrirModal = (id, status) => {
             idEquipamento = id;
 
             $.ajax({
                 type: "get",
                 url: "{{ route('estante.status.modal') }}",
-                data: {id},
-                success: function (response) {
+                data: {
+                    id
+                },
+                success: function(response) {
+                    $('#div-solucao').empty();
                     let usuarios = "<option>Selecione um Técnico</option>";
 
                     let dataDeEntrada = response.equipamento.created_at.split('T')[0].split('-');
-                    $("#p-data").html(`<b>Data de entrada: </b> ${dataDeEntrada[2]}/${dataDeEntrada[1]}/${dataDeEntrada[0]}`);
+                    $("#p-data").html(
+                        `<b>Data de entrada: </b> ${dataDeEntrada[2]}/${dataDeEntrada[1]}/${dataDeEntrada[0]}`
+                    );
                     $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
                     $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
                     $("#p-local").html(`<b>Local:</b> ${response.equipamento.protocolo.local.desc}`);
 
-                    $.each(response.usuarios, function (indexInArray, valueOfElement) {
-                        usuarios += `<option value="${valueOfElement.id}">${valueOfElement.name}</option>`;
+                    $.each(response.usuarios, function(indexInArray, valueOfElement) {
+                        if (response.equipamento.id_users == valueOfElement.id) {
+                            usuarios +=
+                                `<option value="${valueOfElement.id}" selected>${valueOfElement.name}</option>`;
+                        } else {
+                            usuarios +=
+                                `<option value="${valueOfElement.id}">${valueOfElement.name}</option>`;
+                        }
                     });
 
+                    if (response.equipamento.status == 2) {
+                        console.log(response.equipamento);
+                        $('#div-solucao').html(
+                            `<div class="form-floating">
+                                <label for="floatingTextarea2">Comments</label>
+                                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                            </div>`
+                        );
+                    }
                     $("#select-tecnicos").html(usuarios);
                     $("#equipamentos_abertos").modal('show');
                 }

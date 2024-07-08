@@ -1,9 +1,6 @@
-<div class="row" id="tbody_equipamentos">
-
-    @foreach ($equipamentos as $index => $equipamento)
-        @if ($index % 4 == 0)
-</div>
-<div class="row">
+@foreach ($equipamentos as $index => $equipamento)
+    @if ($index % 4 == 0)
+        <div class="row">
     @endif
     <div class="col-md-3 text-center mb-4 abrirModal" data-id="{{ $equipamento->id }}">
         <div>
@@ -21,8 +18,11 @@
             </span>
         </div>
     </div>
-    @endforeach
-</div>
+    @if ($index % 4 == 3)
+        </div>
+    @endif
+@endforeach
+
 <!-- The Modal -->
 <div class="modal fade" id="equipamentos_abertos">
     <div class="modal-dialog">
@@ -34,10 +34,10 @@
             </div>
             <div class="modal-body">
                 <div style="font-size: 0.8rem" class="text-start">
-                    <p id="p-local"><b>Origem: </b>$protocoloEntrada->id_local</p>
-                    <p id="p-data"><b>Data de Entrada:</b> data</p>
-                    <p id="p-tombamento"><b>Tombamento|NS:</b> $equipamento->tombamento</p>
-                    <p id="p-problema"><b>Problema:</b> $equipamento->desc</p>
+                    <p id="p-local"><b>Origem: </b><span id="protocolo_local"></span></p>
+                    <p id="p-data"><b>Data de Entrada:</b> <span id="equipamento_data"></span></p>
+                    <p id="p-tombamento"><b>Tombamento|NS:</b> <span id="equipamento_tombamento"></span></p>
+                    <p id="p-problema"><b>Problema:</b> <span id="equipamento_problema"></span></p>
                     <div class="form-group">
                         <label class="form-label">
                             <b>Atribuir a um funcionário</b>
@@ -45,6 +45,8 @@
                         <select name="id_user" class="form-control" id="select-tecnicos">
                             <option>Selecione um Técnico</option>
                         </select>
+                    </div>
+                    <div id="div-solucao">
                     </div>
                 </div>
             </div>
@@ -56,4 +58,3 @@
         </div>
     </div>
 </div>
-

@@ -47,8 +47,10 @@ class EstanteController extends Controller
     public function passar(Request $request)
     {
         $equipamento = Equipamentos::find($request->id);
-        $equipamento->id_status = $request->status;
-        $equipamento->save();
+        $equipamento->update([
+            'id_status' => $request->statusEq,
+            'id_users'  => $request->id_tecnico
+        ]);
 
         return response()->json(['success' => 'Status atualizado com sucesso!']);
     }

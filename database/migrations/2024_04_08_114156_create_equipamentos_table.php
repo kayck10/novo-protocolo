@@ -24,6 +24,7 @@ return new class extends Migration
             $table->timestamps();
             $table->text('desc')->nullable();
             $table->text('tombamento')->nullable();
+            $table->text('solucao')->nullable();
             $table->boolean('prioridade');
             $table->text('acessorios')->nullable();
             $table->boolean('inservivel')->nullable();

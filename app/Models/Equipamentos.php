@@ -13,6 +13,7 @@ class Equipamentos extends Model
         'desc',
         'id_protocolo',
         'tombamento',
+        'solucao',
         'id_local',
         'acessorios',
         'inservivel',
@@ -20,7 +21,7 @@ class Equipamentos extends Model
         'id_setor_escolas',
         'prioridade',
         'id_status',
-        'id_user'
+        'id_users'
     ];
 
     public function protocolo () {
