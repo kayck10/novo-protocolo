@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/index', [AtendimentoInternoController::class, 'index'])->name('atendimento-interno.index');
         Route::get('/create', [AtendimentoInternoController::class, 'create'])->name('atendimento-interno.create');
         Route::post('/store', [AtendimentoInternoController::class, 'store'])->name('atendimentointerno.store');
+        Route::get('/show/{id}', [AtendimentoInternoController::class, 'show'])->name('atendimentointerno.show');
     });
     Route::prefix('/estante')->group(function () {
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');

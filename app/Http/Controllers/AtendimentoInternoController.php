@@ -88,4 +88,13 @@ class AtendimentoInternoController extends Controller
         Toastr::success('Atendimento Cadastrado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->back();
     }
+
+  public function show($id)
+{
+    $atendimento = Atendimentos::with(['tecnico', 'setor'])->findOrFail($id);
+    $tecnicos = User::where('id_funcoes', 2)->get();
+    $setores = Local::where('externo', 0)->get();
+    return view('atendimentos-internos.show', compact('atendimento', 'tecnicos', 'setores'));
+}
+
 }

@@ -26,7 +26,6 @@
                             <h4 class="card-title">Listagem de Protocolos</h4>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
                                 <table id="example3" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
@@ -45,53 +44,15 @@
                                             <td>{{ $atendimento->tecnico ? $atendimento->tecnico->name : 'N/A' }}</td>
                                             <td>{{ $atendimento->data }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-primary mx-1"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModal{{ $atendimento->id }}">
-                                                    <i class="bi bi-eye"></i>
-                                                </button>
+                                                <a href="{{route('atendimentointerno.show', $atendimento->id)}}">   <button type="button" class="btn btn-sm btn-primary mx-1"{{ $atendimento->id }}">
+                                                   <i class="bi bi-eye"></i>
+                                                </button></a>
                                                 <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
                                             </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
-                                <!-- Modal -->
-                                <div class="modal fade" id="exampleModal" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="exampleModalLabel">VISUALIZAR REGISTROS
-                                                    DO PROTOCOLO</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <table class="table table-striped-columns">
-                                                    <thead>
-                                                        <th scope="col">Tombamento</th>
-                                                        <th scope="col">Funcionário</th>
-                                                        <th scope="col">Status</th>
-                                                        <th scope="col">Problema</th>
-                                                    </thead>
-
-                                                        <tbody>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tbody>
-
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-danger"
-                                                    data-bs-dismiss="modal">Fechar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
