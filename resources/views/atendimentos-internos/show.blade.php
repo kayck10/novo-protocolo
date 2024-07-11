@@ -27,23 +27,23 @@
                         <div class="col-12 mx-auto p-5">
                             <div class="form-group">
                                 <label class="form-label">Técnico:<i class="fa fa-asterisk text-danger"></i></label>
-                                <p class="form-control-plaintext">{{ $tecnicos->firstWhere('id', $atendimento->id_user)->name }}</p>
+                                <input type="text" class="form-control" value="{{ $tecnicos->firstWhere('id', $atendimento->id_user)->name }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Setor:<i class="fa fa-asterisk text-danger"></i></label>
-                                <p class="form-control-plaintext">{{ $setores->firstWhere('id', $atendimento->id_local)->desc }}</p>
+                                <input type="text" class="form-control" value="{{ $setores->firstWhere('id', $atendimento->id_local)->desc }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
-                                <p class="form-control-plaintext">{{ $atendimento->data }}</p>
+                                <input type="text" class="form-control" value="{{ $atendimento->data }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Problema:<i class="fa fa-asterisk text-danger"></i></label>
-                                <p class="form-control-plaintext">{{ $atendimento->desc_problema }}</p>
+                                <textarea class="form-control" rows="3" readonly>{{ $atendimento->desc_problema }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Solução:<i class="fa fa-asterisk text-danger"></i></label>
-                                <p class="form-control-plaintext">{{ $atendimento->solucao }}</p>
+                                <textarea class="form-control" rows="3" readonly>{{ $atendimento->solucao }}</textarea>
                             </div>
                         </div>
                     </div>

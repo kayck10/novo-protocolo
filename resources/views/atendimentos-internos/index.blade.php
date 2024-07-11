@@ -47,7 +47,11 @@
                                                 <a href="{{route('atendimentointerno.show', $atendimento->id)}}">   <button type="button" class="btn btn-sm btn-primary mx-1"{{ $atendimento->id }}">
                                                    <i class="bi bi-eye"></i>
                                                 </button></a>
+                                                <a href="{{route('atendimento-interno.edit', $atendimento->id)}}">   <button type="button" class="btn btn-sm btn-warning mx-1"{{ $atendimento->id }}">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                 </button></a>
                                                 <a href="javascript:void(0);" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+
                                             </td>
                                         </tr>
                                         @endforeach

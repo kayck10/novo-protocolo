@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AtendimentoEscolasController;
 use App\Http\Controllers\AtendimentoInternoController;
+use App\Http\Controllers\AtendimentosController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\GraficosController;
@@ -52,6 +53,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [AtendimentoInternoController::class, 'create'])->name('atendimento-interno.create');
         Route::post('/store', [AtendimentoInternoController::class, 'store'])->name('atendimentointerno.store');
         Route::get('/show/{id}', [AtendimentoInternoController::class, 'show'])->name('atendimentointerno.show');
+        Route::get('/edit/{id}', [AtendimentoInternoController::class, 'edit'])->name('atendimento-interno.edit');
+        Route::put('/update/{id}', [AtendimentoInternoController::class, 'update'])->name('atendimento-interno.update');
     });
     Route::prefix('/estante')->group(function () {
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');

@@ -13,7 +13,7 @@ class AtendimentoInternoController extends Controller
 {
     public function index()
     {
-        $atendimentos = Atendimentos::with(['tecnico', 'setor'])->get();
+        $atendimentos = Atendimentos::where('id_user', '!=',null)->with(['tecnico', 'setor'])->get();
 
         // Buscar técnicos e setores
         $tecnicos = User::where('id_funcoes', 2)->get();
@@ -89,12 +89,27 @@ class AtendimentoInternoController extends Controller
         return redirect()->back();
     }
 
-  public function show($id)
-{
-    $atendimento = Atendimentos::with(['tecnico', 'setor'])->findOrFail($id);
-    $tecnicos = User::where('id_funcoes', 2)->get();
-    $setores = Local::where('externo', 0)->get();
-    return view('atendimentos-internos.show', compact('atendimento', 'tecnicos', 'setores'));
-}
+    public function show($id)
+    {
+        $atendimento = Atendimentos::with(['tecnico', 'setor'])->findOrFail($id);
+        $tecnicos = User::where('id_funcoes', 2)->get();
+        $setores = Local::where('externo', 0)->get();
+        return view('atendimentos-internos.show', compact('atendimento', 'tecnicos', 'setores'));
+    }
+
+    public function edit($id)
+    {
+        $atendimento = Atendimentos::with(['tecnico', 'setor'])->findOrFail($id);
+        $tecnicos = User::where('id_funcoes', 2)->get();
+        $setores = Local::where('externo', 0)->get();
+        return view('atendimentos-internos.edit', compact('atendimento', 'tecnicos', 'setores'));
+    }
+
+    public function update(Request $request, $id) {
+        $atendimento = Atendimentos::find($id);
+        $atendimento->update($request->all());
+        Toastr::success('Atendimento atualizado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
+        return redirect()->route('atendimento-interno.index');
+    }
 
 }
