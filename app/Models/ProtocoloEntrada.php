@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProtocoloEntrada extends Model
 {
@@ -17,5 +17,9 @@ class ProtocoloEntrada extends Model
         return $this->belongsTo(Local::class, 'id_local');
     }
 
-    
+    public function equipamentos(): HasMany
+    {
+        return $this->hasMany(Equipamentos::class, 'id_protocolo', 'id');
+    }
 }
+

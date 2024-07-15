@@ -13,12 +13,26 @@ use Illuminate\Http\Request;
 
 class ProtocoloEntradaController extends Controller
 {
-    public function index () {
+    public function index()
+    {
         $protocolos = ProtocoloEntrada::with('local')->get();
         $locais = Local::whereHas('protocoloEntrada')->distinct()->get();
-        $equipamentos = Equipamentos::all();
-        return view('protocolo-entrada.index', compact('protocolos', 'equipamentos', 'locais'));
+        return view('protocolo-entrada.index', compact('protocolos', 'locais'));
     }
+
+    public function getProtocolo($id)
+    {
+        $protocolo = ProtocoloEntrada::with('equipamentos')->find($id);
+
+        if (!$protocolo) {
+            return response()->json(['message' => 'Protocolo não encontrado'], 404);
+        }
+
+        return response()->json($protocolo);
+    }
+
+
+
 
     public function create() {
        $tiposequipamentos = TiposEquipamentos::all();

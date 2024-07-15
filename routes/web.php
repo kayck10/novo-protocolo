@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/protocolo-entrada')->group(function () {
         Route::get('/index', [ProtocoloEntradaController::class, 'index'])->name('index.protocolo');
+        Route::get('/show/{id}', [ProtocoloEntradaController::class, 'getProtocolo'])->name('getProtocolo');
         Route::get('/create', [ProtocoloEntradaController::class, 'create'])->name('create.protocolo');
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
         Route::post('store/equipamento', [ProtocoloEntradaController::class, 'equipamentos'])->name('store.equipamento');
