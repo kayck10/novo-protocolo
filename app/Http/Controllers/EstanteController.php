@@ -54,4 +54,14 @@ class EstanteController extends Controller
 
         return response()->json(['success' => 'Status atualizado com sucesso!']);
     }
+    public function saida(Request $request)
+    {
+        $equipamento = Equipamentos::find($request->id);
+        $equipamento->update([
+            'id_status' => 3,
+            'solucao'   => $request->solucao
+        ]);
+
+        return response()->json(['success' => 'Equipamento atualizado com sucesso!']);
+    }
 }

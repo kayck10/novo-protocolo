@@ -66,9 +66,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/status', [EstanteController::class, 'getStatus'])->name('estante.status');
         Route::get('/status/modal', [EstanteController::class, 'getStatusModal'])->name('estante.status.modal');
         Route::post('/passar', [EstanteController::class, 'passar'])->name('estante.passar');
+        Route::post('/saida', [EstanteController::class, 'saida'])->name('estante.saida');
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
         Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
     });
+
     Route::prefix('/inservivel')->group(function () {
         Route::get('/index', [InservivelController::class, 'index'])->name('inservivel.index');
         Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');

@@ -52,7 +52,7 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="fechar-modal">Fechar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
                 <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i class="bi bi-arrow-right"></i></button>
             </div>
         </div>
