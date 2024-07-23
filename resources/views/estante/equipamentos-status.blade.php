@@ -38,6 +38,8 @@
                     <p id="p-data"><b>Data de Entrada:</b> <span id="equipamento_data"></span></p>
                     <p id="p-tombamento"><b>Tombamento|NS:</b> <span id="equipamento_tombamento"></span></p>
                     <p id="p-problema"><b>Problema:</b> <span id="equipamento_problema"></span></p>
+                    <p id="p-acessorio"><b>Acessório:</b> <span id="acessorio"></span></p>
+
                     <div class="form-group">
                         <label class="form-label">
                             <b>Atribuir a um funcionário</b>
@@ -50,10 +52,16 @@
                     </div>
                 </div>
             </div>
+
+
+
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar <i class="bi bi-x-lg"></i></button>
                 <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i class="bi bi-arrow-right"></i></button>
+                <div id="div-botoes-status" >
+
+                </div>
             </div>
         </div>
     </div>

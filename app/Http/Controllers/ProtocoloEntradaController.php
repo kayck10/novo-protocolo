@@ -108,6 +108,7 @@ class ProtocoloEntradaController extends Controller
             'id_setor_escolas' => $request->input('setor'),
             'id_tipos_equipamentos' => $request->input('equipamentos'),
             'desc' => $request->problema,
+            'acessorios' => $request->descricao_acessorio,
             'prioridade' => $request->prioridade == 'on' ? 1 : 0,
             'id_status' => 1
         ]);
