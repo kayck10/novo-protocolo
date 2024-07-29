@@ -27,4 +27,10 @@ class Equipamentos extends Model
     public function protocolo () {
         return $this->belongsTo(ProtocoloEntrada::class, 'id_protocolo', 'id');
     }
+
+    public function SetorEscola()
+    {
+        return $this->belongsTo(SetorEscola::class, 'id_setor_escolas');
+    }
 }
+

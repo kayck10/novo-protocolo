@@ -2,8 +2,11 @@
 
 @section('content')
 <style>
-    .hide{
+    .hide {
         display: none;
+    }
+    #myChart {
+        height: 400px; /* Ajuste a altura conforme necessário */
     }
 </style>
 
@@ -11,14 +14,14 @@
     <div class="row page-titles mx-0">
         <div class="col-sm-6">
             <div class="welcome-text">
-                <h4>Participações por Funcionários</h4>
-                <span class="">Acompanhamento da Média de trabalho por Fucionário</span>
+                <h4>Média de Trabalho Anual - </h4>
+                <span class="">Número de Atendimentos e Consertos</span>
             </div>
         </div>
         <div class="col-sm-6 justify-content-sm-end mt-2 mt-sm-0 d-flex">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Gráficos</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Participações</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Participaçõees</a></li>
             </ol>
         </div>
     </div>
@@ -33,53 +36,65 @@
                             <h4 class="card-title">Bar Chart</h4>
                         </div>
                         <div class="card-body">
-                            <div id="morris_bar" class="morris_chart_height"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 hide">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Donught Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="morris_donught" class="morris_chart_height"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 hide">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Line Chart</h4>
-                        </div>
-                        <div class="card-body p-0">
-                            <div id="morris_line" class="morris_chart_height"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-12 col-md-6 hide" hide>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Bar Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="morris_bar" class="morris_chart_height"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 hide">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Line Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="line_chart_2" class="morris_chart_height"></div>
+                            <div>
+                                <canvas id="myChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const usuarios = @json($usuarios);
+
+                const nomes = usuarios.map(usuario => usuario.name);
+                const atendimentos = usuarios.map(usuario => usuario.atendimentos);
+                const consertos = usuarios.map(usuario => usuario.consertos);
+                const inspeções = usuarios.map(usuario => usuario.inspecoes);
+
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: nomes,
+                        datasets: [
+                            {
+                                label: 'Atendimentos Internos',
+                                data: atendimentos,
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Máquinas',
+                                data: consertos,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Escolas',
+                                data: inspeções,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
     </div>
 </div>
-
 @endsection

@@ -7,7 +7,6 @@ use App\Models\Local;
 use App\Models\ProtocoloEntrada;
 use App\Models\SetorEscola;
 use App\Models\TiposEquipamentos;
-use Brian2694\Toastr\Facades\Toastr;
 use DateTime;
 use Illuminate\Http\Request;
 

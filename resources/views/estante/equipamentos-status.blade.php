@@ -4,8 +4,8 @@
     @endif
     <div class="col-md-3 text-center mb-4 abrirModal" data-id="{{ $equipamento->id }}">
         <div>
-            <img src="http://tiprotocolo.maracanau.ce.gov.br/imagens/estante/{{$equipamento->id_tipos_equipamentos}}.png" width="100" height="100"
-                alt="Figura nao encontrada" class="mb-2">
+            <img src="http://tiprotocolo.maracanau.ce.gov.br/imagens/estante/{{ $equipamento->id_tipos_equipamentos }}.png"
+                width="100" height="100" alt="Figura nao encontrada" class="mb-2">
         </div>
         <div class="text text-center">
             <h4>
@@ -14,7 +14,7 @@
                 </span>
             </h4>
             <span class="text-red">
-                <b>{{ \Carbon\Carbon::parse($equipamento->created_at)->format('d/m/y') }}</b>
+                <b>{{ \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/y') }}</b>
             </span>
         </div>
     </div>
@@ -29,7 +29,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Informações</h4>
+                <h4 class="modal-title"><i class="bi bi-layout-text-sidebar-reverse"></i> Dados do Equipamento</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -53,13 +53,13 @@
                 </div>
             </div>
 
-
-
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar <i class="bi bi-x-lg"></i></button>
-                <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i class="bi bi-arrow-right"></i></button>
-                <div id="div-botoes-status" >
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar <i
+                        class="bi bi-x-lg"></i></button>
+                <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i
+                        class="bi bi-arrow-right"></i></button>
+                <div id="div-botoes-status">
 
                 </div>
             </div>

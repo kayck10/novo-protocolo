@@ -2,9 +2,10 @@
 
 @section('content')
 <style>
-    .hide{
+    .hide {
         display: none;
     }
+
 </style>
 
 <div class="container-fluid">
@@ -33,53 +34,56 @@
                             <h4 class="card-title">Bar Chart</h4>
                         </div>
                         <div class="card-body">
-                            <div id="morris_bar" class="morris_chart_height"></div>
+                            <div>
+                                <canvas id="myChart"></canvas>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 hide">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Donught Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="morris_donught" class="morris_chart_height"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 hide">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Line Chart</h4>
-                        </div>
-                        <div class="card-body p-0">
-                            <div id="morris_line" class="morris_chart_height"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-12 col-md-6 hide" hide>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Bar Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="morris_bar" class="morris_chart_height"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 hide">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Line Chart</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="line_chart_2" class="morris_chart_height"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                        datasets: [
+                            {
+                                label: 'Atendimentos',
+                                data: [30, 25, 35, 20, 30, 40, 50, 45, 30, 25, 20, 30],
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Consertos',
+                                data: [20, 15, 25, 10, 20, 30, 40, 35, 20, 15, 10, 20],
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Inspeções',
+                                data: [10, 20, 15, 25, 10, 20, 30, 25, 10, 20, 25, 15],
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
     </div>
 </div>
-
 @endsection

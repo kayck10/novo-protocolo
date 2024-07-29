@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\StatusAtendimento;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class StatusAtendimentos extends Seeder
@@ -16,5 +15,7 @@ class StatusAtendimentos extends Seeder
         StatusAtendimento::create(['desc' => 'Em Aberto']);
         StatusAtendimento::create(['desc' => 'Em Andamento']);
         StatusAtendimento::create(['desc' => 'Finalizado']);
+        StatusAtendimento::create(['desc' => 'Concluído']);
+
     }
 }

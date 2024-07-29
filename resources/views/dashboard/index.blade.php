@@ -66,7 +66,7 @@
                                 <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-light" style="width: 76%"></div>
                                 </div>
-                                <small>Mais Informações</small>
+                                <small><a class="text-light" href="{{route('inservivel.index')}}">Mais Informações</a></small>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                                 <div class="progress mb-2 bg-white">
                                     <div class="progress-bar progress-animated bg-light" style="width: 30%"></div>
                                 </div>
-                                <small>Mais Informações</small>
+                                <small><a class="text-light" href="{{route('index.protocolo')}}">Mais Informações</a></small>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
         <div class="col-lg-6 col-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Atividades do Mês</h4>
+                    <h4 class="card-title">Atividades do mês</h4>
                 </div>
                 <div class="card-body">
                     <canvas id="pie_chart"></canvas>
