@@ -69,29 +69,24 @@
                             <form id="form-protocolo">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label class="form-label">Tombamento:</label>
+                                        <label class="form-label">Tombamento: <i class="fa fa-asterisk text-danger"></i></label>
                                         <input class="form-control" type="text" id="tombamento">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Tipo de Equipamento:</label>
+                                        <label class="form-label">Tipo de Equipamento: <i class="fa fa-asterisk text-danger"></i></label>
                                         <select id="id_tipos_equipamentos" class="form-control">
                                             <option value="">Selecione um Equipamento</option>
                                             @foreach ($tiposequipamentos as $tipoequipamento)
                                                 <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}</option>
                                             @endforeach
                                         </select>
-                                        <div class="form-check">
-                                            <label class="form-check-label" for="flexCheckDefault">Acessórios?</label>
-                                            <input name="acessorios" class="form-check-input mx-2" type="checkbox" id="acessoriosCheck" />
-                                        </div>
-                                        <input type="hidden" name="id_protocolo" id="id_protocolo">
-                                    </div>
-                                    <div class="form-group" id="acessoriosDescricao" style="display: none;">
-                                        <label class="form-label">Descrição do Acessório:</label>
-                                        <textarea cols="30" rows="3" class="form-control" id="descricao_acessorio"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Locais:</label>
+                                        <label class="form-label">Acessórios: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <textarea cols="20" rows="3" class="form-control" type="text" id="descricao_acessorio"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Local: <i class="fa fa-asterisk text-danger"></i></label>
                                         <select id="id_setor_escolas" class="form-control">
                                             <option value="">Selecione um Local</option>
                                             @foreach ($setorEscolas as $setorescolas)
@@ -104,7 +99,7 @@
                                         <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Descrição do Problema:</label>
+                                        <label class="form-label">Descrição do Problema: <i class="fa fa-asterisk text-danger"></i></label>
                                         <textarea cols="30" rows="3" class="form-control" type="text" id="desc"></textarea>
                                     </div>
                                     <div class="modal-footer">

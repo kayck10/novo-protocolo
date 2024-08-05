@@ -11,7 +11,9 @@ class ProtocoloEntrada extends Model
     use HasFactory;
     protected $table = "protocolo_entrada";
     protected $fillable = ['id_local', 'data_entrada'];
+    protected $dates = ['data_entrada'];
 
+    
     public function local()
     {
         return $this->belongsTo(Local::class, 'id_local');
@@ -22,4 +24,3 @@ class ProtocoloEntrada extends Model
         return $this->hasMany(Equipamentos::class, 'id_protocolo', 'id');
     }
 }
-

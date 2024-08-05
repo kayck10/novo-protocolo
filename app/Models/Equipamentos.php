@@ -24,13 +24,26 @@ class Equipamentos extends Model
         'id_users'
     ];
 
-    public function protocolo () {
+    public function protocolo()
+    {
         return $this->belongsTo(ProtocoloEntrada::class, 'id_protocolo', 'id');
     }
 
-    public function SetorEscola()
+    public function setorEscola()
     {
         return $this->belongsTo(SetorEscola::class, 'id_setor_escolas');
     }
+
+    public function tipoEquipamento()
+    {
+        return $this->belongsTo(TiposEquipamentos::class, 'id_tipos_equipamentos');
+    }
+
+    public function responsavel()
+    {
+        return $this->belongsTo(User::class, 'id_users');
+    }
 }
+
+
 

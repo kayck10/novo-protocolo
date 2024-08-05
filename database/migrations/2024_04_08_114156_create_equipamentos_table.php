@@ -23,11 +23,10 @@ return new class extends Migration
             $table->foreign('id_users')->references('id')->on('users');
             $table->timestamps();
             $table->text('desc')->nullable();
-            $table->text('tombamento')->nullable();
+            $table->text('tombamento');
             $table->text('solucao')->nullable();
             $table->boolean('prioridade');
-            $table->text('acessorios')->nullable();
-            $table->boolean('inservivel')->nullable();
+            $table->text('acessorios');
             $table->unsignedBigInteger('id_status')->nullable();
             $table->foreign('id_status')->references('id')->on('status_atendimentos');
         });

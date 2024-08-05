@@ -15,8 +15,9 @@ class InservivelController extends Controller
     public function create()
     {
         $equipamentos = Equipamentos::with('setorEscola')->where('inservivel', true)->get();
-            return view('inservivel.create', compact('equipamentos'));
+        return view('inservivel.create', compact('equipamentos'));
     }
+
     public function show($id)
     {
         $equipamento = Equipamentos::with('setorEscola')->find($id);
@@ -25,6 +26,4 @@ class InservivelController extends Controller
         }
         return response()->json($equipamento);
     }
-
 }
-
