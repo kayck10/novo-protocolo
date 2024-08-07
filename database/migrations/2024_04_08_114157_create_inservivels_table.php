@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_problema')->nullable();
             $table->foreign('id_problema')->references('id')->on('problemas');
-            $table->unsignedBigInteger('id_equipament')->nullable();
-            $table->foreign('id_equipamento')->references('id')->on('equipamento');
+            $table->unsignedBigInteger('id_equipamento')->nullable();
+            $table->foreign('id_equipamento')->references('id')->on('equipamentos');
+            $table->text('marca');
+            $table->text('modelo');
+            $table->text('num_serie');
             $table->timestamps();
         });
     }

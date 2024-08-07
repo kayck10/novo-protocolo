@@ -12,7 +12,8 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
                     <li class="breadcrumb-item active"><a href="{{ route('index.protocolo') }}">Protocolos de Entrada</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('create.protocolo') }}">Cadastrar Protocolo</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('create.protocolo') }}">Cadastrar Protocolo</a>
+                    </li>
                 </ol>
             </div>
         </div>
@@ -35,11 +36,16 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
-                                <input id="data_entrada" name="datepicker" class="datepicker-default form-control" id="datepicker1">
+                                <input id="data_entrada" name="datepicker" class="datepicker-default form-control"
+                                    id="datepicker1">
                             </div>
-                            <button style=" display:none;" type="button" class="btn btn-primary buttons" data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar Equipamento <i class="bi bi-plus"></i> </button>
-                            <button style=" display:none;" type="button" class="btn btn-primary buttons">Imprimir <i class="fa fa-print"></i></i></button>
-                            <button id="btnCadastrar" type="button" class="btn btn-primary">Cadastrar <i class="bi bi-check color-white"></i></button>
+                            <button style=" display:none;" type="button" class="btn btn-primary buttons"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar Equipamento <i
+                                    class="bi bi-plus"></i> </button>
+                            <button style=" display:none;" type="button" class="btn btn-primary buttons">Imprimir <i
+                                    class="fa fa-print"></i></i></button>
+                            <button id="btnCadastrar" type="button" class="btn btn-primary">Cadastrar <i
+                                    class="bi bi-check color-white"></i></button>
                         </div>
                         <hr>
                         <div class="col-12" id="tabela-equipamentos-div" style="display: none;">
@@ -59,75 +65,82 @@
                     </div>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Equipamento</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <form id="form-protocolo">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label class="form-label">Tombamento: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <label class="form-label">Tombamento: <i
+                                                class="fa fa-asterisk text-danger"></i></label>
                                         <input class="form-control" type="text" id="tombamento">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Tipo de Equipamento: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <label class="form-label">Tipo de Equipamento: <i
+                                                class="fa fa-asterisk text-danger"></i></label>
                                         <select id="id_tipos_equipamentos" class="form-control">
                                             <option value="">Selecione um Equipamento</option>
                                             @foreach ($tiposequipamentos as $tipoequipamento)
-                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}</option>
+                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}
+                                                </option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Acessórios: <i class="fa fa-asterisk text-danger"></i></label>
-                                        <textarea cols="20" rows="3" class="form-control" type="text" id="descricao_acessorio"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Local: <i class="fa fa-asterisk text-danger"></i></label>
-                                        <select id="id_setor_escolas" class="form-control">
-                                            <option value="">Selecione um Local</option>
-                                            @foreach ($setorEscolas as $setorescolas)
-                                                <option value="{{ $setorescolas->id }}">{{ $setorescolas->desc }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
-                                        <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Descrição do Problema: <i class="fa fa-asterisk text-danger"></i></label>
-                                        <textarea cols="30" rows="3" class="form-control" type="text" id="desc"></textarea>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn" data-bs-dismiss="modal">Fechar</button>
-                                        <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
+
+                                        <div class="form-group" id="acessoriosDescricao" style="">
+                                            <label class="form-label">Descrição do Acessório:</label>
+                                            <textarea cols="20" rows="3" class="form-control" id="descricao_acessorio"></textarea>
+                                            <input type="hidden" name="id_protocolo" id="id_protocolo">
                                     </div>
                                 </div>
-                            </form>
+
+                                <div class="form-group">
+                                    <label class="form-label mx-2">Local: <i
+                                            class="fa fa-asterisk text-danger"></i></label>
+                                    <select id="id_setor_escolas" class="form-control">
+                                        <option value="">Selecione um Local</option>
+                                        @foreach ($setorEscolas as $setorescolas)
+                                            <option value="{{ $setorescolas->id }}">{{ $setorescolas->desc }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
+                                    <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Descrição do Problema: <i
+                                            class="fa fa-asterisk text-danger"></i></label>
+                                    <textarea cols="30" rows="3" class="form-control" type="text" id="desc"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-bs-dismiss="modal">Fechar</button>
+                                    <button type="submit"
+                                        class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
+                                </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
     <script>
         $(document).ready(function() {
-            // Evento de mudança no checkbox de acessórios
-            $('#acessoriosCheck').change(function() {
-                if ($(this).is(':checked')) {
-                    $('#acessoriosDescricao').show(); // Mostrar o textarea se o checkbox estiver marcado
-                } else {
-                    $('#acessoriosDescricao').hide(); // Ocultar o textarea se o checkbox estiver desmarcado
-                }
-            });
+
+
 
             // Adiciona o evento de clique no botão de cadastro
             $('#btnCadastrar').on('click', function() {
