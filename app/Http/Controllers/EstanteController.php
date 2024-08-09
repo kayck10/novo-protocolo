@@ -78,7 +78,7 @@ class EstanteController extends Controller
     public function inservivel(Request $request)
     {
         $equipamento = Equipamentos::find($request->id);
-        $equipamento->inservivel = true;
+        $equipamento->id_status = 5;
         $equipamento->save();
 
         return response()->json(['success' => 'Equipamento marcado como inservível com sucesso.']);

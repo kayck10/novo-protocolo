@@ -8,22 +8,23 @@ class InservivelController extends Controller
 {
     public function index()
     {
-        $equipamentos = Equipamentos::with('setorEscola')->where('inservivel', true)->get();
+        $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 5)->get();
         return view('inservivel.index', compact('equipamentos'));
     }
 
     public function create()
     {
-        $equipamentos = Equipamentos::with('setorEscola')->where('inservivel', true)->get();
+        $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 5)->get();
         return view('inservivel.create', compact('equipamentos'));
     }
 
     public function show($id)
     {
-        $equipamento = Equipamentos::with('setorEscola')->find($id);
+        $equipamento = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 5)->find($id);
         if (!$equipamento) {
             return response()->json(['error' => 'Equipamento não encontrado'], 404);
         }
         return response()->json($equipamento);
     }
 }
+
