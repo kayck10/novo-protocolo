@@ -48,7 +48,13 @@
                                                     data-bs-target="#exampleModal">
                                                     <i class="bi bi-eye"></i>
                                                 </button>
-                                                <a href="#" class="btn btn-sm btn-danger"><i class="la la-trash-o"></i></a>
+                                                <form action="{{ route('protocolo.destroy', $protocolo->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Tem certeza que deseja excluir este protocolo?')">
+                                                        <i class="la la-trash-o"></i>
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -114,8 +120,8 @@
                             var tr = document.createElement('tr');
                             tr.innerHTML = `
                                 <td>${equipamento.tombamento}</td>
-                                <td>${equipamento.funcionario ? equipamento.funcionario.nome : ''}</td>
-                                <td>${equipamento.id_status}</td>
+                                <td>${equipamento.user ? equipamento.user.name : ''}</td>
+                                <td>${equipamento.status ? equipamento.status.desc : ''}</td>
                                 <td>${equipamento.desc}</td>
                             `;
                             tbody.appendChild(tr);

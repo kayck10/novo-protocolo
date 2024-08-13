@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
         Route::post('store/equipamento', [ProtocoloEntradaController::class, 'equipamentos'])->name('store.equipamento');
         Route::put('/update/{id}', [ProtocoloEntradaController::class, 'update'])->name('protocolo.update');
-        Route::post('/destroy{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
+        Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
     });
 
     Route::prefix('/atendimento-interno')->group(function () {

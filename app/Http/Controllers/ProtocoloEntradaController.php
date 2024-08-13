@@ -21,7 +21,7 @@ class ProtocoloEntradaController extends Controller
 
     public function getProtocolo($id)
     {
-        $protocolo = ProtocoloEntrada::with('equipamentos')->find($id);
+        $protocolo = ProtocoloEntrada::with(['equipamentos.status', 'equipamentos.user'])->find($id);
 
         if (!$protocolo) {
             return response()->json(['message' => 'Protocolo não encontrado'], 404);
@@ -29,9 +29,6 @@ class ProtocoloEntradaController extends Controller
 
         return response()->json($protocolo);
     }
-
-
-
 
     public function create() {
        $tiposequipamentos = TiposEquipamentos::all();
@@ -114,9 +111,19 @@ class ProtocoloEntradaController extends Controller
         return response()->json($equipamentos, 201);
     }
 
-    public function destroy ($id, Request $request) {
-        $protocolos = ProtocoloEntrada::find($id);
-        $protocolos->delete();
-        return redirect()->back();
+    public function destroy($id)
+    {
+        $protocolo = ProtocoloEntrada::find($id);
+
+        if ($protocolo) {
+            $protocolo->equipamentos()->delete();
+
+            $protocolo->delete();
+
+            return redirect()->route('index.protocolo')->with('success', 'Protocolo excluído com sucesso.');
+        } else {
+            return redirect()->route('index.protocolo')->with('error', 'Protocolo não encontrado.');
+        }
     }
+
 }

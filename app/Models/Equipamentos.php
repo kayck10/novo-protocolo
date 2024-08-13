@@ -31,7 +31,7 @@ class Equipamentos extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_users');
     }
 
     public function setorEscola()
@@ -42,6 +42,10 @@ class Equipamentos extends Model
     public function tiposEquipamentos()
     {
         return $this->belongsTo(TiposEquipamentos::class, 'id_tipos_equipamentos');
+    }
+    public function status()
+    {
+        return $this->belongsTo(StatusAtendimento::class, 'id_status');
     }
 }
 
