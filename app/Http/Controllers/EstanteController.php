@@ -83,4 +83,5 @@ class EstanteController extends Controller
 
         return response()->json(['success' => 'Equipamento marcado como inservível com sucesso.']);
     }
+
 }

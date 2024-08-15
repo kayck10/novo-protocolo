@@ -67,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/status/modal', [EstanteController::class, 'getStatusModal'])->name('estante.status.modal');
         Route::post('/passar', [EstanteController::class, 'passar'])->name('estante.passar');
         Route::post('/saida', [EstanteController::class, 'saida'])->name('estante.saida');
+        Route::post('/retornar', [EstanteController::class, 'retornar'])->name('estante.retornar');
         Route::post('/retirar', [EstanteController::class, 'retirar'])->name('estante.retirar');
         Route::post('/inservivel', [EstanteController::class, 'inservivel'])->name('estante.inservivel');
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');

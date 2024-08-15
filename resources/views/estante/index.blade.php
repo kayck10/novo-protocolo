@@ -99,48 +99,45 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="equipamentos_abertosLabel">Dados do Equipamento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <div style="font-size: 0.8rem" class="text-start">
-                        <p id="p-local"><b>Origem: </b><span id="protocolo_local"></span></p>
-                        <p id="p-data"><b>Data de Entrada:</b> <span id="equipamento_data"></span></p>
-                        <p id="p-tombamento"><b>Tombamento|NS:</b> <span id="equipamento_tombamento"></span></p>
-                        <p id="p-problema"><b>Problema:</b> <span id="equipamento_problema"></span></p>
-                        <p id="p-acessorio"><b>Acessório:</b> <span id="acessorio"></span></p>
+ <!-- Modal -->
+<div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="equipamentos_abertosLabel">Dados do Equipamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                <div style="font-size: 0.8rem" class="text-start">
+                    <p id="p-local"><b>Origem: </b><span id="protocolo_local"></span></p>
+                    <p id="p-data"><b>Data de Entrada:</b> <span id="equipamento_data"></span></p>
+                    <p id="p-tombamento"><b>Tombamento|NS:</b> <span id="equipamento_tombamento"></span></p>
+                    <p id="p-problema"><b>Problema:</b> <span id="equipamento_problema"></span></p>
+                    <p id="p-acessorio"><b>Acessório:</b> <span id="acessorio"></span></p>
 
-                        <div class="form-group">
-                            <label class="form-label"><b>Atribuir a um funcionário</b></label>
-                            <select name="id_user" class="form-control" id="select-tecnicos">
-                                <option>Selecione um Técnico</option>
-                                @foreach ($usuarios as $usuario)
-                                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-floating" id="div-solucao">
-                        <!-- Campo de solução será inserido aqui -->
-                    </div>
-                    <div id="div-botoes-status" class="text-start mt-3">
-                        <!-- Botões serão inseridos aqui -->
+                    <div class="form-group">
+                        <label class="form-label"><b>Atribuir a um funcionário</b></label>
+                        <select name="id_user" class="form-control" id="select-tecnicos">
+                            <option>Selecione um Técnico</option>
+                            @foreach ($usuarios as $usuario)
+                                <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                    <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i
-                            class="bi bi-arrow-right"></i></button>
+                <div class="form-floating" id="div-solucao">
                 </div>
+                <div id="div-botoes-status" class="text-start mt-3">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i class="bi bi-arrow-right"></i></button>
             </div>
         </div>
     </div>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -273,6 +270,7 @@ const abrirModal = (id) => {
                         <label for="floatingTextarea2">Solução</label>
                     </div>`
                 );
+                $('#btn-andamento-voltar').text('Voltar status');
                 $('#btn-andamento-passar').text('Saída');
                 $('#div-botoes-status').hide(); // Esconde os botões para status 2
             } else if (response.equipamento.id_status == 3) {
@@ -281,8 +279,10 @@ const abrirModal = (id) => {
                 );
                 $('#btn-andamento-passar').hide(); // Esconde o botão de andamento para status 3
                 $('#div-botoes-status').html(`
+                    <button id="btn-voltar" type="button" class="btn btn-primary">Em Andamento</button>
                     <button id="btn-retirar" type="button" class="btn btn-success">Retirar</button>
                     <button id="btn-inservivel" type="button" class="btn btn-warning">Inservível</button>
+
                 `);
 
                 $('#btn-retirar').off('click').on('click', function() {
@@ -292,9 +292,12 @@ const abrirModal = (id) => {
                 $('#btn-inservivel').off('click').on('click', function() {
                     atualizarStatusEspecial(id, 'inservivel');
                 });
+                $('#btn-voltar').off('click').on('click', function() {
+                    atualizarStatusEspecial(id, 'entrada');
+                });
             } else {
-                $('#div-botoes-status').empty(); // Limpa os botões para outros status
-                $('#btn-andamento-passar').show(); // Mostra o botão de andamento para outros status
+                $('#div-botoes-status').empty();
+                $('#btn-andamento-passar').show();
             }
 
             $("#select-tecnicos").html(usuarios);
@@ -305,13 +308,24 @@ const abrirModal = (id) => {
 
 function atualizarStatusEspecial(id, tipo) {
     let _token = $('#_token').val();
-    let url = tipo === 'retirar' ? "{{ route('estante.retirar') }}" : "{{ route('estante.inservivel') }}";
+    let url;
+    let status;
+
+    if (tipo === 'retirar') {
+        url = "{{ route('estante.retirar') }}";
+    } else if (tipo === 'inservivel') {
+        url = "{{ route('estante.inservivel') }}";
+    } else if (tipo === 'entrada') {
+        url = "{{ route('estante.passar') }}"; // Usando a rota para "passar" para atualizar o status
+        status = 2; // Definindo o status de entrada para 2
+    }
 
     $.ajax({
         type: "post",
         url: url,
         data: {
             id,
+            statusEq: status,
             _token
         },
         success: function(response) {
@@ -321,9 +335,14 @@ function atualizarStatusEspecial(id, tipo) {
             });
             $("#equipamentos_abertos").modal('hide');
             $('#profile-tab').click();
+        },
+        error: function(error) {
+            iziToast.error({
+                title: 'Erro',
+                message: 'Não foi possível atualizar o status.'
+            });
         }
     });
 }
-
     </script>
 @endsection
