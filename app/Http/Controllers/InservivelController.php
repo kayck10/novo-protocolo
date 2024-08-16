@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipamentos;
+use App\Models\ProtocoloEntrada;
 
 class InservivelController extends Controller
 {
@@ -15,7 +16,8 @@ class InservivelController extends Controller
     public function create()
     {
         $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 5)->get();
-        return view('inservivel.create', compact('equipamentos'));
+        $protocolos = ProtocoloEntrada::all();
+        return view('inservivel.create', compact('equipamentos', 'protocolos'));
     }
 
     public function show($id)

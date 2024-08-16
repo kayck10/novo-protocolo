@@ -66,6 +66,22 @@
 @import url(../vendor/perfect-scrollbar/css/perfect-scrollbar.css);
 @import url(../vendor/metismenu/css/metisMenu.min.css);
 
+
+.event-modal{
+    overflow: hidden !important;
+}
+.overflowh{
+    overflow: hidden !important;
+}
+.content-body{
+    overflow: hidden !important;
+
+}
+
+
+
+
+
 .gradient_one {
   background-image: linear-gradient(to right, rgba(186, 1, 181, 0.85) 0%, rgba(103, 25, 255, 0.85) 100%); }
 
@@ -264,7 +280,9 @@ body {
   line-height: 1.5;
   color: #444;
   text-align: left;
-  background-color: #F7F8FA; }
+  background-color: #F7F8FA;
+    overflow: scroll;
+}
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important; }

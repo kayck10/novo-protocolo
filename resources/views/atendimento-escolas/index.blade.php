@@ -1,16 +1,15 @@
 @extends('layout.main')
 
 @section('content')
-    <!-- row -->
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-8 offset-1">
             <div class="card">
                 <div class="card-body">
                     <div id="calendar" class="app-fullcalendar"></div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-2">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-intro-title">Calendário <i class="bi bi-calendar-week-fill"></i></h4>
@@ -29,7 +28,7 @@
     </div>
 
     <!-- Modal Add Category -->
-    <div class="modal fade none-border" id="add-category">
+    <div class="modal fade none-border overflowh" id="add-category">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -39,15 +38,15 @@
         </div>
     </div>
 
-    <!-- BEGIN MODAL -->
-    <div class="modal fade none-border" id="event-modal">
-        <div class="modal-dialog">
+    <div class="modal fade event-modal" id="event-modal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered overflowh">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title ">
+                    <h5 class="modal-title" id="eventModalLabel">
                         <strong>Agendar Atendimento <i class="bi bi-calendar3"></i>
                         </strong>
-                    </h4>
+                    </h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -72,12 +71,35 @@
                         <input class="form-control" type="text" name="desc_problema" id="desc_problema">
                     </div>
                     <p id="selected-date"></p>
-                </div class="modal-footer">
-                <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-success save-event waves-effect waves-light" onclick="changeEvent()">Criar Evento</button>
+                </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade event-modal" id="event-modal-click" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalLabel">Detalhes do Evento</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <p><b>Data:</b> <span id="modal-event-click-date"></span></p>
+                    <p><b>Descrição:</b> <span id="modal-event-click-desc"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-info waves-effect" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <script>
         function changeEvent() {
@@ -127,12 +149,22 @@
                     return [
                         'title' => $evento->desc_problema,
                         'start' => $evento->data,
+                        'extendedProps' => [
+                            'desc' => $evento->desc_problema
+                        ]
                         // Adicione outros atributos conforme necessário
                     ];
                 })),
                 dateClick: function(info) {
                     document.getElementById('selected-date').innerText = info.dateStr;
                     $('#event-modal').modal('show');
+                    console.log(info)
+                },
+
+                eventClick: function(info) {
+                    $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[0]);
+                    $('#modal-event-click-desc').html(info.event.extendedProps.desc);
+                    $('#event-modal-click').modal('show');
                 },
             });
 

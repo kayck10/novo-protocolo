@@ -100,7 +100,7 @@
     </div>
 
  <!-- Modal -->
-<div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel" aria-hidden="true">
+ <div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -128,6 +128,8 @@
                 <div class="form-floating" id="div-solucao">
                 </div>
                 <div id="div-botoes-status" class="text-start mt-3">
+                    <!-- Botão para atualizar status -->
+                    <button id="btn-atualizar-status" type="button" class="btn btn-primary">Atualizar Status</button>
                 </div>
             </div>
             <div class="modal-footer">
@@ -138,15 +140,16 @@
     </div>
 </div>
 
+
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
-        integrity="sha512-3l2QOFNBLXc3Gr+krSL6s6QfM7TH25G3+9h83ZK7cEr2QkZBqlrAEnu9jU6n7UnbS9+M14J8nMgCXuNGWU3H0A=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-     $(document).ready(function() {
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+    integrity="sha512-3l2QOFNBLXc3Gr+krSL6s6QfM7TH25G3+9h83ZK7cEr2QkZBqlrAEnu9jU6n7UnbS9+M14J8nMgCXuNGWU3H0A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+ $(document).ready(function() {
     pegarEquipamentos(1);
 });
 
@@ -199,7 +202,7 @@ const pegarEquipamentos = (statusEq) => {
             });
         },
         error: function(error) {
-            alert(error);
+            alert('Erro ao pegar equipamentos: ' + error.responseText);
         }
     });
 }
@@ -226,6 +229,15 @@ function atualizarStatus(id, status, solucao) {
             });
             $("#equipamentos_abertos").modal('hide');
             $('#profile-tab').click();
+            pegarEquipamentos(1); // Recarrega equipamentos para status 1
+            pegarEquipamentos(2); // Recarrega equipamentos para status 2
+        },
+        error: function(error) {
+            iziToast.error({
+                title: 'Erro',
+                message: 'Não foi possível atualizar o status.'
+            });
+            console.error('Erro ao atualizar status:', error);
         }
     });
 }
@@ -280,9 +292,8 @@ const abrirModal = (id) => {
                 $('#btn-andamento-passar').hide(); // Esconde o botão de andamento para status 3
                 $('#div-botoes-status').html(`
                     <button id="btn-voltar" type="button" class="btn btn-primary">Em Andamento</button>
-                    <button id="btn-retirar" type="button" class="btn btn-success">Retirar</button>
                     <button id="btn-inservivel" type="button" class="btn btn-warning">Inservível</button>
-
+                    <button id="btn-retirar" type="button" class="btn btn-success">Retirar</button>
                 `);
 
                 $('#btn-retirar').off('click').on('click', function() {
@@ -302,6 +313,13 @@ const abrirModal = (id) => {
 
             $("#select-tecnicos").html(usuarios);
             $("#equipamentos_abertos").modal('show');
+        },
+        error: function(error) {
+            iziToast.error({
+                title: 'Erro',
+                message: 'Não foi possível carregar as informações do equipamento.'
+            });
+            console.error('Erro ao abrir modal:', error);
         }
     });
 }
@@ -316,8 +334,8 @@ function atualizarStatusEspecial(id, tipo) {
     } else if (tipo === 'inservivel') {
         url = "{{ route('estante.inservivel') }}";
     } else if (tipo === 'entrada') {
-        url = "{{ route('estante.passar') }}"; // Usando a rota para "passar" para atualizar o status
-        status = 2; // Definindo o status de entrada para 2
+        url = "{{ route('estante.passar') }}";
+        status = 1; // Atualizando para status 1 ao voltar
     }
 
     $.ajax({
@@ -335,14 +353,18 @@ function atualizarStatusEspecial(id, tipo) {
             });
             $("#equipamentos_abertos").modal('hide');
             $('#profile-tab').click();
+            pegarEquipamentos(1); // Recarrega equipamentos para status 1
+            pegarEquipamentos(2); // Recarrega equipamentos para status 2
         },
         error: function(error) {
             iziToast.error({
                 title: 'Erro',
                 message: 'Não foi possível atualizar o status.'
             });
+            console.error('Erro ao atualizar status especial:', error);
         }
     });
 }
-    </script>
+</script>
+
 @endsection
