@@ -88,11 +88,33 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label class="form-label">Escola:</label>
+                        <p id="modal-event-click-escola"></p> <!-- Aqui será mostrado o nome da escola -->
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label"><b>Atribuir a um funcionário</b></label>
+                        <select name="id_user" class="form-control" id="select-tecnicos">
+                            <option>Selecione um Técnico</option>
+                            @foreach ($usuarios as $usuario)
+                                <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <p><b>Data:</b> <span id="modal-event-click-date"></span></p>
-                    <p><b>Descrição:</b> <span id="modal-event-click-desc"></span></p>
+                    <p><b>Problema:</b> <span id="modal-event-click-desc"></span></p>
+                    <div class="form-group">
+                        <label class="form-label">Solução:</label>
+                        <textarea class="form-control" name="solucao" id="solucao" cols="20" rows="2"></textarea>
+                    </div>
                 </div>
+
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-info waves-effect" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-warning text-light" data-dismiss="modal">Excluir <i class="bi bi-trash3-fill"></i></button>
+                    <button type="submit" class="btn btn-info text-light" data-dismiss="modal">Salvar <i class="bi bi-floppy-fill"></i></button>
+                    <button type="submit" class="btn btn-success text-light " data-dismiss="modal">Finalizar <i class="bi bi-check2-circle"></i></button>
+
                 </div>
             </div>
         </div>
@@ -126,44 +148,47 @@
                     });
                     $('#event-modal').modal('hide');
                     calendar.refetchEvents(); // Atualizar o calendário para mostrar o novo evento
-                    console.log(response.error)
+                    console.log(response.error);
                 }
             }).fail(function(jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status == 500) {
                     iziToast.error({
                         title: 'Erro',
-                        message: `Status: Voce nao permissao!`,
+                        message: 'Status: Você não tem permissão!',
                     });
                 }
                 console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-            })
+            });
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
 
+            var events = {!! json_encode($eventos->map(function($evento) {
+                return [
+                    'title' => $evento->desc_problema,
+                    'start' => $evento->data,
+                    'extendedProps' => [
+                        'desc' => $evento->desc_problema,
+                        'escola' => $evento->local->desc // Supondo que a relação esteja corretamente definida no model
+                    ]
+                ];
+            })) !!};
+
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'pt-br',
-                events: @json($eventos->map(function($evento) {
-                    return [
-                        'title' => $evento->desc_problema,
-                        'start' => $evento->data,
-                        'extendedProps' => [
-                            'desc' => $evento->desc_problema
-                        ]
-                        // Adicione outros atributos conforme necessário
-                    ];
-                })),
+                events: events,
                 dateClick: function(info) {
                     document.getElementById('selected-date').innerText = info.dateStr;
                     $('#event-modal').modal('show');
-                    console.log(info)
                 },
 
                 eventClick: function(info) {
+                    // Exibir informações do evento na modal
                     $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[0]);
                     $('#modal-event-click-desc').html(info.event.extendedProps.desc);
+                    $('#modal-event-click-escola').html(info.event.extendedProps.escola); // Exibe o nome da escola
                     $('#event-modal-click').modal('show');
                 },
             });
@@ -171,4 +196,5 @@
             calendar.render();
         });
     </script>
+
 @endsection

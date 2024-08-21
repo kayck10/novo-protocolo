@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Atendimentos;
 use App\Models\Local;
+use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,9 @@ class AtendimentoEscolasController extends Controller
     {
         $escolas = Local::where('externo', 1)->orderBy('desc')->get();
         $eventos = Atendimentos::where('id_user', null)->get();
-        return view('atendimento-escolas.index', compact('escolas', 'eventos'));
+        $usuarios = User::where('id_funcoes', 2)->get();
+
+        return view('atendimento-escolas.index', compact('escolas', 'eventos', 'usuarios'));
     }
 
     public function store(Request $request)

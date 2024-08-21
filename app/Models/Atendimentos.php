@@ -19,5 +19,9 @@ class Atendimentos extends Model
     {
         return $this->belongsTo(Local::class, 'id_local');
     }
+    public function local()
+    {
+        return $this->belongsTo(Local::class, 'id_local');
+    }
 
 }
