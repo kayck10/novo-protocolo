@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/index', [AtendimentoEscolasController::class, 'index'])->name('atendimento.escola');
         Route::post('/store', [AtendimentoEscolasController::class, 'store'])->name('atendimento.store');
         Route::post('/finalize', [AtendimentoEscolasController::class, 'finalize'])->name('atendimento.finalize');
+        Route::post('/delete', [AtendimentoEscolasController::class, 'delete'])->name('atendimento.delete');
     });
 
     Route::prefix('/protocolo-entrada')->group(function () {
@@ -57,6 +58,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show/{id}', [AtendimentoInternoController::class, 'show'])->name('atendimentointerno.show');
         Route::get('/edit/{id}', [AtendimentoInternoController::class, 'edit'])->name('atendimento-interno.edit');
         Route::put('/update/{id}', [AtendimentoInternoController::class, 'update'])->name('atendimento-interno.update');
+        Route::delete('/delete/{id}', [AtendimentoInternoController::class, 'delete'])->name('atendimento-interno.delete');
     });
     Route::prefix('/estante')->group(function () {
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');

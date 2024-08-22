@@ -12,7 +12,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
                     <li class="breadcrumb-item active"><a href="{{ route('atendimento-interno.index') }}">Atendimento Interno</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('create.protocolo') }}">Cadastrar Atendimento</a></li>
+                    <li class="breadcrumb-item active"><a href="">Ver Atendimento</a></li>
                 </ol>
             </div>
         </div>
@@ -21,7 +21,7 @@
             <div class="col-xl-12 col-xxl-12 col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Protocolo Cadastrado</h5>
+                        <h5 class="card-title">Atendimento Cadastrado</h5>
                     </div>
                     <div class="card-body">
                         <div class="col-12 mx-auto p-5">

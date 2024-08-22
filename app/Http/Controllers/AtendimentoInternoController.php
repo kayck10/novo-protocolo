@@ -13,7 +13,7 @@ class AtendimentoInternoController extends Controller
 {
     public function index()
     {
-        $atendimentos = Atendimentos::where('id_user', '!=',null)->with(['tecnico', 'setor'])->get();
+        $atendimentos = Atendimentos::where('id_user', '!=', null)->with(['tecnico', 'setor'])->get();
 
         // Buscar técnicos e setores
         $tecnicos = User::where('id_funcoes', 2)->get();
@@ -105,11 +105,19 @@ class AtendimentoInternoController extends Controller
         return view('atendimentos-internos.edit', compact('atendimento', 'tecnicos', 'setores'));
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $atendimento = Atendimentos::find($id);
         $atendimento->update($request->all());
         Toastr::success('Atendimento atualizado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->route('atendimento-interno.index');
     }
+    public function delete(Request $request, $id)
+    {
+        $atendimento = Atendimentos::findOrFail($id);
+        $atendimento->delete();
 
+        Toastr::success('Atendimento excluído com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
+        return redirect()->route('atendimento-interno.index');
+    }
 }

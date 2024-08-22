@@ -61,7 +61,8 @@ class EstanteController extends Controller
         $equipamento = Equipamentos::find($request->id);
         $equipamento->update([
             'id_status' => 3,
-            'solucao'   => $request->solucao
+            'solucao'   => $request->solucao,
+            'id_users'  => $request->id_tecnico
         ]);
 
         return response()->json(['success' => 'Equipamento atualizado com sucesso!']);

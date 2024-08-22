@@ -44,8 +44,8 @@
                     <ul class="nav nav-tabs itens" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <button class="nav-link tab-estante active" id="home-tab" data-bs-toggle="tab"
-                                data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                data-status="1" aria-selected="true">Em aberto
+                                data-bs-target="#home" type="button" role="tab" aria-controls="home" data-status="1"
+                                aria-selected="true">Em aberto
                             </button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -71,8 +71,7 @@
                         </div>
                     </div>
                     <div class="tab-content mb-5 mt-3 ms-3" id="myTabContent">
-                        <div class="tab-pane fade show active" id="home" role="tabpanel"
-                            aria-labelledby="home-tab">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="row">
                                 <div id="tbody_equipamentos" class="col-12">
                                     <!-- Conteúdo de equipamentos em aberto aqui -->
@@ -99,272 +98,294 @@
         </div>
     </div>
 
- <!-- Modal -->
- <div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="equipamentos_abertosLabel">Dados do Equipamento</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-            </div>
-            <div class="modal-body">
-                <div style="font-size: 0.8rem" class="text-start">
-                    <p id="p-local"><b>Origem: </b><span id="protocolo_local"></span></p>
-                    <p id="p-data"><b>Data de Entrada:</b> <span id="equipamento_data"></span></p>
-                    <p id="p-tombamento"><b>Tombamento|NS:</b> <span id="equipamento_tombamento"></span></p>
-                    <p id="p-problema"><b>Problema:</b> <span id="equipamento_problema"></span></p>
-                    <p id="p-acessorio"><b>Acessório:</b> <span id="acessorio"></span></p>
+    <!-- Modal -->
+    <div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="equipamentos_abertosLabel">Dados do Equipamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div style="font-size: 0.8rem" class="text-start">
+                        <p id="p-local"><b>Origem: </b><span id="protocolo_local"></span></p>
+                        <p id="p-data"><b>Data de Entrada:</b> <span id="equipamento_data"></span></p>
+                        <p id="p-tombamento"><b>Tombamento|NS:</b> <span id="equipamento_tombamento"></span></p>
+                        <p id="p-problema"><b>Problema:</b> <span id="equipamento_problema"></span></p>
+                        <p id="p-acessorio"><b>Acessório:</b> <span id="acessorio"></span></p>
 
-                    <div class="form-group">
-                        <label class="form-label"><b>Atribuir a um funcionário</b></label>
-                        <select name="id_user" class="form-control" id="select-tecnicos">
-                            <option>Selecione um Técnico</option>
-                            @foreach ($usuarios as $usuario)
-                                <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
-                            @endforeach
-                        </select>
+                        <div class="form-group">
+                            <label class="form-label"><b>Atribuir a um funcionário</b></label>
+                            <select name="id_user" class="form-control" id="select-tecnicos">
+                                <option>Selecione um Técnico</option>
+                                @foreach ($usuarios as $usuario)
+                                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-floating" id="div-solucao">
+                    </div>
+                    <div id="div-botoes-status" class="text-start mt-3">
+                        <!-- Botão para atualizar status -->
+                        <button id="btn-atualizar-status" type="button" class="btn btn-primary">Atualizar
+                            Status</button>
                     </div>
                 </div>
-                <div class="form-floating" id="div-solucao">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                    <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i
+                            class="bi bi-arrow-right"></i></button>
                 </div>
-                <div id="div-botoes-status" class="text-start mt-3">
-                    <!-- Botão para atualizar status -->
-                    <button id="btn-atualizar-status" type="button" class="btn btn-primary">Atualizar Status</button>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i class="bi bi-arrow-right"></i></button>
             </div>
         </div>
     </div>
-</div>
-
-
 @endsection
 
 @section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
-    integrity="sha512-3l2QOFNBLXc3Gr+krSL6s6QfM7TH25G3+9h83ZK7cEr2QkZBqlrAEnu9jU6n7UnbS9+M14J8nMgCXuNGWU3H0A=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
- $(document).ready(function() {
-    pegarEquipamentos(1);
-});
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"
+        integrity="sha512-3l2QOFNBLXc3Gr+krSL6s6QfM7TH25G3+9h83ZK7cEr2QkZBqlrAEnu9jU6n7UnbS9+M14J8nMgCXuNGWU3H0A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function() {
+            pegarEquipamentos(1);
+        });
 
-let idEquipamento;
+        let idEquipamento;
 
-function getIdEquipamento() {
-    return idEquipamento;
-}
-
-$('.tab-estante').click(function() {
-    let status = $(this).data('status');
-    pegarEquipamentos(status);
-});
-
-const pegarEquipamentos = (statusEq) => {
-    let _token = $('#_token').val();
-    $.ajax({
-        type: "get",
-        url: "{{ route('estante.status') }}",
-        data: {
-            statusEq,
-            _token
-        },
-        success: function(response) {
-            if (statusEq == 1) {
-                $('#tbody_equipamentos_andamento').empty().html('');
-                $('#tbody_equipamentos').empty().html(response);
-            } else if (statusEq == 2) {
-                $('#tbody_equipamentos').empty().html('');
-                $('#tbody_equipamentos_andamento').empty().html(response);
-            } else if (statusEq == 3) {
-                $('#tbody_equipamentos_andamento').empty().html('');
-                $('#tbody_equipamentos').empty().html('');
-                $('#contact').empty().html(response);
-            }
-
-            $(".abrirModal").off('click').on('click', function(e) {
-                abrirModal($(this).data('id'));
-            });
-
-            $("#fechar-modal").off('click').on('click', function(e) {
-                $("#equipamentos_abertos").modal('hide');
-            });
-
-            $('#btn-andamento-passar').off('click').on('click', function() {
-                let id = getIdEquipamento();
-                let status = $(this).text() === 'Saída' ? 3 : 2;
-                let solucao = status === 3 ? $('#floatingTextarea2').val() : null;
-                atualizarStatus(id, status, solucao);
-            });
-        },
-        error: function(error) {
-            alert('Erro ao pegar equipamentos: ' + error.responseText);
+        function getIdEquipamento() {
+            return idEquipamento;
         }
-    });
-}
 
-function atualizarStatus(id, status, solucao) {
-    let id_tecnico = $('#select-tecnicos').val();
-    let _token = $('#_token').val();
-    let url = status === 3 ? "{{ route('estante.saida') }}" : "{{ route('estante.passar') }}";
+        $('.tab-estante').click(function() {
+            let status = $(this).data('status');
+            pegarEquipamentos(status);
+        });
 
-    $.ajax({
-        type: "post",
-        url: url,
-        data: {
-            id,
-            statusEq: status,
-            id_tecnico,
-            solucao,
-            _token
-        },
-        success: function(response) {
-            iziToast.success({
-                title: 'Sucesso',
-                message: response.success
-            });
-            $("#equipamentos_abertos").modal('hide');
-            $('#profile-tab').click();
-            pegarEquipamentos(1); // Recarrega equipamentos para status 1
-            pegarEquipamentos(2); // Recarrega equipamentos para status 2
-        },
-        error: function(error) {
-            iziToast.error({
-                title: 'Erro',
-                message: 'Não foi possível atualizar o status.'
-            });
-            console.error('Erro ao atualizar status:', error);
-        }
-    });
-}
+        const pegarEquipamentos = (statusEq) => {
+            let _token = $('#_token').val();
+            $.ajax({
+                type: "get",
+                url: "{{ route('estante.status') }}",
+                data: {
+                    statusEq,
+                    _token
+                },
+                success: function(response) {
+                    if (statusEq == 1) {
+                        $('#tbody_equipamentos_andamento').empty().html('');
+                        $('#tbody_equipamentos').empty().html(response);
+                    } else if (statusEq == 2) {
+                        $('#tbody_equipamentos').empty().html('');
+                        $('#tbody_equipamentos_andamento').empty().html(response);
+                    } else if (statusEq == 3) {
+                        $('#tbody_equipamentos_andamento').empty().html('');
+                        $('#tbody_equipamentos').empty().html('');
+                        $('#contact').empty().html(response);
+                    }
 
-const abrirModal = (id) => {
-    idEquipamento = id;
+                    $(".abrirModal").off('click').on('click', function(e) {
+                        abrirModal($(this).data('id'));
+                    });
 
-    $.ajax({
-        type: "get",
-        url: "{{ route('estante.status.modal') }}",
-        data: {
-            id
-        },
-        success: function(response) {
-            $('#div-solucao').empty();
-            $('#div-botoes-status').empty();
-            let usuarios = "<option>Selecione um Técnico</option>";
+                    $("#fechar-modal").off('click').on('click', function(e) {
+                        $("#equipamentos_abertos").modal('hide');
+                    });
 
-            let dataDeEntrada = response.protocoloEntrada.data_entrada.split('T')[0].split('-');
-            $("#p-data").html(
-                `<b>Data de entrada: </b> ${dataDeEntrada[2]}/${dataDeEntrada[1]}/${dataDeEntrada[0]}`
-            );
-            $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
-            $("#p-acessorio").html(`<b>Acessório: </b> ${response.equipamento.acessorios}`);
-            $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
-            $("#p-local").html(`<b>Local:</b> ${response.equipamento.protocolo.local.desc}`);
-
-            $.each(response.usuarios, function(indexInArray, valueOfElement) {
-                if (response.equipamento.id_users == valueOfElement.id) {
-                    usuarios +=
-                        `<option value="${valueOfElement.id}" selected>${valueOfElement.name}</option>`;
-                } else {
-                    usuarios +=
-                        `<option value="${valueOfElement.id}">${valueOfElement.name}</option>`;
+                    $('#btn-andamento-passar').off('click').on('click', function() {
+                        let id = getIdEquipamento();
+                        let status = $(this).text() === 'Saída' ? 3 : 2;
+                        let solucao = status === 3 ? $('#floatingTextarea2').val() : null;
+                        atualizarStatus(id, status, solucao);
+                    });
+                },
+                error: function(error) {
+                    alert('Erro ao pegar equipamentos: ' + error.responseText);
                 }
             });
+        }
 
-            if (response.equipamento.id_status == 2) {
-                $('#div-solucao').html(
-                    `<div class="form-floating">
-                        <textarea class="form-control" placeholder="Insira a solução aqui" id="floatingTextarea2" style="height: 100px"></textarea>
-                        <label for="floatingTextarea2">Solução</label>
-                    </div>`
-                );
-                $('#btn-andamento-voltar').text('Voltar status');
-                $('#btn-andamento-passar').text('Saída');
-                $('#div-botoes-status').hide(); // Esconde os botões para status 2
-            } else if (response.equipamento.id_status == 3) {
-                $('#div-solucao').html(
-                    `<p><b>Solução:</b> ${response.equipamento.solucao}</p>`
-                );
-                $('#btn-andamento-passar').hide(); // Esconde o botão de andamento para status 3
-                $('#div-botoes-status').html(`
-                    <button id="btn-voltar" type="button" class="btn btn-primary">Em Andamento</button>
-                    <button id="btn-inservivel" type="button" class="btn btn-warning">Inservível</button>
-                    <button id="btn-retirar" type="button" class="btn btn-success">Retirar</button>
-                `);
+        function atualizarStatus(id, status, solucao) {
+            let id_tecnico = $('#select-tecnicos').val();
+            let _token = $('#_token').val();
 
-                $('#btn-retirar').off('click').on('click', function() {
-                    atualizarStatusEspecial(id, 'retirar');
+            // Verifica se o técnico foi selecionado
+            if (id_tecnico === '' || id_tecnico === 'Selecione um Técnico') {
+                iziToast.error({
+                    title: 'Erro',
+                    message: 'Por favor, selecione um técnico.',
                 });
-
-                $('#btn-inservivel').off('click').on('click', function() {
-                    atualizarStatusEspecial(id, 'inservivel');
-                });
-                $('#btn-voltar').off('click').on('click', function() {
-                    atualizarStatusEspecial(id, 'entrada');
-                });
-            } else {
-                $('#div-botoes-status').empty();
-                $('#btn-andamento-passar').show();
+                return;
             }
 
-            $("#select-tecnicos").html(usuarios);
-            $("#equipamentos_abertos").modal('show');
-        },
-        error: function(error) {
-            iziToast.error({
-                title: 'Erro',
-                message: 'Não foi possível carregar as informações do equipamento.'
+            // Verifica se a solução foi preenchida quando o status é 3
+            if (status === 3 && !solucao) {
+                iziToast.error({
+                    title: 'Erro',
+                    message: 'Por favor, insira a solução.',
+                });
+                return;
+            }
+
+            let url = status === 3 ? "{{ route('estante.saida') }}" : "{{ route('estante.passar') }}";
+
+            $.ajax({
+                type: "post",
+                url: url,
+                data: {
+                    id,
+                    statusEq: status,
+                    id_tecnico,
+                    solucao,
+                    _token
+                },
+                success: function(response) {
+                    iziToast.success({
+                        title: 'Sucesso',
+                        message: response.success
+                    });
+                    $("#equipamentos_abertos").modal('hide');
+                    $('#profile-tab').click();
+                    pegarEquipamentos(1); // Recarrega equipamentos para status 1
+                    pegarEquipamentos(2); // Recarrega equipamentos para status 2
+                },
+                error: function(error) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Não foi possível atualizar o status.'
+                    });
+                    console.error('Erro ao atualizar status:', error);
+                }
             });
-            console.error('Erro ao abrir modal:', error);
         }
-    });
-}
 
-function atualizarStatusEspecial(id, tipo) {
-    let _token = $('#_token').val();
-    let url;
-    let status;
 
-    if (tipo === 'retirar') {
-        url = "{{ route('estante.retirar') }}";
-    } else if (tipo === 'inservivel') {
-        url = "{{ route('estante.inservivel') }}";
-    } else if (tipo === 'entrada') {
-        url = "{{ route('estante.passar') }}";
-        status = 1; // Atualizando para status 1 ao voltar
-    }
 
-    $.ajax({
-        type: "post",
-        url: url,
-        data: {
-            id,
-            statusEq: status,
-            _token
-        },
-        success: function(response) {
-            iziToast.success({
-                title: 'Sucesso',
-                message: response.success
+        const abrirModal = (id) => {
+            idEquipamento = id;
+
+            $.ajax({
+                type: "get",
+                url: "{{ route('estante.status.modal') }}",
+                data: {
+                    id
+                },
+                success: function(response) {
+                    $('#div-solucao').empty();
+                    $('#div-botoes-status').empty();
+                    let usuarios = "<option>Selecione um Técnico</option>";
+
+                    let dataDeEntrada = response.protocoloEntrada.data_entrada.split('T')[0].split('-');
+                    $("#p-data").html(
+                        `<b>Data de entrada: </b> ${dataDeEntrada[2]}/${dataDeEntrada[1]}/${dataDeEntrada[0]}`
+                    );
+                    $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
+                    $("#p-acessorio").html(`<b>Acessório: </b> ${response.equipamento.acessorios}`);
+                    $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
+                    $("#p-local").html(`<b>Local:</b> ${response.equipamento.protocolo.local.desc}`);
+
+                    $.each(response.usuarios, function(indexInArray, valueOfElement) {
+                        if (response.equipamento.id_users == valueOfElement.id) {
+                            usuarios +=
+                                `<option value="${valueOfElement.id}" selected>${valueOfElement.name}</option>`;
+                        } else {
+                            usuarios +=
+                                `<option value="${valueOfElement.id}">${valueOfElement.name}</option>`;
+                        }
+                    });
+
+                    if (response.equipamento.id_status == 2) {
+                        $('#div-solucao').html(
+                            `<div class="form-floating">
+                <textarea class="form-control" placeholder="Insira a solução aqui" id="floatingTextarea2" style="height: 100px"></textarea>
+                <label for="floatingTextarea2">Solução</label>
+            </div>`
+                        );
+                        $('#btn-andamento-voltar').text('Voltar status');
+                        $('#btn-andamento-passar').text('Saída');
+                        $('#div-botoes-status').hide(); // Esconde os botões para status 2
+                    } else if (response.equipamento.id_status == 3) {
+                        $('#div-solucao').html(
+                            `<p><b>Solução:</b> ${response.equipamento.solucao}</p>`
+                        );
+                        $('#btn-andamento-passar').hide(); // Esconde o botão de andamento para status 3
+                        $('#div-botoes-status').html(`
+            <button id="btn-voltar" type="button" class="btn btn-primary">Em Andamento</button>
+            <button id="btn-inservivel" type="button" class="btn btn-warning">Inservível</button>
+            <button id="btn-retirar" type="button" class="btn btn-success">Retirar</button>
+        `);
+
+                        $('#btn-retirar').off('click').on('click', function() {
+                            atualizarStatusEspecial(id, 'retirar');
+                        });
+
+                        $('#btn-inservivel').off('click').on('click', function() {
+                            atualizarStatusEspecial(id, 'inservivel');
+                        });
+                        $('#btn-voltar').off('click').on('click', function() {
+                            atualizarStatusEspecial(id, 'entrada');
+                        });
+                    } else {
+                        $('#div-botoes-status').empty();
+                        $('#btn-andamento-passar').show();
+                    }
+
+                    $("#select-tecnicos").html(usuarios);
+                    $("#equipamentos_abertos").modal('show');
+                },
+                error: function(error) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Não foi possível carregar as informações do equipamento.'
+                    });
+                    console.error('Erro ao abrir modal:', error);
+                }
             });
-            $("#equipamentos_abertos").modal('hide');
-            $('#profile-tab').click();
-            pegarEquipamentos(1); // Recarrega equipamentos para status 1
-            pegarEquipamentos(2); // Recarrega equipamentos para status 2
-        },
-        error: function(error) {
-            iziToast.error({
-                title: 'Erro',
-                message: 'Não foi possível atualizar o status.'
-            });
-            console.error('Erro ao atualizar status especial:', error);
         }
-    });
-}
-</script>
 
+
+        function atualizarStatusEspecial(id, tipo) {
+            let _token = $('#_token').val();
+            let url;
+            let status;
+
+            if (tipo === 'retirar') {
+                url = "{{ route('estante.retirar') }}";
+            } else if (tipo === 'inservivel') {
+                url = "{{ route('estante.inservivel') }}";
+            } else if (tipo === 'entrada') {
+                url = "{{ route('estante.passar') }}";
+                status = 2;
+            }
+
+            $.ajax({
+                type: "post",
+                url: url,
+                data: {
+                    id,
+                    statusEq: status,
+                    _token
+                },
+                success: function(response) {
+                    iziToast.success({
+                        title: 'Sucesso',
+                        message: response.success
+                    });
+                    $("#equipamentos_abertos").modal('hide');
+                    $('#profile-tab').click();
+                    pegarEquipamentos(1);
+                    pegarEquipamentos(2);
+                },
+                error: function(error) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Não foi possível atualizar o status.'
+                    });
+                    console.error('Erro ao atualizar status especial:', error);
+                }
+            });
+        }
+    </script>
 @endsection
