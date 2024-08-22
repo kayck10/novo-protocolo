@@ -76,4 +76,20 @@ class AtendimentoEscolasController extends Controller
 
         return response()->json($atendimento, 201);
     }
+    public function finalize(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:atendimentos,id',
+            'id_user' => 'required|exists:users,id',
+            'solucao' => 'required|string',
+        ]);
+
+        $atendimento = Atendimentos::findOrFail($request->id);
+        $atendimento->id_user = $request->id_user;
+        $atendimento->solucao = $request->solucao;
+        $atendimento->id_status = 3;
+        $atendimento->save();
+
+        return response()->json($atendimento, 200);
+    }
 }

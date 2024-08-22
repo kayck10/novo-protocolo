@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/atendimento-escola')->group(function () {
         Route::get('/index', [AtendimentoEscolasController::class, 'index'])->name('atendimento.escola');
         Route::post('/store', [AtendimentoEscolasController::class, 'store'])->name('atendimento.store');
+        Route::post('/finalize', [AtendimentoEscolasController::class, 'finalize'])->name('atendimento.finalize');
     });
 
     Route::prefix('/protocolo-entrada')->group(function () {
