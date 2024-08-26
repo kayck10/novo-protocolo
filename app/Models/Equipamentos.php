@@ -47,6 +47,11 @@ class Equipamentos extends Model
     {
         return $this->belongsTo(StatusAtendimento::class, 'id_status');
     }
+
+    public function atendimento()
+    {
+        return $this->belongsTo(Atendimentos::class, 'id_atendimento');
+    }
 }
 
 

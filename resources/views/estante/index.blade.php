@@ -12,6 +12,9 @@
         .back-btn {
             background-color: #024f9b;
         }
+        .hidden{
+            display: none;
+        }
     </style>
 
     <div class="container-fluid">
@@ -97,50 +100,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="equipamentos_abertos" tabindex="-1" aria-labelledby="equipamentos_abertosLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="equipamentos_abertosLabel">Dados do Equipamento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body">
-                    <div style="font-size: 0.8rem" class="text-start">
-                        <p id="p-local"><b>Origem: </b><span id="protocolo_local"></span></p>
-                        <p id="p-data"><b>Data de Entrada:</b> <span id="equipamento_data"></span></p>
-                        <p id="p-tombamento"><b>Tombamento|NS:</b> <span id="equipamento_tombamento"></span></p>
-                        <p id="p-problema"><b>Problema:</b> <span id="equipamento_problema"></span></p>
-                        <p id="p-acessorio"><b>Acessório:</b> <span id="acessorio"></span></p>
-
-                        <div class="form-group">
-                            <label class="form-label"><b>Atribuir a um funcionário</b></label>
-                            <select name="id_user" class="form-control" id="select-tecnicos">
-                                <option>Selecione um Técnico</option>
-                                @foreach ($usuarios as $usuario)
-                                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-floating" id="div-solucao">
-                    </div>
-                    <div id="div-botoes-status" class="text-start mt-3">
-                        <!-- Botão para atualizar status -->
-                        <button id="btn-atualizar-status" type="button" class="btn btn-primary">Atualizar
-                            Status</button>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
-                    <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i
-                            class="bi bi-arrow-right"></i></button>
-                </div>
-            </div>
-        </div>
-    </div>
 @endsection
 
 @section('scripts')
@@ -152,6 +111,16 @@
         $(document).ready(function() {
             pegarEquipamentos(1);
         });
+
+        const passarStatus = (idStatus) => {
+            let id = getIdEquipamento();
+            // console.log($(this).text())
+            let solucao;
+            if($('#floatingTextarea2').length){
+                solucao = $('#floatingTextarea2').val();
+            }
+            atualizarStatus(id, idStatus, solucao);
+        }
 
         let idEquipamento;
 
@@ -194,12 +163,7 @@
                         $("#equipamentos_abertos").modal('hide');
                     });
 
-                    $('#btn-andamento-passar').off('click').on('click', function() {
-                        let id = getIdEquipamento();
-                        let status = $(this).text() === 'Saída' ? 3 : 2;
-                        let solucao = status === 3 ? $('#floatingTextarea2').val() : null;
-                        atualizarStatus(id, status, solucao);
-                    });
+
                 },
                 error: function(error) {
                     alert('Erro ao pegar equipamentos: ' + error.responseText);
@@ -210,7 +174,6 @@
         function atualizarStatus(id, status, solucao) {
             let id_tecnico = $('#select-tecnicos').val();
             let _token = $('#_token').val();
-
             // Verifica se o técnico foi selecionado
             if (id_tecnico === '' || id_tecnico === 'Selecione um Técnico') {
                 iziToast.error({
@@ -221,7 +184,7 @@
             }
 
             // Verifica se a solução foi preenchida quando o status é 3
-            if (status === 3 && !solucao) {
+            if($('#floatingTextarea2').length && !solucao && status  != 1){
                 iziToast.error({
                     title: 'Erro',
                     message: 'Por favor, insira a solução.',
@@ -229,11 +192,11 @@
                 return;
             }
 
-            let url = status === 3 ? "{{ route('estante.saida') }}" : "{{ route('estante.passar') }}";
+            // console.log(url)
 
             $.ajax({
                 type: "post",
-                url: url,
+                url: "{{ route('estante.passar') }}",
                 data: {
                     id,
                     statusEq: status,
@@ -296,26 +259,35 @@
                         }
                     });
 
+                    if (response.equipamento.id_status == 1) {
+
+
+                        $('#btn-entrada').removeClass('hidden')
+                        $('#btn-andamento').addClass('hidden')
+                        $('#btn-finalizar').addClass('hidden')
+
+                    }
+
                     if (response.equipamento.id_status == 2) {
                         $('#div-solucao').html(
                             `<div class="form-floating">
-                <textarea class="form-control" placeholder="Insira a solução aqui" id="floatingTextarea2" style="height: 100px"></textarea>
-                <label for="floatingTextarea2">Solução</label>
-            </div>`
+                                <textarea class="form-control" placeholder="Insira a solução aqui" id="floatingTextarea2" style="height: 100px"></textarea>
+                                <label for="floatingTextarea2">Solução</label>
+                            </div>`
                         );
-                        $('#btn-andamento-voltar').text('Voltar status');
-                        $('#btn-andamento-passar').text('Saída');
-                        $('#div-botoes-status').hide(); // Esconde os botões para status 2
+
+                        $('#btn-entrada').addClass('hidden')
+                        $('#btn-andamento').removeClass('hidden')
+                        $('#btn-finalizar').addClass('hidden')
+
                     } else if (response.equipamento.id_status == 3) {
                         $('#div-solucao').html(
                             `<p><b>Solução:</b> ${response.equipamento.solucao}</p>`
                         );
-                        $('#btn-andamento-passar').hide(); // Esconde o botão de andamento para status 3
-                        $('#div-botoes-status').html(`
-            <button id="btn-voltar" type="button" class="btn btn-primary">Em Andamento</button>
-            <button id="btn-inservivel" type="button" class="btn btn-warning">Inservível</button>
-            <button id="btn-retirar" type="button" class="btn btn-success">Retirar</button>
-        `);
+                        // $('#btn-andamento-passar').hide(); // Esconde o botão de andamento para status 3
+                        $('#btn-entrada').addClass('hidden')
+                        $('#btn-andamento').addClass('hidden')
+                        $('#btn-finalizar').removeClass('hidden')
 
                         $('#btn-retirar').off('click').on('click', function() {
                             atualizarStatusEspecial(id, 'retirar');

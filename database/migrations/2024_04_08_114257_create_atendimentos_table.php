@@ -24,7 +24,7 @@ return new class extends Migration
                 $table->text('desc_problema')->nullable();
                 $table->text('solucao')->nullable();
                 $table->boolean('prioridade')->default(false);
-                $table->date('data');
+                $table->date('data')->nullable();
                 $table->timestamps();
             });
     }

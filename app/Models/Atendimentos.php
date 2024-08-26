@@ -24,4 +24,9 @@ class Atendimentos extends Model
         return $this->belongsTo(Local::class, 'id_local');
     }
 
+    public function equipamentos()
+    {
+        return $this->hasMany(Equipamentos::class, 'id_atendimento');
+    }
+
 }

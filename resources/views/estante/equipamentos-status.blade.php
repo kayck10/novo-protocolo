@@ -54,15 +54,30 @@
             </div>
 
             <!-- Modal footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar <i
-                        class="bi bi-x-lg"></i></button>
-                <button id="btn-andamento-passar" type="button" class="btn btn-primary">Andamento <i
-                        class="bi bi-arrow-right"></i></button>
-                <div id="div-botoes-status">
-
+            <div class="modal-footer" id="btn-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar <i class="bi bi-x-lg"></i></button>
+                <div id="btn-entrada">
+                    {{-- botao entrada --}}
+                    <button id="btn-em-andamento" data-id-status="2" type="button" class="btn btn-primary atualizar-status">Em Andamento <i class="bi bi-arrow-right"></i></button>
+                </div>
+                <div id="btn-andamento">
+                    {{-- botao andamento --}}
+                    <button id="btn-em-aberto" data-id-status="1" type="button" class="btn btn-primary atualizar-status">Em aberto <i class="bi bi-arrow-right"></i></button>
+                    <button id="btn-finalizado" data-id-status="3" type="button" class="btn btn-primary atualizar-status">Finalizado <i class="bi bi-arrow-right"></i></button>
+                </div>
+                <div id="btn-finalizar">
+                    {{-- botao finalizar --}}
+                    <button id="btn-voltar" data-id-status="2" type="button" class="btn btn-primary atualizar-status">Em Andamento</button>
+                    <button id="btn-inservivel" data-id-status="5" type="button" class="btn btn-warning atualizar-status">Inservível</button>
+                    <button id="btn-retirar" data-id-status="4" type="button" class="btn btn-success atualizar-status">Retirar</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $('.atualizar-status').on('click', function() {
+        passarStatus($(this).data('id-status'));
+    });
+</script>

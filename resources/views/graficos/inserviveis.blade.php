@@ -47,13 +47,15 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const ctx = document.getElementById('myChart').getContext('2d');
+                const dadosPorMes = @json(array_values($dadosPorMes));
+
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
                         datasets: [{
                             label: 'Inservíveis',
-                            data: [12, 19, 3, 5, 2, 3],
+                            data: dadosPorMes,
                             borderWidth: 1
                         }]
                     },

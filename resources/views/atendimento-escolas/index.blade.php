@@ -86,7 +86,8 @@
                 </div>
             </div>
         </div>
-        <-- modal de finalizar -->
+                <!-- Modal finalizar -->
+
             <div class="modal fade event-modal" id="event-modal-click" tabindex="-1" aria-labelledby="eventModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">

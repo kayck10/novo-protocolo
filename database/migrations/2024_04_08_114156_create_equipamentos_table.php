@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('desc')->nullable();
             $table->text('tombamento');
             $table->text('solucao')->nullable();
+            $table->date('data_entrada')->nullable();
             $table->boolean('prioridade');
             $table->text('acessorios');
             $table->unsignedBigInteger('id_status')->nullable();

@@ -48,25 +48,43 @@ class EstanteController extends Controller
 
     public function passar(Request $request)
     {
-        $equipamento = Equipamentos::find($request->id);
-        $equipamento->update([
-            'id_status' => $request->statusEq,
-            'id_users'  => $request->id_tecnico
-        ]);
 
-        return response()->json(['success' => 'Status atualizado com sucesso!']);
-    }
-    public function saida(Request $request)
-    {
         $equipamento = Equipamentos::find($request->id);
-        $equipamento->update([
-            'id_status' => 3,
-            'solucao'   => $request->solucao,
-            'id_users'  => $request->id_tecnico
-        ]);
+
+        if($request->statusEq == 1){
+            $equipamento->update([
+                'id_status' => $request->statusEq,
+                'id_users'  => null
+            ]);
+        }elseif($request->statusEq == 2){
+            $equipamento->update([
+                'id_status' => $request->statusEq,
+                'id_users'  => $request->id_tecnico
+            ]);
+        }elseif($request->statusEq == 3){
+            $equipamento->update([
+                'id_status' => $request->statusEq,
+                'id_users'  => $request->id_tecnico,
+                'solucao'  => $request->solucao
+            ]);
+        }
+
+
 
         return response()->json(['success' => 'Equipamento atualizado com sucesso!']);
     }
+    // public function saida(Request $request)
+    // {
+    //     $equipamento = Equipamentos::find($request->id);
+    //     $equipamento->update([
+    //         'id_status' => 3,
+    //         'solucao'   => $request->solucao,
+    //         'id_users'  => $request->id_tecnico
+    //     ]);
+
+    //     return response()->json(['success' => 'Equipamento atualizado com sucesso!']);
+    // }
+
     public function retirar(Request $request)
     {
         $equipamento = Equipamentos::find($request->id);

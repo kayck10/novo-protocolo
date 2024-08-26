@@ -10,4 +10,8 @@ class StatusAtendimento extends Model
     use HasFactory;
     protected $fillable = ['desc'];
 
+    public function equipamentos()
+    {
+        return $this->hasMany(Equipamentos::class, 'id_status');
+    }
 }
