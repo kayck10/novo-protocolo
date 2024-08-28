@@ -81,6 +81,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/inservivel')->group(function () {
         Route::get('/index', [InservivelController::class, 'index'])->name('inservivel.index');
         Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
+        Route::post('/store', [InservivelController::class, 'store'])->name('inservivel.store');
+
     });
     Route::prefix('/graficos')->group(function () {
         Route::get('/anual', [GraficosController::class, 'anual'])->name('graficos.anual');
