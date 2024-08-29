@@ -41,8 +41,8 @@
                 <span class="nav-text">Inservível</span>
             </a>
             <ul aria-expanded="false">
-                <li><a href="{{route('inservivel.index')}}">Ver Tudo</a></li>
                 <li><a href="{{route('inservivel.create')}}">Criar Laudo</a></li>
+                <li><a href="{{route('inservivel.index')}}">Ver Tudo</a></li>
             </ul>
         </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">

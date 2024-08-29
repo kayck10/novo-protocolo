@@ -9,6 +9,7 @@ use App\Http\Controllers\GraficosController;
 use App\Http\Controllers\InservivelController;
 use App\Http\Controllers\LocalController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\UserController;
 use App\Models\ProtocoloEntrada;
@@ -82,6 +83,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/index', [InservivelController::class, 'index'])->name('inservivel.index');
         Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
         Route::post('/store', [InservivelController::class, 'store'])->name('inservivel.store');
+        Route::post('/gerar-pdf', [PdfController::class, 'gerarPDF'])->name('gerar.pdf');
+
 
     });
     Route::prefix('/graficos')->group(function () {
