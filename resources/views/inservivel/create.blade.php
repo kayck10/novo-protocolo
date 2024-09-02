@@ -97,8 +97,9 @@
                                                                         <input name="num_serie" type="text" class="form-control" required>
                                                                     </div>
                                                                     <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                                                        <button type="submit" class="btn btn-warning">Imprimir</button>
+                                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar</button>
+                                                                        <button type="submit" class="btn btn-primary">Devolver <i class="bi bi-arrow-up"></i></button>
+                                                                        <button type="submit" class="btn btn-warning">Imprimir <i class="bi bi-printer-fill"></i></button>
                                                                     </div>
                                                                 </form>
                                                             </div>
