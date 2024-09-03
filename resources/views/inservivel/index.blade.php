@@ -38,22 +38,28 @@
                                         @foreach ($equipamentos as $equipamento)
                                             <tr>
                                                 <td class="center">{{ $equipamento->tombamento }}</td>
-                                                <td class="center">{{ $equipamento->id_setor_escolas}}</td>
+                                                <td class="center">{{ $equipamento->setorEscola->desc }}</td>
                                                 <td class="center">{{ $equipamento->created_at->format('d/m/Y') }}</td>
-                                                <td class="center"><button class="btn btn-warning"><i class="bi bi-eye-fill"></i></button>
-                                                    <button class="btn btn-primary"><i class="bi bi-pencil-square"></i></button>
+                                                <td class="center">
+                                                    <button class="btn btn-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#modalcriarlaudo{{ $equipamento->id }}"
+                                                            data-equipamento-id="{{ $equipamento->id }}">
+                                                            <i class="bi bi-pencil-square"></i>
+                                                        </button>
+                                                <button class="btn btn-warning">
+                                                    <i class="bi bi-eye-fill" data-bs-toggle="modal"
+                                                    data-bs-target="#modalmostrardados{{ $equipamento->id }}"
+                                                    data-equipamento-id="{{ $equipamento->id }}"></i>
+                                                </button>
+                                                    <button class="btn btn-primary"><i
+                                                            class="bi bi-pencil-square"></i></button>
                                                 </td>
                                                 <td class="center">
-                                                    <!-- Coloque as opções de ações aqui -->
-
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
