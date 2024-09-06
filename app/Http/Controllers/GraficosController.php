@@ -17,22 +17,24 @@ class GraficosController extends Controller
     public function inserviveis()
     {
         $equipamentosInserviveis = Equipamentos::with('status')
-            ->select(DB::raw('MONTH(data_entrada) as mes'), DB::raw('count(*) as total'))
-            ->where('id_status', 5)
-            ->groupBy(DB::raw('MONTH(data_entrada)'))
-            ->pluck('total', 'mes')
-            ->toArray();
+            ->select(DB::raw('MONTH(created_at) as mes'), DB::raw('YEAR(created_at) as ano'), DB::raw('count(*) as total'))
+            ->where('id_status', 6)
+            ->groupBy(DB::raw('MONTH(created_at)'), DB::raw('YEAR(created_at)'))
+            ->get()
+            ->groupBy('ano');
 
-        // $equipamentosInserviveis = Equipamentos::with('status')->where()->get();
+        $dadosPorAno = [];
 
-
-            // dd($equipamentosInserviveis );
+        foreach ($equipamentosInserviveis as $ano => $dados) {
             $dadosPorMes = array_fill(1, 12, 0);
-        foreach ($equipamentosInserviveis as $mes => $total) {
-            $dadosPorMes[$mes] = $total;
+            foreach ($dados as $dado) {
+                $dadosPorMes[$dado->mes] = $dado->total;
+            }
+            $dadosPorAno[$ano] = $dadosPorMes;
         }
-        return view('graficos.inserviveis', compact('dadosPorMes'));
+        return view('graficos.inserviveis', compact('dadosPorAno'));
     }
+
 
     public function participacoes()
     {

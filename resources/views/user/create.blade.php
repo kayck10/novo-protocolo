@@ -12,9 +12,8 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('atendimento-interno.index') }};">Usuário</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('create.protocolo') }}">Cadastrar Usuário </a>
-                    </li>
+                    <li class="breadcrumb-item active"><a href="{{ route('atendimento-interno.index') }}">Usuário</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('create.protocolo') }}">Cadastrar Usuário </a></li>
                 </ol>
             </div>
         </div>
@@ -31,36 +30,36 @@
                                 <div>
                                     <form action="{{ route('user.store') }}" method="POST">
                                         @csrf
-                                        <!-- 2 column grid layout with text inputs for the first and last names -->
                                         <div class="row mb-4">
                                             <div class="">
                                                 <div data-mdb-input-init class="form-outline">
                                                     <label class="form-label" for="form6Example1">Nome:</label>
                                                     <input type="text" name="name" id="form6Example1"
-                                                        class="form-control" />
+                                                        class="form-control" value="{{ old('name') }}" />
                                                 </div>
                                             </div>
-
                                         </div>
 
-                                        <!-- Text input -->
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="form6Example3">Usuário:</label>
-                                            <input type="text" name="usuario" id="form6Example3" class="form-control" />
+                                            <input type="text" name="usuario" id="form6Example3" class="form-control"
+                                                value="{{ old('usuario') }}" />
                                         </div>
 
-                                        <!-- Email input -->
                                         <div data-mdb-input-init class="form-outline mb-4">
                                             <label class="form-label" for="form6Example5">E-mail:</label>
-                                            <input type="email" name="email" id="form6Example5" class="form-control" />
+                                            <input type="email" name="email" id="form6Example5" class="form-control"
+                                                value="{{ old('email') }}" />
                                         </div>
 
                                         <div class="form-group">
                                             <label class="form-label">Função:</label>
                                             <select name="id_funcoes" class="form-control">
-                                                <option value="Gender">Selecione uma Função</option>
+                                                <option value="">Selecione uma Função</option>
                                                 @foreach ($funcoes as $funcao)
-                                                    <option value="{{ $funcao->id }}">{{ $funcao->desc }}</option>
+                                                    <option value="{{ $funcao->id }}"
+                                                        {{ old('id_funcoes') == $funcao->id ? 'selected' : '' }}>
+                                                        {{ $funcao->desc }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -68,9 +67,11 @@
                                         <div class="form-group">
                                             <label class="form-label">Tipo de Usuário:<i></i></label>
                                             <select name="id_tipos_usuarios" class="form-control">
-                                                <option value="Gender">Selecione um tipo de usuário</option>
+                                                <option value="">Selecione um tipo de usuário</option>
                                                 @foreach ($tipos as $tipo)
-                                                    <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
+                                                    <option value="{{ $tipo->id }}"
+                                                        {{ old('id_tipos_usuarios') == $tipo->id ? 'selected' : '' }}>
+                                                        {{ $tipo->desc }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -87,4 +88,28 @@
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection
+
+@section('scripts')
+    <!-- Incluir Toastr CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
+    <!-- Incluir Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    @if(\Illuminate\Support\Facades\Session::has('success'))
+    <script>
+        toastr.success("{{ \Illuminate\Support\Facades\Session::get('success') }}");
+    </script>
+@endif
+
+
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+            <script>
+                toastr.error("{{ $error }}");
+            </script>
+        @endforeach
+    @endif
+@endsection

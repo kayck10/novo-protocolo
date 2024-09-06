@@ -69,7 +69,7 @@
                     <span class="nav-text">Escolas</span>
                 </a>
             </li>
-            <li><a href="javascript:void()" aria-expanded="false">
+            <li><a href="{{route('equipamento')}}" aria-expanded="false">
                 <i class="bi bi-clock-history"></i>
                     <span class="nav-text">Histórico de Máquinas</span>
                 </a>

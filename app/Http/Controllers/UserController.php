@@ -29,6 +29,23 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'usuario' => 'required|string|max:255|unique:users,usuario',
+            'email' => 'required|email|max:255|unique:users,email',
+            'id_funcoes' => 'required|exists:funcoes,id',
+            'id_tipos_usuarios' => 'required|exists:tipos_usuarios,id',
+        ], [
+            'name.required' => 'O campo nome é obrigatório.',
+            'usuario.required' => 'O campo usuário é obrigatório.',
+            'usuario.unique' => 'Este nome de usuário já está em uso.',
+            'email.required' => 'O campo e-mail é obrigatório.',
+            'email.email' => 'Por favor, insira um e-mail válido.',
+            'email.unique' => 'Este e-mail já está em uso.',
+            'id_funcoes.required' => 'Por favor, selecione uma função.',
+            'id_tipos_usuarios.required' => 'Por favor, selecione um tipo de usuário.',
+        ]);
+
         $senha = '$2a$12$n7fLncjyhEg.pdchlD11wOtOCiohWohA8UZmjKhoUuhUCyWEOBrey';
 
         $user = User::create([
@@ -40,9 +57,11 @@ class UserController extends Controller
             'id_tipos_usuarios' => $request->id_tipos_usuarios,
             'id_situacao' => 1,
         ]);
-        Toastr::success('Usuário Cadastrado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
+
+        Toastr::success('Usuário cadastrado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->back();
     }
+
 
     public function show(Request $request, $id)
     {

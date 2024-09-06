@@ -76,6 +76,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/inservivel', [EstanteController::class, 'inservivel'])->name('estante.inservivel');
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
         Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
+        Route::get('/escolas', [EstanteController::class, 'equipamento'])->name('equipamento');
+
     });
 
 

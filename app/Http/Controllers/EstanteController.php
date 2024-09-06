@@ -103,4 +103,9 @@ class EstanteController extends Controller
         return response()->json(['success' => 'Equipamento marcado como inservível com sucesso.']);
     }
 
+    public function equipamento () {
+        $equipamentos = Equipamentos::all();
+        return view('equipamentos.lista-equipamentos', compact('equipamentos'));
+    }
+
 }

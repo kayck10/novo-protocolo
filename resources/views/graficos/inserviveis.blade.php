@@ -39,7 +39,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -47,17 +46,22 @@
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const ctx = document.getElementById('myChart').getContext('2d');
-                const dadosPorMes = @json(array_values($dadosPorMes));
+                const dadosPorAno = @json($dadosPorAno);
+
+                const datasets = [];
+                for (const [ano, dados] of Object.entries(dadosPorAno)) {
+                    datasets.push({
+                        label: `Inservíveis - ${ano}`,
+                        data: Object.values(dados),
+                        borderWidth: 1,
+                    });
+                }
 
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-                        datasets: [{
-                            label: 'Inservíveis',
-                            data: dadosPorMes,
-                            borderWidth: 1
-                        }]
+                        datasets: datasets
                     },
                     options: {
                         scales: {
