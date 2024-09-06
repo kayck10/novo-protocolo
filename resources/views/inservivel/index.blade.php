@@ -51,10 +51,9 @@
                                                     data-bs-target="#modalmostrardados{{ $equipamento->id }}"
                                                     data-equipamento-id="{{ $equipamento->id }}"></i>
                                                 </button>
-                                                    <button class="btn btn-primary"><i
-                                                            class="bi bi-pencil-square"></i></button>
                                                 </td>
                                                 <td class="center">
+                                        @endforeach
                                 </table>
                             </div>
                         </div>

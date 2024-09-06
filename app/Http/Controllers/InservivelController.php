@@ -12,7 +12,7 @@ class InservivelController extends Controller
 {
     public function index()
     {
-        $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 5)->get();
+        $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 6)->get();
         return view('inservivel.index', compact('equipamentos'));
     }
 

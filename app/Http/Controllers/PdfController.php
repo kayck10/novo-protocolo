@@ -15,6 +15,15 @@ class PdfController extends Controller
     {
         $equipamento = Equipamentos::find($request->id_equipamento);
 
+        if($equipamento->id_status == 5) {
+            $equipamento->modelo = $request->modelo;
+            $equipamento->marca = $request->marca;
+            $equipamento->num_serie = $request->num_serie;
+            $equipamento->id_status = 6;
+            $equipamento->save();
+        }
+
+
         if (!$equipamento) {
             return response()->json(['error' => 'Equipamento não encontrado'], 404);
         }
@@ -42,6 +51,16 @@ class PdfController extends Controller
         // Gere o PDF usando os dados coletados
         $pdf = FacadePdf::loadView('inservivel.pdf', $data);
         return $pdf->stream('inservivel.pdf');
+    }
+
+    public function verificarId(Request $request)
+    {
+        $equipamento = Equipamentos::find($request->id);
+        if($equipamento->id_status == 5) {
+            return 0;
+        }
+
+        return 1;
     }
 }
 
