@@ -15,7 +15,6 @@ class AtendimentoInternoController extends Controller
     {
         $atendimentos = Atendimentos::where('id_user', '!=', null)->with(['tecnico', 'setor'])->get();
 
-        // Buscar técnicos e setores
         $tecnicos = User::where('id_funcoes', 2)->get();
         $setores = Local::where('externo', 0)->get();
 
@@ -52,29 +51,23 @@ class AtendimentoInternoController extends Controller
 
 
 
-        // Recebe a entrada do request
         $data_entrada = $request->data;
 
-        // Substitui o nome do mês em português pelo correspondente em inglês
         foreach ($meses_traducao as $pt => $en) {
             if (strpos($data_entrada, $pt) !== false) {
                 $data_entrada = str_replace($pt, $en, $data_entrada);
-                break; // Substitui apenas uma vez
+                break;
             }
         }
-        // Cria um objeto DateTime com a data corrigida
         $data = DateTime::createFromFormat('j F, Y', $data_entrada);
 
         $prioridade =  (int) $request->prioridade;
-        // Verifica se a criação foi bem-sucedida
 
 
         if ($data === false) {
-            // Se houver erro, mostra uma mensagem de erro
             $errors = DateTime::getLastErrors();
             return response()->json(["error" => true, "message" => "Informe uma data válida!"], 400);
         } else {
-            // Se a criação foi bem-sucedida, formata a data
             $data_formatada = $data->format('y/m/d');
         }
 
@@ -82,6 +75,7 @@ class AtendimentoInternoController extends Controller
             'id_user' => $request->id_user,
             'id_local' => $request->id_local,
             'data' => $data_formatada,
+            'externo' => 0,
             'desc_problema' => $request->desc_problema,
             'solucao' => $request->solucao
         ]);

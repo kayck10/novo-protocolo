@@ -11,7 +11,7 @@
     <div class="row page-titles mx-0">
         <div class="col-sm-6">
             <div class="welcome-text">
-                <h4>Média de Trabalho Anual - </h4>
+                <h4>Média de Trabalho Anual - {{ date('Y') }}</</h4>
                 <span class="">Número de Atendimentos e Consertos</span>
             </div>
         </div>

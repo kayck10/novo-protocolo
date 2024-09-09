@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atendimentos;
 use App\Models\Equipamentos;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +11,49 @@ class GraficosController extends Controller
 {
     public function anual()
     {
-        return view('graficos.anual');
+        // Consertos de Equipamentos
+        $equipamentosConsertados = Equipamentos::select(DB::raw('MONTH(created_at) as mes'), DB::raw('count(*) as total'))
+            ->where('id_status', 4)
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->pluck('total', 'mes')
+            ->toArray();
+
+        $dadosPorMesConsertos = array_fill(1, 12, 0);
+        foreach ($equipamentosConsertados as $mes => $total) {
+            if (!empty($mes)) {
+                $dadosPorMesConsertos[$mes] = $total;
+            }
+        }
+
+        // Atendimento Externo
+        $atendimentoExterno = Atendimentos::select(DB::raw('MONTH(created_at) as mes'), DB::raw('count(*) as total'))
+            ->where('externo', 1)
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->pluck('total', 'mes')
+            ->toArray();
+
+        $dadosPorMesExterno = array_fill(1, 12, 0);
+        foreach ($atendimentoExterno as $mes => $total) {
+            if (!empty($mes)) {
+                $dadosPorMesExterno[$mes] = $total;
+            }
+        }
+
+        // Atendimento Interno
+        $atendimentoInterno = Atendimentos::select(DB::raw('MONTH(created_at) as mes'), DB::raw('count(*) as total'))
+            ->where('externo', 0)
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->pluck('total', 'mes')
+            ->toArray();
+
+        $dadosPorMesInterno = array_fill(1, 12, 0);
+        foreach ($atendimentoInterno as $mes => $total) {
+            if (!empty($mes)) {
+                $dadosPorMesInterno[$mes] = $total;
+            }
+        }
+
+        return view('graficos.anual', compact('dadosPorMesConsertos', 'dadosPorMesExterno', 'dadosPorMesInterno'));
     }
 
 
