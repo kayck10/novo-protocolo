@@ -30,11 +30,27 @@ class AtendimentoInternoController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'id_user' => 'required|exists:users,id',
+            'id_local' => 'required|exists:local,id',
+            'data' => 'required|string',
+            'desc_problema' => 'required|string',
+            'solucao' => 'required|string',
+        ], [
+            'id_user.required' => 'O campo Técnico é obrigatório.',
+            'id_user.exists' => 'O técnico selecionado não é válido.',
+            'id_local.required' => 'O campo Setor é obrigatório.',
+            'id_local.exists' => 'O setor selecionado não é válido.',
+            'data.required' => 'O campo Data é obrigatório.',
+            'data.string' => 'O campo Data deve ser uma string válida.',
+            'desc_problema.required' => 'O campo Problema é obrigatório.',
+            'desc_problema.string' => 'O campo Problema deve ser uma string válida.',
+            'solucao.required' => 'O campo Solução é obrigatório.',
+            'solucao.string' => 'O campo Solução deve ser uma string válida.',
+        ]);
 
-
-        $local = Local::find($request->input('local'));
-
-        $meses_traducao = array(
+        // Tradução dos meses
+        $meses_traducao = [
             "Janeiro" => "January",
             "Fevereiro" => "February",
             "Março" => "March",
@@ -47,9 +63,7 @@ class AtendimentoInternoController extends Controller
             "Outubro" => "October",
             "Novembro" => "November",
             "Dezembro" => "December"
-        );
-
-
+        ];
 
         $data_entrada = $request->data;
 
@@ -59,29 +73,29 @@ class AtendimentoInternoController extends Controller
                 break;
             }
         }
+
         $data = DateTime::createFromFormat('j F, Y', $data_entrada);
-
-        $prioridade =  (int) $request->prioridade;
-
-
         if ($data === false) {
-            $errors = DateTime::getLastErrors();
             return response()->json(["error" => true, "message" => "Informe uma data válida!"], 400);
-        } else {
-            $data_formatada = $data->format('y/m/d');
         }
 
-        $atendimentos = Atendimentos::create([
+        $data_formatada = $data->format('Y-m-d');
+
+        // Criar o atendimento
+        Atendimentos::create([
             'id_user' => $request->id_user,
             'id_local' => $request->id_local,
             'data' => $data_formatada,
             'externo' => 0,
             'desc_problema' => $request->desc_problema,
-            'solucao' => $request->solucao
+            'solucao' => $request->solucao,
         ]);
+
         Toastr::success('Atendimento Cadastrado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->back();
     }
+
+
 
     public function show($id)
     {

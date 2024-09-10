@@ -14,13 +14,13 @@
     <div class="row page-titles mx-0">
         <div class="col-sm-6">
             <div class="welcome-text">
-                <h4>Número de Atendimentos e Consertos - {{ date('Y') }}</</h4>
+                <h4>Participações em Equipamentos e Atendimentos - {{ date('Y') }}</h4>
             </div>
         </div>
         <div class="col-sm-6 justify-content-sm-end mt-2 mt-sm-0 d-flex">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="javascript:void(0)">Gráficos</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Participaçõees</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Participações e Atendimentos</a></li>
             </ol>
         </div>
     </div>
@@ -48,12 +48,11 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                const usuarios = @json($usuarios);
+                const usuariosDados = @json($usuariosDados);
 
-                const nomes = usuarios.map(usuario => usuario.name);
-                const atendimentos = usuarios.map(usuario => usuario.atendimentos);
-                const consertos = usuarios.map(usuario => usuario.consertos);
-                const inspeções = usuarios.map(usuario => usuario.inspecoes);
+                const nomes = usuariosDados.map(usuario => usuario.name);
+                const participacoes = usuariosDados.map(usuario => usuario.total_participacoes);
+                const atendimentos = usuariosDados.map(usuario => usuario.total_atendimentos);
 
                 const ctx = document.getElementById('myChart').getContext('2d');
                 new Chart(ctx, {
@@ -62,24 +61,17 @@
                         labels: nomes,
                         datasets: [
                             {
-                                label: 'Atendimentos Internos',
-                                data: atendimentos,
-                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                                borderColor: 'rgba(255, 99, 132, 1)',
-                                borderWidth: 1
-                            },
-                            {
-                                label: 'Máquinas',
-                                data: consertos,
-                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            },
-                            {
-                                label: 'Escolas',
-                                data: inspeções,
+                                label: 'Participações em Equipamentos',
+                                data: participacoes,
                                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                                 borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Atendimentos',
+                                data: atendimentos,
+                                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                borderColor: 'rgba(153, 102, 255, 1)',
                                 borderWidth: 1
                             }
                         ]
