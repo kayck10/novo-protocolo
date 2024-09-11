@@ -25,7 +25,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="responsive table table-striped" id="table">
+                                <table id="tabelaInservivel" class="display" style="min-width: 845px">
                                     <thead>
                                         <tr>
                                             <th class="center">Tombamento | NS</th>

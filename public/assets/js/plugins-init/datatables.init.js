@@ -91,14 +91,37 @@ let dataSet = [
     });
 
 	//
-	var table = $('#example3, #example4, #example5').DataTable();
-    $('#tableEquipamentos').DataTable({
-        searching: false, // Desativa a funcionalidade de pesquisa
-        paging: false, // Desativa a paginação
-        ordering: false, // Desativa a ordenação
-        info: false,
-        // Outras opções de configuração...
+	var table = $('#example3, #example4, #example5, #listProtocolos, #tabelaInservivel').DataTable({
+        searching: true, // Desativa a funcionalidade de pesquisa
+        paging: true, // Desativa a paginação
+        ordering: true, // Desativa a ordenação
+        info: true,
+        language: {
+            "decimal": ",",
+            "thousands": ".",
+            "emptyTable": "Nenhum dado disponível na tabela",
+            "info": "Mostrando _START_ até _END_ de _TOTAL_ entradas",
+            "infoEmpty": "Mostrando 0 até 0 de 0 entradas",
+            "infoFiltered": "(filtrado de _MAX_ entradas totais)",
+            "lengthMenu": "Mostrar _MENU_ entradas",
+            "loadingRecords": "Carregando...",
+            "processing": "Processando...",
+            "search": "Pesquisar:",
+            "zeroRecords": "Nenhum registro correspondente encontrado",
+            "paginate": {
+                "first": "Primeiro",
+                "last": "Último",
+                "next": "Próximo",
+                "previous": "Anterior"
+            },
+            "aria": {
+                "sortAscending": ": ativar para ordenar a coluna de forma ascendente",
+                "sortDescending": ": ativar para ordenar a coluna de forma descendente"
+            }
+        }
     });
+
+
 	$('#example tbody').on('click', 'tr', function () {
 		var data = table.row( this ).data();
 	});

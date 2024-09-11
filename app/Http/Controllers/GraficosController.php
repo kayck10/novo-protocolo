@@ -81,18 +81,22 @@ class GraficosController extends Controller
 
     public function participacoes()
     {
-        $usuarios = User::where('id_funcoes', 2)->pluck('id', 'name');
+        // Obtém todos os usuários com id_funcoes = 2
+        $usuarios = User::where('id_funcoes', 2)->pluck('name', 'id');
 
+        // Conta o número de participações em equipamentos para cada usuário
         $equipamentoParticipacoes = Equipamentos::whereIn('id_users', $usuarios->keys())
             ->select('id_users', DB::raw('count(*) as total_participacoes'))
             ->groupBy('id_users')
             ->get();
 
+        // Conta o número de atendimentos para cada usuário
         $atendimentos = Atendimentos::whereIn('id_user', $usuarios->keys())
             ->select('id_user', DB::raw('count(*) as total_atendimentos'))
             ->groupBy('id_user')
             ->get();
 
+        // Converte os resultados para arrays associativos para fácil acesso
         $equipamentoArray = $equipamentoParticipacoes->keyBy('id_users')->map(function ($item) {
             return $item->total_participacoes;
         });
@@ -101,6 +105,7 @@ class GraficosController extends Controller
             return $item->total_atendimentos;
         });
 
+        // Preenche os dados com zero quando não há participações ou atendimentos
         $usuariosDados = $usuarios->map(function ($name, $id) use ($equipamentoArray, $atendimentosArray) {
             return [
                 'name' => $name,
@@ -111,6 +116,5 @@ class GraficosController extends Controller
 
         return view('graficos.participacoes', compact('usuariosDados'));
     }
-
 
 }
