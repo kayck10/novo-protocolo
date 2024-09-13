@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>PROTOCOLO</title>
+    <title>Laudo Inservível</title>
     <style>
         body {
             text-align: center;
@@ -60,7 +60,7 @@
     <div>
         <h4>
             <br>
-            LAUDO DE AVALIAÇÃO DE EQUIPAMENTOS DE NFORMÁTICA
+            PROTOCOLO DE ENTRADA DO EQUIPAMENTO Nº: {{$tombamento}}
             <br>
         </h4>
     </div>
@@ -69,7 +69,7 @@
 
     <table id="customers">
         <tr>
-            <th>Escola</th>
+            <th>Local</th>
             <th>Setor</th>
         </tr>
         <tr>
@@ -92,11 +92,8 @@
 
         </tr>
         <tr>
-            <td>{{ $tipo }}</td>
-            <td>{{ $marca }}</td>
-            <td>{{ $modelo }}</td>
-            <td>{{ $num_serie }}</td>
-            <td>{{ $num_patrimonio }}</td>
+
+
 
 
         </tr>
@@ -121,7 +118,7 @@
 
     <h4>Observações</h4>
 
-    <textarea name="" id="" cols="30" rows="10">{{$solucao}}</textarea>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
 
 
     <table style="width: 100%; margin-top:20px">

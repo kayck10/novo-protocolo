@@ -126,4 +126,5 @@ class ProtocoloEntradaController extends Controller
         }
     }
 
+
 }

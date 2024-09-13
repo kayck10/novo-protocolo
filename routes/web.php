@@ -50,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('store/equipamento', [ProtocoloEntradaController::class, 'equipamentos'])->name('store.equipamento');
         Route::put('/update/{id}', [ProtocoloEntradaController::class, 'update'])->name('protocolo.update');
         Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
+        Route::post('/gerar-pdf-segundo', [PdfController::class, 'gerarprotocoloPDF'])->name('gerar.protocolo.pdf');
+
     });
 
     Route::prefix('/atendimento-interno')->group(function () {
