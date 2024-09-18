@@ -68,22 +68,46 @@ class PdfController extends Controller
     }
     public function gerarprotocoloPDF(Request $request)
 {
+    // Encontra o equipamento pelo ID
     $equipamento = Equipamentos::find($request->id_equipamento);
 
+    // Verifica se o equipamento existe
     if (!$equipamento) {
         return response()->json(['error' => 'Equipamento não encontrado'], 404);
     }
 
-    $data = [
-        'local' => $equipamento->local->desc ?? 'Local não definido',
-        'setor' => $equipamento->setor->desc ?? 'Setor não definido',
-        'tombamento' => $equipamento->tombamento,
+    // Coleta informações de local e setor
+    $local = $equipamento->protocolo->local->desc ?? 'Local não definido';
+    $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
 
+    // Coleta dados do equipamento
+    $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
+    $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
+    $problemaRelatado = $equipamento->solucao ?? 'Problema não relatado';
+
+    // Verifica se o campo data_entrada é uma string ou um objeto DateTime/Carbon
+    $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
+    $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
+
+    // Monta o array de dados a serem passados para a view
+    $data = [
+        'local' => $local,
+        'setor' => $setor,
+        'tombamento' => $equipamento->tombamento,
+        'tipoEquipamento' => $tipoEquipamento,
+        'acessorios' => $acessorios,
+        'problemaRelatado' => $problemaRelatado,
+        'dataEntrada' => $dataEntrada,
+        'horaEntrada' => $horaEntrada,
     ];
 
+    // Gera o PDF com os dados
     $pdf = FacadePdf::loadView('protocolo-entrada.pdf', $data);
     return $pdf->stream('protocolo-entrada.pdf');
 }
+
+
+
 
 }
 

@@ -65,66 +65,57 @@
                     </div>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Equipamento</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <form id="form-protocolo">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label class="form-label">Tombamento: <i
-                                                class="fa fa-asterisk text-danger"></i></label>
-                                        <input class="form-control" type="text" id="tombamento">
+                                        <label class="form-label">Tombamento: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <input class="form-control" type="text" id="tombamento" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Tipo de Equipamento: <i
-                                                class="fa fa-asterisk text-danger"></i></label>
-                                        <select id="id_tipos_equipamentos" class="form-control">
+                                        <label class="form-label">Tipo de Equipamento: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <select id="id_tipos_equipamentos" class="form-control" required>
                                             <option value="">Selecione um Equipamento</option>
                                             @foreach ($tiposequipamentos as $tipoequipamento)
-                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}
-                                                </option>
+                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}</option>
                                             @endforeach
                                         </select>
-
-                                        <div class="form-group" id="acessoriosDescricao" style="">
-                                            <label class="form-label">Descrição do Acessório:</label>
-                                            <textarea cols="20" rows="3" class="form-control" id="descricao_acessorio"></textarea>
-                                            <input type="hidden" name="id_protocolo" id="id_protocolo">
                                     </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label mx-2">Local: <i
-                                            class="fa fa-asterisk text-danger"></i></label>
-                                    <select id="id_setor_escolas" class="form-control">
-                                        <option value="">Selecione um Local</option>
-                                        @foreach ($setorEscolas as $setorescolas)
-                                            <option value="{{ $setorescolas->id }}">{{ $setorescolas->desc }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="form-check">
-                                    <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
-                                    <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Descrição do Problema: <i
-                                            class="fa fa-asterisk text-danger"></i></label>
-                                    <textarea cols="30" rows="3" class="form-control" type="text" id="desc"></textarea>
+                                    <div class="form-group">
+                                        <label class="form-label">Descrição do Acessório:</label>
+                                        <textarea cols="20" rows="3" class="form-control" id="descricao_acessorio"></textarea>
+                                        <input type="hidden" name="id_protocolo" id="id_protocolo">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label mx-2">Local: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <select id="id_setor_escolas" class="form-control" required>
+                                            <option value="">Selecione um Local</option>
+                                            @foreach ($setorEscolas as $setorescolas)
+                                                <option value="{{ $setorescolas->id }}">{{ $setorescolas->desc }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label" for="prioridade">Prioridade?</label>
+                                        <input class="form-check-input mx-2" type="checkbox" id="prioridade">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Descrição do Problema: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <textarea cols="30" rows="3" class="form-control" type="text" id="desc" required></textarea>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn" data-bs-dismiss="modal">Fechar</button>
-                                    <button type="submit"
-                                        class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
+                                    <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
                                 </div>
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -179,7 +170,6 @@
 
                 $.ajax(settings).done(function(response) {
                     console.log(response);
-                    // Destroy the old Datatable
                     $('#tableEquipamentos').DataTable().clear().destroy();
                     let dados = `
                 <tr>

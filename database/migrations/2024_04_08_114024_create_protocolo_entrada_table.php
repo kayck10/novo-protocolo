@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_local');
             $table->foreign('id_local')->references('id')->on('local');
-            $table->date('data_entrada');
+            $table->dateTime('data_entrada');
             $table->timestamps();
         });
     }

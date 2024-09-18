@@ -87,6 +87,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/index', [InservivelController::class, 'index'])->name('inservivel.index');
         Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
         Route::post('/store', [InservivelController::class, 'store'])->name('inservivel.store');
+        Route::post('/devolver', [InservivelController::class, 'devolver'])->name('inservivel.devolver');
         Route::post('/gerar-pdf', [PdfController::class, 'gerarPDF'])->name('gerar.pdf');
         Route::post('/verificar', [PdfController::class, 'verificarId'])->name('verificar');
 

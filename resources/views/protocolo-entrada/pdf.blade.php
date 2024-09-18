@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Laudo Inservível</title>
+    <title>Protocolo de Entrada</title>
     <style>
         body {
             text-align: center;
@@ -22,8 +22,6 @@
         h1 {
             margin-top: 20px;
         }
-
-
 
         #customers {
             font-family: Arial, Helvetica, sans-serif;
@@ -73,72 +71,44 @@
             <th>Setor</th>
         </tr>
         <tr>
-            <td>{{$local}}</td>
-            <td>{{$setor}}</td>
+            <td>{{ $local }}</td>
+            <td>{{ $setor }}</td>
         </tr>
-
     </table>
 
     <h4>Dados do Equipamento</h4>
 
     <table id="customers">
         <tr>
-            <th>Tipo</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Número de Série</th>
-            <th>Número de Patrimônio</th>
-
-
+            <th>Tombamento</th>
+            <th>Tipo de Equipamento</th>
+            <th>Acessórios</th>
+            <th>Problema Relatado</th>
         </tr>
         <tr>
-
-
-
-
+            <td>{{ $tombamento }}</td>
+            <td>{{ $tipoEquipamento }}</td>
+            <td>{{ $acessorios }}</td>
+            <td>{{ $problemaRelatado }}</td>
         </tr>
     </table>
-
-    <h4>Condições do Equipamento</h4>
-    <table id="customers">
-        <tr>
-            <th>Obsoleto ( )</th>
-            <th>Sem Conserto ( x )</th>
-        </tr>
-    </table>
-
-    <h4>Destino Sugerido</h4>
-    <table id="customers">
-        <tr>
-            <th>Manutenção ( )</th>
-            <th>Atualização ( )</th>
-            <th>Baixa Patrimonial ( x )</th>
-        </tr>
-    </table>
-
-    <h4>Observações</h4>
-
-    <textarea name="" id="" cols="30" rows="10"></textarea>
-
 
     <table style="width: 100%; margin-top:20px">
         <tr>
             <td style="width: 50%; text-align: center;">
                 __________________________
-                <p>Cordenador de TI</p>
-                <p>Data</p>
+                <p><b>Data de Entrada:</b> {{ $dataEntrada }}</p>
+                <p><b>Hora:</b> {{ $horaEntrada }}</p>
 
             </td>
-            <td style="width: 50%; text-align: center;">
+            <td style="width: 50%; text-align: center; ">
                 __________________________
-                <p>Técnico Responsável</p>
-                <p>Data</p>
+                <p><b>Secretaria de Educação</b></p>
+                <p><b>Setor de Tecnologia da Informação</b></p>
 
             </td>
         </tr>
     </table>
-
-
 
 </body>
 

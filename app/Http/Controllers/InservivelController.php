@@ -37,5 +37,16 @@ class InservivelController extends Controller
         }
         return response()->json($equipamento);
     }
+
+    public function devolver(Request $request)
+{
+    $equipamento = Equipamentos::find($request->id_equipamento);
+
+    $equipamento->id_status = 3;
+    $equipamento->save();
+
+    return response()->json(['message' => 'Equipamento devolvido com sucesso!'], 200);
+}
+
 }
 

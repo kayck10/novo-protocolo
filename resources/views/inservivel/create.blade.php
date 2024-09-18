@@ -61,8 +61,7 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h1 class="modal-title fs-5" id="exampleModalLabel2">Criar
-                                                                Laudo
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel2">Criar Laudo
                                                                 Inservível</h1>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-label="Close"></button>
@@ -71,16 +70,19 @@
                                                             <div class="font-weight-bold">
                                                                 <p>Origem: {{ $equipamento->setorEscola->desc }}</p>
                                                                 <p>Tombamento / NS: {{ $equipamento->tombamento }}</p>
-                                                                <p>Tipo: {{ $equipamento->tiposEquipamentos->desc }}
-                                                                </p>
+                                                                <p>Tipo: {{ $equipamento->tiposEquipamentos->desc }}</p>
                                                             </div>
-                                                            <form action="{{ route('gerar.pdf') }}" target="_blank"
+
+                                                            <form id="form-laudo-{{ $equipamento->id }}"
+                                                                action="{{ route('gerar.pdf') }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 <input type="hidden" name="id_equipamento"
                                                                     value="{{ $equipamento->id }}">
+
+                                                                <!-- Campos para criar laudo -->
                                                                 <div class="form-group">
-                                                                    <label class="form-label"><b>Problema:</b></label>
+                                                                    <label><b>Problema:</b></label>
                                                                     <select id="id_problema" name="id_problema"
                                                                         class="form-control" required>
                                                                         <option value="">Selecione um Problema
@@ -91,29 +93,34 @@
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
+
                                                                 <div class="mb-3">
-                                                                    <label class="form-label"><b>Marca:</b></label>
+                                                                    <label><b>Marca:</b></label>
                                                                     <input id="marca" name="marca" type="text"
                                                                         class="form-control" required>
                                                                 </div>
+
                                                                 <div class="mb-3">
-                                                                    <label class="form-label"><b>Modelo:</b></label>
+                                                                    <label><b>Modelo:</b></label>
                                                                     <input id="modelo" name="modelo" type="text"
                                                                         class="form-control" required>
                                                                 </div>
+
                                                                 <div class="mb-3">
-                                                                    <label class="form-label"><b>Número de
-                                                                            série:</b></label>
+                                                                    <label><b>Número de série:</b></label>
                                                                     <input id="num_serie" name="num_serie" type="text"
                                                                         class="form-control" required>
                                                                 </div>
+
                                                                 <div class="modal-footer">
+                                                                    <!-- Botão de Devolver (sem obrigatoriedade de preencher campos) -->
                                                                     <button type="button" class="btn btn-danger"
-                                                                        data-bs-dismiss="modal">Fechar</button>
-                                                                    <button type="submit" class="btn btn-primary">Devolver
+                                                                        id="devolver-btn-{{ $equipamento->id }}">Devolver
                                                                         <i class="bi bi-arrow-up"></i></button>
-                                                                    <button type="submit" id="imprimir"
-                                                                        class="btn btn-warning">Imprimir <i
+
+                                                                    <!-- Botão de Criar Laudo -->
+                                                                    <button type="submit" class="btn btn-primary">
+                                                                        Imprimir <i
                                                                             class="bi bi-printer-fill"></i></button>
                                                                 </div>
                                                             </form>
@@ -121,6 +128,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
 
                                             <!-- Modal Equipamento -->
                                             <div class="modal fade" id="modalEquipamento{{ $equipamento->id }}"
@@ -174,44 +182,79 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-        crossorigin="anonymous"></script>
-    <script>
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
 
-        let id;
-        $('.abrirModal').click(function() {
-            id = $(this).data('equipamento-id');
+<script>
+    let id;
 
-        });
+    // Quando clicar para abrir a modal, capturar o ID do equipamento
+    $('.abrirModal').click(function() {
+        id = $(this).data('equipamento-id');
+    });
 
-        $('#imprimir').click(async function() {
-            let campos = {
-                modelo: $('#modelo').val(),
-                marca: $('#marca').val(),
-                num_serie: $('#num_serie').val(),
-                id_problema: $('#id_problema').val()
-            };
+    // Lógica para criar o laudo e imprimir
+    $('#imprimir').click(async function() {
+        let campos = {
+            modelo: $('#modelo').val(),
+            marca: $('#marca').val(),
+            num_serie: $('#num_serie').val(),
+            id_problema: $('#id_problema').val()
+        };
 
-            let validador = true;
-            for (let key in campos) {
-                if (campos[key].trim() === '') {
-                    validador = false;
-                    break;
-                }
+        let validador = true;
+        for (let key in campos) {
+            if (campos[key].trim() === '') {
+                validador = false;
+                break;
             }
+        }
 
-            if (validador == true) {
-                $(`#modalcriarlaudo${id}`).modal('hide');
-                $(`#list-equipamento-${id}`).remove();
+        if (validador == true) {
+            $(`#modalcriarlaudo${id}`).modal('hide');
+            $(`#list-equipamento-${id}`).remove();
 
+            iziToast.success({
+                title: 'Excluído',
+                message: 'Registro excluído com sucesso!',
+            });
+        }
+    });
+
+    // Lógica para devolver o equipamento (sem campos obrigatórios)
+    $('[id^="devolver-btn-"]').click(function() {
+        var equipamentoId = $(this).attr('id').split('-').pop(); // Obtém o ID do equipamento a partir do botão
+
+        $.ajax({
+            url: '{{ route("inservivel.devolver") }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_equipamento: equipamentoId
+            },
+            success: function(response) {
+                // Fechar modal
+                $('#modalcriarlaudo' + equipamentoId).modal('hide');
+
+                // Exibir mensagem de sucesso
                 iziToast.success({
-                    title: 'Excluído',
-                    message: 'Registro excluído com sucesso!',
+                    title: 'Sucesso',
+                    message: 'Equipamento devolvido com sucesso!',
+                });
+
+                // Remover o equipamento da lista (se necessário)
+                $('#list-equipamento-' + equipamentoId).remove();
+            },
+            error: function(xhr) {
+                iziToast.error({
+                    title: 'Erro',
+                    message: 'Erro ao devolver o equipamento. Tente novamente.',
                 });
             }
-
         });
-    </script>
+    });
+</script>
+
 @endsection
