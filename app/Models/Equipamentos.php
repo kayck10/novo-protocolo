@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Equipamentos extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'id_tipos_equipamentos',
-        'desc',
         'id_protocolo',
         'tombamento',
         'solucao',
@@ -43,6 +43,7 @@ class Equipamentos extends Model
     {
         return $this->belongsTo(TiposEquipamentos::class, 'id_tipos_equipamentos');
     }
+
     public function status()
     {
         return $this->belongsTo(StatusAtendimento::class, 'id_status');
@@ -53,5 +54,3 @@ class Equipamentos extends Model
         return $this->belongsTo(Atendimentos::class, 'id_atendimento');
     }
 }
-
-

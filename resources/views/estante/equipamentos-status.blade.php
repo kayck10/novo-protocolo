@@ -55,7 +55,7 @@
 
             <!-- Modal footer -->
             <div class="modal-footer" id="btn-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar <i class="bi bi-x-lg"></i></button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Fechar <i class="bi bi-sm"></i></button>
                 <div id="btn-entrada">
                     {{-- botao entrada --}}
                     <button id="btn-em-andamento" data-id-status="2" type="button" class="btn btn-primary atualizar-status">Em Andamento <i class="bi bi-arrow-right"></i></button>
@@ -69,6 +69,7 @@
                     {{-- botao finalizar --}}
                     <button id="btn-voltar" data-id-status="2" type="button" class="btn btn-primary atualizar-status">Em Andamento</button>
                     <button id="btn-inservivel" data-id-status="5" type="button" class="btn btn-warning atualizar-status">Inservível</button>
+                    <button id="btn-imprimir" data-id-status="5" type="button" class="btn btn-secondary atualizar-status">Imprimir</button>
                     <button id="btn-retirar" data-id-status="4" type="button" class="btn btn-success atualizar-status">Retirar</button>
                 </div>
             </div>

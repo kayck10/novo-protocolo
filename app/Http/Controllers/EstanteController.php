@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Equipamentos;
 use App\Models\ProtocoloEntrada;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EstanteController extends Controller
@@ -103,9 +105,46 @@ class EstanteController extends Controller
         return response()->json(['success' => 'Equipamento marcado como inservível com sucesso.']);
     }
 
-    public function equipamento () {
-        $equipamentos = Equipamentos::all();
+    public function equipamento()
+    {
+        $equipamentos = Equipamentos::with('protocolo', 'tiposEquipamentos')->get();
         return view('equipamentos.lista-equipamentos', compact('equipamentos'));
     }
+
+
+
+public function pdf(Request $request, $id)
+{
+     // Encontra o equipamento pelo ID
+     $equipamento = Equipamentos::findOrFail($id);
+
+     if (!$equipamento) {
+         return response()->json(['error' => 'Equipamento não encontrado'], 404);
+     }
+
+     $local = $equipamento->protocolo->local->desc ?? 'Local não definido';
+     $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
+
+     $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
+     $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
+
+     $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
+     $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
+
+     $data = [
+         'local' => $local,
+         'setor' => $setor,
+         'tombamento' => $equipamento->tombamento,
+         'tipoEquipamento' => $tipoEquipamento,
+         'acessorios' => $acessorios,
+         'dataEntrada' => $dataEntrada,
+         'horaEntrada' => $horaEntrada,
+     ];
+
+    $pdf = FacadePdf::loadView('estante.pdf', $data);
+
+    return $pdf->stream('detalhes_equipamento.pdf');
+}
+
 
 }
