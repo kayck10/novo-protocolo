@@ -48,6 +48,19 @@
             background-color: #fafafa;
             color: rgb(31, 29, 29);
         }
+
+        .solucao {
+            margin: 20px auto;
+            text-align: center;
+            width: 50%;
+        }
+
+        .solucao textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 50px;
+        }
     </style>
 </head>
 
@@ -58,23 +71,16 @@
     <div>
         <h4>
             <br>
-            PROTOCOLO DE ENTRADA DO EQUIPAMENTO Nº: {{$tombamento}}
+            PROTOCOLO DE SAÍDA DO EQUIPAMENTO Nº: {{$tombamento}}
             <br>
         </h4>
     </div>
 
     <h4>ORIGEM DO EQUIPAMENTO</h4>
 
-    <table id="customers">
-        <tr>
-            <th>Local</th>
-            <th>Setor</th>
-        </tr>
-        <tr>
-            <td>{{ $local }}</td>
-            <td>{{ $setor }}</td>
-        </tr>
-    </table>
+    <div>
+        <h4>Escola: {{$local}}</h4>
+    </div>
 
     <h4>Dados do Equipamento</h4>
 
@@ -89,9 +95,14 @@
             <td>{{ $tombamento }}</td>
             <td>{{ $tipoEquipamento }}</td>
             <td>{{ $acessorios }}</td>
-            <td></td>
+            <td>{{ $tecnico }}</td>
         </tr>
     </table>
+
+    <div class="solucao">
+        <h4>Solução</h4>
+        <textarea name="" id="" cols="30" rows="10">{{ $solucao }}</textarea>
+    </div>
 
     <table style="width: 100%; margin-top:20px">
         <tr>
@@ -99,9 +110,7 @@
                 __________________________
                 <p><b>Data de Saída:</b> {{ $dataEntrada }}</p>
                 <p><b>Hora:</b> {{ $horaEntrada }}</p>
-
             </td>
-
         </tr>
     </table>
 

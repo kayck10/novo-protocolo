@@ -63,7 +63,7 @@
                 <div id="btn-andamento">
                     {{-- botao andamento --}}
                     <button id="btn-em-aberto" data-id-status="1" type="button" class="btn btn-primary atualizar-status">Em aberto <i class="bi bi-arrow-right"></i></button>
-                    <button id="btn-finalizado" data-id-status="3" type="button" class="btn btn-primary atualizar-status">Finalizado <i class="bi bi-arrow-right"></i></button>
+                    <button id="btn-finalizado" data-id-status="3" type="button" class="btn btn-success atualizar-status">Finalizado <i class="bi bi-arrow-right"></i></button>
                 </div>
                 <div id="btn-finalizar">
                     {{-- botao finalizar --}}

@@ -100,7 +100,7 @@
             <div class="col-lg-6 col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Atividades do mês</h4>
+                        <h4 class="">Atividades do Mês</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="pie_chart"></canvas>
@@ -110,7 +110,7 @@
             <div class="col-lg-6 col-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Status das Máquinas</h4>
+                        <h4 class="">Status das Máquinas</h4>
                     </div>
                     <div class="card-body">
                         <canvas id="doughnut_chart"></canvas>

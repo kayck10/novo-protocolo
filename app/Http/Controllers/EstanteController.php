@@ -113,9 +113,10 @@ class EstanteController extends Controller
 
 
 
-public function pdf(Request $request, $id)
+public function pdf( $id)
 {
-     // Encontra o equipamento pelo ID
+    $equipamento = Equipamentos::with('user', 'protocolo.local', 'tiposEquipamentos')->findOrFail($id);
+
      $equipamento = Equipamentos::findOrFail($id);
 
      if (!$equipamento) {
@@ -131,6 +132,8 @@ public function pdf(Request $request, $id)
      $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
      $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
 
+    $tecnico = $equipamento->user->name ?? 'Técnico não definido';
+
      $data = [
          'local' => $local,
          'setor' => $setor,
@@ -139,6 +142,8 @@ public function pdf(Request $request, $id)
          'acessorios' => $acessorios,
          'dataEntrada' => $dataEntrada,
          'horaEntrada' => $horaEntrada,
+         'solucao' => $equipamento->solucao,
+         'tecnico' => $tecnico,
      ];
 
     $pdf = FacadePdf::loadView('estante.pdf', $data);

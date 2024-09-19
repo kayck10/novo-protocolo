@@ -13,7 +13,7 @@ class AtendimentoEscolasController extends Controller
     public function index()
     {
         $escolas = Local::where('externo', 1)->orderBy('desc')->get();
-        $eventos = Atendimentos::where('id_status', 3)->orWhere('id_user', null)->get();
+        $eventos = Atendimentos::with('tecnico')->where('id_status', 3)->orWhere('id_user', null)->get();
         $usuarios = User::where('id_funcoes', 2)->get();
 
         return view('atendimento-escolas.index', compact('escolas', 'eventos', 'usuarios'));

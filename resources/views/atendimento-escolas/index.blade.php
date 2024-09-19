@@ -31,292 +31,354 @@
             </div>
         </div>
 
-        <!-- Modal Add Category -->
-        <div class="modal fade none-border overflowh" id="add-category">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title"><strong>Adicionar Categoria</strong></h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <div class="modal fade event-modal" id="event-modal" tabindex="-1" aria-labelledby="eventModalLabel"
             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered overflowh">
-                <div class="modal-content">
-                    <div class="modal-header">
+            <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Aumentando o tamanho da modal -->
+                <div class="modal-content shadow-lg rounded"> <!-- Adicionando sombra e bordas arredondadas -->
+                    <div class="modal-header  text-white">
                         <h5 class="modal-title" id="eventModalLabel">
-                            <strong>Agendar Atendimento <i class="bi bi-calendar3"></i>
-                            </strong>
+                            <strong>Agendar Atendimento <i class="bi bi-calendar3"></i></strong>
                         </h5>
-                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Fechar"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Fechar"></button> <!-- Estilizando o botão de fechar -->
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label class="form-label">Escola:</label>
+                        <!-- Escola -->
+                        <div class="form-group mb-3">
+                            <label for="id_local" class="form-label"><strong>Escola:</strong></label>
                             <select id="id_local" class="form-control">
                                 <option value="">Selecione uma Escola</option>
                                 @foreach ($escolas as $escola)
                                     <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
                                 @endforeach
                             </select>
-                            <div class="form-check mt-3">
-                                <label class="form-check-label" for="flexCheckDefault">Prioridade?</label>
-                                <input class="form-check-input mx-2" type="checkbox" id="prioridade" />
+                        </div>
+
+
+                        <div class="form-check form-switch mb-3 ms-3"> <!-- Usando um switch para melhorar a usabilidade -->
+                            <input class="form-check-input" type="checkbox" id="prioridade">
+                            <label class="form-check-label" for="prioridade">Prioridade?</label>
+                        </div>
+
+                        <!-- Data -->
+                        <div class="form-group mb-3">
+                            <label for="data_entrada" class="form-label"><strong>Data:</strong></label>
+                            <input type="text" name="datepicker" id="data_entrada"
+                                class="form-control datepicker-default" placeholder="Selecione a data">
+                        </div>
+
+                        <!-- Problema -->
+                        <div class="form-group mb-3">
+                            <label for="desc_problema" class="form-label"><strong>Problema:</strong></label>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="desc_problema" placeholder="Descreva o problema">
+                                <span class="btn btn-secondary btn-sm" onclick="novoProblema()"><i class="bi bi-plus-circle"></i></span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">Data:</label>
-                            <input name="datepicker" id="data_entrada" class="datepicker-default form-control"
-                                id="datepicker1">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Problema:</label>
-                            <input class="form-control" type="text" name="desc_problema" id="desc_problema">
-                        </div>
-                        <p id="selected-date"></p>
+
+
+
+                        <!-- Mensagem de data selecionada -->
+                        <p id="selected-date" class="text-muted"></p> <!-- Exibir feedback de seleção de data -->
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-default waves-effect" data-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-success save-event waves-effect waves-light"
-                            onclick="changeEvent()">Criar Evento</button>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-success save-event" onclick="changeEvent()">Criar
+                            Evento</button>
                     </div>
                 </div>
             </div>
         </div>
-                <!-- Modal finalizar -->
 
-            <div class="modal fade event-modal" id="event-modal-click" tabindex="-1" aria-labelledby="eventModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="eventModalLabel">Detalhes do Evento</h5>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Fechar"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="form-label">Escola:</label>
-                                <p id="modal-event-click-escola"></p> <!-- Aqui será mostrado o nome da escola -->
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label"><b>Atribuir a um funcionário</b></label>
-                                <select name="id_user" class="form-control" id="select-tecnicos">
-                                    <option>Selecione um Técnico</option>
-                                    @foreach ($usuarios as $usuario)
-                                        <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <p><b>Data:</b> <span id="modal-event-click-date"></span></p>
-                            <p><b>Problema:</b> <span id="modal-event-click-desc"></span></p>
-                            <div class="form-group">
-                                <label class="form-label">Solução:</label>
-                                <textarea class="form-control" name="solucao" id="solucao" cols="20" rows="2"></textarea>
-                            </div>
-                            <!-- Input hidden para armazenar o ID do atendimento -->
-                            <input type="hidden" id="modal-event-click-id" name="atendimento_id">
+        <!-- Modal finalizar -->
+
+        <div class="modal fade event-modal" id="event-modal-click" tabindex="-1" aria-labelledby="eventModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content shadow-lg rounded">
+                    <div class="modal-header text-white">
+                        <h5 class="modal-title" id="eventModalLabel">
+                            <strong>Detalhes do Evento</strong>
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Escola -->
+                        <div class="form-group mb-3">
+                            <label for="modal-event-click-escola" class="form-label"><strong>Escola:</strong></label>
+                            <p id="modal-event-click-escola" class="form-control-plaintext"></p>
+                            <!-- Aqui será mostrado o nome da escola -->
                         </div>
 
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-danger" data-dismiss="modal">Fechar</button>
-                            <button type="submit" class="btn btn-warning text-light" onclick="deleteEvent()" data-dismiss="modal">Excluir <i
-                                    class="bi bi-trash3-fill"></i></button>
-                            <button type="submit" class="btn btn-info text-light" data-dismiss="modal">Salvar <i
-                                    class="bi bi-floppy-fill"></i></button>
-                            <button type="submit" class="btn btn-success text-light" onclick="finalizeEvent()"
-                                data-dismiss="modal">Finalizar <i class="bi bi-check2-circle"></i></button>
+                        <!-- Atribuir Técnico -->
+                        <div class="form-group mb-3">
+                            <label for="select-tecnicos" class="form-label"><strong>Técnico Responsável</strong></label>
+                            <select name="id_user" class="form-control" id="select-tecnicos">
+                                <option>Selecione um Técnico</option>
+                                @foreach ($usuarios as $usuario)
+                                    <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                                @endforeach
+                            </select>
+                            <p id="modal-event-click-tecnico" class="form-control-plaintext"></p>
                         </div>
+
+                        <!-- Data do Evento -->
+                        <div class="form-group mb-3">
+                            <label class="form-label"><strong>Data:</strong></label>
+                            <p id="modal-event-click-date" class="form-control-plaintext"></p>
+                        </div>
+
+                        <!-- Problema -->
+                        <div class="form-group mb-3">
+                            <label class="form-label"><strong>Problema:</strong></label>
+                            <p id="modal-event-click-desc" class="form-control-plaintext"></p>
+                        </div>
+
+                        <!-- Solução -->
+                        <div class="form-group mb-3">
+                            <label for="solucao" class="form-label"><strong>Solução:</strong></label>
+                            <textarea class="form-control" name="solucao" id="solucao" rows="3" placeholder="Digite a solução"></textarea>
+                        </div>
+
+                        <!-- ID do Atendimento (Input Hidden) -->
+                        <input type="hidden" id="modal-event-click-id" name="atendimento_id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+
+                        <button id="btn-excluir" type="button" class="btn btn-danger" onclick="deleteEvent()">
+                            Excluir <i class="bi bi-trash3-fill"></i>
+                        </button>
+                        <button id="btn-salvar" type="button" class="btn btn-info text-light">
+                            Salvar <i class="bi bi-floppy-fill"></i>
+                        </button>
+                        <button id="btn-finalizar" type="button" class="btn btn-success text-light" onclick="finalizeEvent()">
+                            Finalizar <i class="bi bi-check2-circle"></i>
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
 
-            <script>
-                function changeEvent() {
-                    let local = $('#id_local').val();
-                    let prioridade = $('#prioridade').is(':checked');
-                    let problema = $('#desc_problema').val();
-                    let data_entrada = $('#data_entrada').val();
+        <script>
+            const novoProblema = () => {
+                let data = $('#desc_problema').val();
+                alert(data);
+            }
+            function changeEvent() {
+                let local = $('#id_local').val();
+                let prioridade = $('#prioridade').is(':checked');
+                let problema = $('#desc_problema').val();
+                let data_entrada = $('#data_entrada').val();
 
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('atendimento.store') }}",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            'local': local,
-                            'prioridade': prioridade,
-                            'problema': problema,
-                            'data_entrada': data_entrada,
-                        },
-                        success: function(response) {
-                            iziToast.success({
-                                title: 'Cadastrado',
-                                message: 'Atendimento cadastrado com sucesso!',
-                            });
-                            $('#event-modal').modal('hide');
-                            calendar.refetchEvents(); // Atualizar o calendário para mostrar o novo evento
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.store') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'local': local,
+                        'prioridade': prioridade,
+                        'problema': problema,
+                        'data_entrada': data_entrada,
+                    },
+                    success: function(response) {
+                        iziToast.success({
+                            title: 'Cadastrado',
+                            message: 'Atendimento cadastrado com sucesso!',
+                        });
+                        $('#event-modal').modal('hide');
+
+                        location.reload();
+                    }
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == 500) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Status: Você não tem permissão!',
+                        });
+                    }
+                    console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+                });
+            }
+
+
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+
+                // Carrega os eventos do backend com id_status
+                var events = {!! json_encode(
+                    $eventos->map(function ($evento) {
+                        $jefin = isset($evento->tecnico->name) ? $evento->tecnico->name : '';
+                        return [
+                            'id' => $evento->id,
+                            'title' => $evento->desc_problema,
+                            'start' => $evento->data,
+                            'id_status' => $evento->id_status, // Certifique-se de que o status está sendo retornado
+                            'extendedProps' => [
+                                'desc' => $evento->desc_problema,
+                                'escola' => $evento->local->desc, // Supondo que a relação esteja corretamente definida no model
+                                'solucao' => $evento->solucao, // Supondo que a relação esteja corretamente definida no model
+                                'id_user' => $evento->id_user, // Supondo que a relação esteja corretamente definida no model
+                                'tecnico_nome' => $jefin, // Supondo que a relação esteja corretamente definida no model
+                            ],
+                        ];
+                    }),
+                ) !!};
+
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    locale: 'pt-br',
+                    events: events.map(event => {
+                        // Aplica cor verde para eventos com id_status = 3
+                        if (event.id_status === 3) {
+                            event.backgroundColor = '#28a745'; // Cor verde
+                            event.borderColor = '#28a745'; // Borda verde
                         }
-                    }).fail(function(jqXHR, textStatus, errorThrown) {
-                        if (jqXHR.status == 500) {
-                            iziToast.error({
-                                title: 'Erro',
-                                message: 'Status: Você não tem permissão!',
-                            });
+                        return event;
+                    }),
+                    dateClick: function(info) {
+                        document.getElementById('selected-date').innerText = info.dateStr;
+                        $('#event-modal').modal('show');
+                    },
+
+                    eventClick: function(info) {
+                        // Exibir informações do evento na modal
+                        $('#event-modal-click').attr('data-status-id', info.event.extendedProps.id_status)
+                        $('#modal-event-click-id').val(info.event.id);
+                        $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[0]);
+                        $('#modal-event-click-desc').html(info.event.extendedProps.desc);
+                        $('#modal-event-click-escola').html(info.event.extendedProps
+                            .escola); // Exibe o nome da escola
+                        $('#event-modal-click').modal('show');
+
+
+                        if (info.event.extendedProps.id_status == 1) {
+                            console.log(info.event.extendedProps);
+                            $('#select-tecnicos').show();
+                            $('#btn-finalizar').show();
+                            $('#btn-salvar').show();
                         }
-                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                    });
-                }
+                        if (info.event.extendedProps.id_status == 3) {
+                            console.log(info.event.extendedProps);
+                            $('#select-tecnicos').hide();
+                            $('#btn-finalizar').hide();
+                            $('#btn-salvar').hide();
+                            $('#modal-event-click-tecnico').html(info.event.extendedProps.tecnico_nome);
+                            $('#solucao').html(info.event.extendedProps.solucao).prop('disabled', true);
+                        }
 
-                document.addEventListener('DOMContentLoaded', function() {
-                    var calendarEl = document.getElementById('calendar');
 
-                    // Carrega os eventos do backend com id_status
-                    var events = {!! json_encode(
-                        $eventos->map(function ($evento) {
-                            return [
-                                'id' => $evento->id,
-                                'title' => $evento->desc_problema,
-                                'start' => $evento->data,
-                                'id_status' => $evento->id_status, // Certifique-se de que o status está sendo retornado
-                                'extendedProps' => [
-                                    'desc' => $evento->desc_problema,
-                                    'escola' => $evento->local->desc, // Supondo que a relação esteja corretamente definida no model
-                                ],
-                            ];
-                        }),
-                    ) !!};
-
-                    var calendar = new FullCalendar.Calendar(calendarEl, {
-                        initialView: 'dayGridMonth',
-                        locale: 'pt-br',
-                        events: events.map(event => {
-                            // Aplica cor verde para eventos com id_status = 3
-                            if (event.id_status === 3) {
-                                event.backgroundColor = '#28a745'; // Cor verde
-                                event.borderColor = '#28a745'; // Borda verde
-                            }
-                            return event;
-                        }),
-                        dateClick: function(info) {
-                            document.getElementById('selected-date').innerText = info.dateStr;
-                            $('#event-modal').modal('show');
-                        },
-
-                        eventClick: function(info) {
-                            // Exibir informações do evento na modal
-                            $('#modal-event-click-id').val(info.event.id);
-                            $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[0]);
-                            $('#modal-event-click-desc').html(info.event.extendedProps.desc);
-                            $('#modal-event-click-escola').html(info.event.extendedProps
-                                .escola); // Exibe o nome da escola
-                            $('#event-modal-click').modal('show');
-                        },
-                    });
-
-                    calendar.render();
+                    },
                 });
 
+                calendar.render();
+            });
 
-                function finalizeEvent() {
-                    let atendimentoId = $('#modal-event-click-id').val();
-                    if (!atendimentoId) {
-                        iziToast.error({
-                            title: 'Erro',
-                            message: 'ID do atendimento não encontrado!',
-                        });
-                        return;
-                    }
 
-                    let userId = $('#select-tecnicos').val();
-                    let solucao = $('#solucao').val();
 
-                    console.log("Finalizando evento com ID:", atendimentoId);
-
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('atendimento.finalize') }}",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            'id': atendimentoId,
-                            'id_user': userId,
-                            'solucao': solucao
-                        },
-                        success: function(response) {
-                            iziToast.success({
-                                title: 'Finalizado',
-                                message: 'Atendimento finalizado com sucesso!',
-                            });
-
-                            let event = calendar.getEventById(atendimentoId);
-                            if (event) {
-                                event.setProp('backgroundColor',
-                                    '#28a745');
-                                event.setExtendedProp('status',
-                                    'finalizado');
-                            }
-
-                            $('#event-modal-click').modal('hide');
-                            calendar.refetchEvents();
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            iziToast.error({
-                                title: 'Erro',
-                                message: 'Ocorreu um erro ao tentar finalizar o atendimento. Verifique os dados e tente novamente.',
-                            });
-                            console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                        }
+            function finalizeEvent() {
+                let atendimentoId = $('#modal-event-click-id').val();
+                if (!atendimentoId) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'ID do atendimento não encontrado!',
                     });
+                    return;
                 }
 
-                function deleteEvent() {
-                    let atendimentoId = $('#modal-event-click-id').val();
-                    if (!atendimentoId) {
+                let userId = $('#select-tecnicos').val();
+                let solucao = $('#solucao').val();
+
+                console.log("Finalizando evento com ID:", atendimentoId);
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.finalize') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'id': atendimentoId,
+                        'id_user': userId,
+                        'solucao': solucao
+                    },
+                    success: function(response) {
+                        iziToast.success({
+                            title: 'Finalizado',
+                            message: 'Atendimento finalizado com sucesso!',
+                        });
+
+                        // let event = calendar.getEventById(atendimentoId);
+                        // if (event) {
+                        //     event.setProp('backgroundColor',
+                        //         '#28a745');
+                        //     event.setExtendedProp('status',
+                        //         'finalizado');
+                        // }
+
+                        $('#event-modal-click').modal('hide');
+                        location.reload();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
                         iziToast.error({
                             title: 'Erro',
-                            message: 'ID do atendimento não encontrado!',
+                            message: 'Ocorreu um erro ao tentar finalizar o atendimento. Verifique os dados e tente novamente.',
                         });
-                        return;
+                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
                     }
+                });
+            }
 
-                    $.ajax({
-                        type: "POST",
-                        url: "{{ route('atendimento.delete') }}",
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        data: {
-                            'id': atendimentoId
-                        },
-                        success: function(response) {
-                            iziToast.error({
-                                title: 'Excluído',
-                                message: 'Atendimento excluído com sucesso!',
-                            });
-
-                            let event = calendar.getEventById(atendimentoId);
-                            if (event) {
-                                event.remove(); // Remove o evento do calendário
-                            }
-
-                            $('#event-modal-click').modal('hide');
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            iziToast.error({
-                                title: 'Erro',
-                                message: 'Ocorreu um erro ao tentar excluir o atendimento. Tente novamente.',
-                            });
-                            console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                        }
+            function deleteEvent() {
+                let atendimentoId = $('#modal-event-click-id').val();
+                if (!atendimentoId) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'ID do atendimento não encontrado!',
                     });
+                    return;
                 }
-            </script>
-        @endsection
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.delete') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'id': atendimentoId
+                    },
+                    success: function(response) {
+                        iziToast.error({
+                            title: 'Excluído',
+                            message: 'Atendimento excluído com sucesso!',
+                        });
+
+                        let event = calendar.getEventById(atendimentoId);
+                        if (event) {
+                            event.remove(); // Remove o evento do calendário
+                        }
+
+                        $('#event-modal-click').modal('hide');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Ocorreu um erro ao tentar excluir o atendimento. Tente novamente.',
+                        });
+                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+                    }
+                });
+            }
+        </script>
+    @endsection
