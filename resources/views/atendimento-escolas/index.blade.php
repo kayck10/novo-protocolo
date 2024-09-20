@@ -80,10 +80,8 @@
                                         class="bi bi-plus-circle"></i></span>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <ul id="to-do-list">
+                        <div class="col-md-12" id="to-do-list">
 
-                            </ul>
                         </div>
 
 
@@ -174,223 +172,236 @@
 
 
         <script>
+            let i = 0;
             const novoProblema = () => {
-                    let data = $('#desc_problema').val();
-                    $('#to-do-list').append(`<li>${data}</li>`);
-                    $('#desc_problema').val('');
+                i++;
+                let data = $('#desc_problema').val();
+                $('#to-do-list').append(`
+                    <div class="input-group mb-2" id="div-desc-prob-${i}">
+                        <input type="text" class="form-control" id="desc_problema_${i}    ,m "
+                            value="${data}" disabled>
+                        <span class="btn btn-danger btn-sm" onclick="excluirProblema(${i})"><i class="bi bi-trash"></i></span>
+                    </div>
+                    `);
+                $('#desc_problema').val('');
+            }
+
+
+            const excluirProblema = (idDiv) => {
+                $(`#div-desc-prob-${idDiv}`).remove();
+            }
+
+            function changeEvent() {
+                let local = $('#id_local').val();
+                let prioridade = $('#prioridade').is(':checked');
+                let problema = $('#desc_problema').val();
+                let data_entrada = $('#data_entrada').val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.store') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'local': local,
+                        'prioridade': prioridade,
+                        'problema': problema,
+                        'data_entrada': data_entrada,
+                    },
+                    success: function(response) {
+                        iziToast.success({
+                            title: 'Cadastrado',
+                            message: 'Atendimento cadastrado com sucesso!',
+                        });
+                        $('#event-modal').modal('hide');
+
+                        location.reload();
                     }
-
-                    function changeEvent() {
-                        let local = $('#id_local').val();
-                        let prioridade = $('#prioridade').is(':checked');
-                        let problema = $('#desc_problema').val();
-                        let data_entrada = $('#data_entrada').val();
-
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ route('atendimento.store') }}",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                'local': local,
-                                'prioridade': prioridade,
-                                'problema': problema,
-                                'data_entrada': data_entrada,
-                            },
-                            success: function(response) {
-                                iziToast.success({
-                                    title: 'Cadastrado',
-                                    message: 'Atendimento cadastrado com sucesso!',
-                                });
-                                $('#event-modal').modal('hide');
-
-                                location.reload();
-                            }
-                        }).fail(function(jqXHR, textStatus, errorThrown) {
-                            if (jqXHR.status == 500) {
-                                iziToast.error({
-                                    title: 'Erro',
-                                    message: 'Status: Você não tem permissão!',
-                                });
-                            }
-                            console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == 500) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Status: Você não tem permissão!',
                         });
                     }
+                    console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+                });
+            }
 
 
 
-                    document.addEventListener('DOMContentLoaded', function() {
-                        var calendarEl = document.getElementById('calendar');
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
 
-                        // Carrega os eventos do backend com id_status
-                        var events = {!! json_encode(
-                            $eventos->map(function ($evento) {
-                                $jefin = isset($evento->tecnico->name) ? $evento->tecnico->name : '';
-                                return [
-                                    'id' => $evento->id,
-                                    'title' => $evento->desc_problema,
-                                    'start' => $evento->data,
-                                    'id_status' => $evento->id_status, // Certifique-se de que o status está sendo retornado
-                                    'extendedProps' => [
-                                        'desc' => $evento->desc_problema,
-                                        'escola' => $evento->local->desc, // Supondo que a relação esteja corretamente definida no model
-                                        'solucao' => $evento->solucao, // Supondo que a relação esteja corretamente definida no model
-                                        'id_user' => $evento->id_user, // Supondo que a relação esteja corretamente definida no model
-                                        'tecnico_nome' => $jefin, // Supondo que a relação esteja corretamente definida no model
-                                    ],
-                                ];
-                            }),
-                        ) !!};
+                // Carrega os eventos do backend com id_status
+                var events = {!! json_encode(
+                    $eventos->map(function ($evento) {
+                        $jefin = isset($evento->tecnico->name) ? $evento->tecnico->name : '';
+                        return [
+                            'id' => $evento->id,
+                            'title' => $evento->desc_problema,
+                            'start' => $evento->data,
+                            'id_status' => $evento->id_status, // Certifique-se de que o status está sendo retornado
+                            'extendedProps' => [
+                                'desc' => $evento->desc_problema,
+                                'escola' => $evento->local->desc, // Supondo que a relação esteja corretamente definida no model
+                                'solucao' => $evento->solucao, // Supondo que a relação esteja corretamente definida no model
+                                'id_user' => $evento->id_user, // Supondo que a relação esteja corretamente definida no model
+                                'tecnico_nome' => $jefin, // Supondo que a relação esteja corretamente definida no model
+                            ],
+                        ];
+                    }),
+                ) !!};
 
-                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                            initialView: 'dayGridMonth',
-                            locale: 'pt-br',
-                            events: events.map(event => {
-                                // Aplica cor verde para eventos com id_status = 3
-                                if (event.id_status === 3) {
-                                    event.backgroundColor = '#28a745'; // Cor verde
-                                    event.borderColor = '#28a745'; // Borda verde
-                                }
-                                return event;
-                            }),
-                            dateClick: function(info) {
-                                // document.getElementById('selected-date').innerText = info.dateStr;
-                                $('#event-modal').modal('show');
-                            },
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    locale: 'pt-br',
+                    events: events.map(event => {
+                        // Aplica cor verde para eventos com id_status = 3
+                        if (event.id_status === 3) {
+                            event.backgroundColor = '#28a745'; // Cor verde
+                            event.borderColor = '#28a745'; // Borda verde
+                        }
+                        return event;
+                    }),
+                    dateClick: function(info) {
+                        // document.getElementById('selected-date').innerText = info.dateStr;
+                        $('#event-modal').modal('show');
+                    },
 
-                            eventClick: function(info) {
-                                // Exibir informações do evento na modal
-                                $('#event-modal-click').attr('data-status-id', info.event.extendedProps
-                                    .id_status)
-                                $('#modal-event-click-id').val(info.event.id);
-                                $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[
-                                    0]);
-                                $('#modal-event-click-desc').html(info.event.extendedProps.desc);
-                                $('#modal-event-click-escola').html(info.event.extendedProps
-                                    .escola); // Exibe o nome da escola
-                                $('#event-modal-click').modal('show');
-
-
-                                if (info.event.extendedProps.id_status == 1) {
-                                    console.log(info.event.extendedProps);
-                                    $('#select-tecnicos').show();
-                                    $('#btn-finalizar').show();
-                                    $('#btn-salvar').show();
-                                }
-                                if (info.event.extendedProps.id_status == 3) {
-                                    console.log(info.event.extendedProps);
-                                    $('#select-tecnicos').hide();
-                                    $('#btn-finalizar').hide();
-                                    $('#btn-salvar').hide();
-                                    $('#modal-event-click-tecnico').html(info.event.extendedProps
-                                        .tecnico_nome);
-                                    $('#solucao').html(info.event.extendedProps.solucao).prop('disabled',
-                                        true);
-                                }
+                    eventClick: function(info) {
+                        // Exibir informações do evento na modal
+                        $('#event-modal-click').attr('data-status-id', info.event.extendedProps
+                            .id_status)
+                        $('#modal-event-click-id').val(info.event.id);
+                        $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[
+                            0]);
+                        $('#modal-event-click-desc').html(info.event.extendedProps.desc);
+                        $('#modal-event-click-escola').html(info.event.extendedProps
+                            .escola); // Exibe o nome da escola
+                        $('#event-modal-click').modal('show');
 
 
-                            },
-                        });
+                        if (info.event.extendedProps.id_status == 1) {
+                            console.log(info.event.extendedProps);
+                            $('#select-tecnicos').show();
+                            $('#btn-finalizar').show();
+                            $('#btn-salvar').show();
+                        }
+                        if (info.event.extendedProps.id_status == 3) {
+                            console.log(info.event.extendedProps);
+                            $('#select-tecnicos').hide();
+                            $('#btn-finalizar').hide();
+                            $('#btn-salvar').hide();
+                            $('#modal-event-click-tecnico').html(info.event.extendedProps
+                                .tecnico_nome);
+                            $('#solucao').html(info.event.extendedProps.solucao).prop('disabled',
+                                true);
+                        }
 
-                        calendar.render();
+
+                    },
+                });
+
+                calendar.render();
+            });
+
+
+
+            function finalizeEvent() {
+                let atendimentoId = $('#modal-event-click-id').val();
+                if (!atendimentoId) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'ID do atendimento não encontrado!',
                     });
+                    return;
+                }
 
+                let userId = $('#select-tecnicos').val();
+                let solucao = $('#solucao').val();
 
+                console.log("Finalizando evento com ID:", atendimentoId);
 
-                    function finalizeEvent() {
-                        let atendimentoId = $('#modal-event-click-id').val();
-                        if (!atendimentoId) {
-                            iziToast.error({
-                                title: 'Erro',
-                                message: 'ID do atendimento não encontrado!',
-                            });
-                            return;
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.finalize') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'id': atendimentoId,
+                        'id_user': userId,
+                        'solucao': solucao
+                    },
+                    success: function(response) {
+                        iziToast.success({
+                            title: 'Finalizado',
+                            message: 'Atendimento finalizado com sucesso!',
+                        });
+
+                        // let event = calendar.getEventById(atendimentoId);
+                        // if (event) {
+                        //     event.setProp('backgroundColor',
+                        //         '#28a745');
+                        //     event.setExtendedProp('status',
+                        //         'finalizado');
+                        // }
+
+                        $('#event-modal-click').modal('hide');
+                        location.reload();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Ocorreu um erro ao tentar finalizar o atendimento. Verifique os dados e tente novamente.',
+                        });
+                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+                    }
+                });
+            }
+
+            function deleteEvent() {
+                let atendimentoId = $('#modal-event-click-id').val();
+                if (!atendimentoId) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'ID do atendimento não encontrado!',
+                    });
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.delete') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'id': atendimentoId
+                    },
+                    success: function(response) {
+                        iziToast.error({
+                            title: 'Excluído',
+                            message: 'Atendimento excluído com sucesso!',
+                        });
+
+                        let event = calendar.getEventById(atendimentoId);
+                        if (event) {
+                            event.remove(); // Remove o evento do calendário
                         }
 
-                        let userId = $('#select-tecnicos').val();
-                        let solucao = $('#solucao').val();
-
-                        console.log("Finalizando evento com ID:", atendimentoId);
-
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ route('atendimento.finalize') }}",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                'id': atendimentoId,
-                                'id_user': userId,
-                                'solucao': solucao
-                            },
-                            success: function(response) {
-                                iziToast.success({
-                                    title: 'Finalizado',
-                                    message: 'Atendimento finalizado com sucesso!',
-                                });
-
-                                // let event = calendar.getEventById(atendimentoId);
-                                // if (event) {
-                                //     event.setProp('backgroundColor',
-                                //         '#28a745');
-                                //     event.setExtendedProp('status',
-                                //         'finalizado');
-                                // }
-
-                                $('#event-modal-click').modal('hide');
-                                location.reload();
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                iziToast.error({
-                                    title: 'Erro',
-                                    message: 'Ocorreu um erro ao tentar finalizar o atendimento. Verifique os dados e tente novamente.',
-                                });
-                                console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                            }
+                        $('#event-modal-click').modal('hide');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Ocorreu um erro ao tentar excluir o atendimento. Tente novamente.',
                         });
+                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
                     }
-
-                    function deleteEvent() {
-                        let atendimentoId = $('#modal-event-click-id').val();
-                        if (!atendimentoId) {
-                            iziToast.error({
-                                title: 'Erro',
-                                message: 'ID do atendimento não encontrado!',
-                            });
-                            return;
-                        }
-
-                        $.ajax({
-                            type: "POST",
-                            url: "{{ route('atendimento.delete') }}",
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            data: {
-                                'id': atendimentoId
-                            },
-                            success: function(response) {
-                                iziToast.error({
-                                    title: 'Excluído',
-                                    message: 'Atendimento excluído com sucesso!',
-                                });
-
-                                let event = calendar.getEventById(atendimentoId);
-                                if (event) {
-                                    event.remove(); // Remove o evento do calendário
-                                }
-
-                                $('#event-modal-click').modal('hide');
-                            },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                iziToast.error({
-                                    title: 'Erro',
-                                    message: 'Ocorreu um erro ao tentar excluir o atendimento. Tente novamente.',
-                                });
-                                console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                            }
-                        });
-                    }
+                });
+            }
         </script>
     @endsection
