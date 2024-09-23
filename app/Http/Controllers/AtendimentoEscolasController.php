@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Atendimentos;
 use App\Models\Local;
+use App\Models\problemaAtendimento;
 use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
@@ -23,8 +24,11 @@ class AtendimentoEscolasController extends Controller
     {
         $request->validate([
             'local' => 'required|exists:local,id',
+            'problemas' => 'required|array',
+            'problemas.*' => 'required|string',
         ]);
-        $meses_traducao = array(
+
+        $meses_traducao = [
             "Janeiro" => "January",
             "Fevereiro" => "February",
             "Março" => "March",
@@ -37,9 +41,7 @@ class AtendimentoEscolasController extends Controller
             "Outubro" => "October",
             "Novembro" => "November",
             "Dezembro" => "December"
-        );
-
-
+        ];
 
         $data_entrada = $request->data_entrada;
 
@@ -49,27 +51,32 @@ class AtendimentoEscolasController extends Controller
                 break;
             }
         }
-        $data = DateTime::createFromFormat('j F, Y', $data_entrada);
-        $prioridade =  (int) $request->prioridade;
 
+        $data = DateTime::createFromFormat('j F, Y', $data_entrada);
 
         if ($data === false) {
-            $errors = DateTime::getLastErrors();
             return response()->json(["error" => true, "message" => "Informe uma data válida!"], 400);
-        } else {
-            $data_formatada = $data->format('y/m/d');
         }
+
+        $data_formatada = $data->format('y/m/d');
 
         $atendimento = Atendimentos::create([
             'id_local' => $request->input('local'),
             'externo' => 1,
-            'desc_problema' => $request->problema,
+            'desc_problema' => $request->input('desc_problema'), // Usado para outros tipos de atendimentos
             'data' => $data_formatada
-
         ]);
+
+        foreach ($request->input('problemas') as $descricaoProblema) {
+            problemaAtendimento::create([
+                'atendimento_id' => $atendimento->id,
+                'descricao' => $descricaoProblema
+            ]);
+        }
 
         return response()->json($atendimento, 201);
     }
+
     public function finalize(Request $request)
     {
         $request->validate([
@@ -86,8 +93,11 @@ class AtendimentoEscolasController extends Controller
 
         return response()->json($atendimento, 200);
     }
-    public function delete (Request $request) {
-        $request -> validate([
+
+
+    public function delete(Request $request)
+    {
+        $request->validate([
             'id' => 'required|exists:atendimentos,id',
         ]);
         $atendimento = Atendimentos::findOrFail($request->id);

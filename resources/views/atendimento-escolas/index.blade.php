@@ -33,68 +33,58 @@
 
 
 
-        <div class="modal fade event-modal" id="event-modal" tabindex="-1" aria-labelledby="eventModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg"> <!-- Aumentando o tamanho da modal -->
-                <div class="modal-content shadow-lg rounded"> <!-- Adicionando sombra e bordas arredondadas -->
-                    <div class="modal-header  text-white">
-                        <h5 class="modal-title" id="eventModalLabel">
-                            <strong>Agendar Atendimento <i class="bi bi-calendar3"></i></strong>
-                        </h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                            aria-label="Fechar"></button> <!-- Estilizando o botão de fechar -->
-                    </div>
-                    <div class="modal-body">
-                        <!-- Escola -->
-                        <div class="form-group mb-3">
-                            <label for="id_local" class="form-label"><strong>Escola:</strong></label>
-                            <select id="id_local" class="form-control">
-                                <option value="">Selecione uma Escola</option>
-                                @foreach ($escolas as $escola)
-                                    <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                        <!-- Modasl cadastro atendimento-->
 
+                        <div class="modal fade event-modal" id="event-modal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content shadow-lg rounded">
+                                    <div class="modal-header text-white">
+                                        <h5 class="modal-title" id="eventModalLabel">
+                                            <strong>Agendar Atendimento <i class="bi bi-calendar3"></i></strong>
+                                        </h5>
+                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Escola -->
+                                        <div class="form-group mb-3">
+                                            <label for="id_local" class="form-label"><strong>Escola:</strong></label>
+                                            <select id="id_local" class="form-control">
+                                                <option value="">Selecione uma Escola</option>
+                                                @foreach ($escolas as $escola)
+                                                    <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                        <div class="form-check form-switch mb-3 ms-3"> <!-- Usando um switch para melhorar a usabilidade -->
-                            <input class="form-check-input" type="checkbox" id="prioridade">
-                            <label class="form-check-label" for="prioridade">Prioridade?</label>
-                        </div>
+                                        <div class="form-check form-switch mb-3 ms-3"> <!-- Usando um switch para melhorar a usabilidade -->
+                                            <input class="form-check-input" type="checkbox" id="prioridade">
+                                            <label class="form-check-label" for="prioridade">Prioridade?</label>
+                                        </div>
 
-                        <!-- Data -->
-                        <div class="form-group mb-3">
-                            <label for="data_entrada" class="form-label"><strong>Data:</strong></label>
-                            <input type="text" name="datepicker" id="data_entrada"
-                                class="form-control datepicker-default" placeholder="Selecione a data">
-                        </div>
+                                        <!-- Data -->
+                                        <div class="form-group mb-3">
+                                            <label for="data_entrada" class="form-label"><strong>Data:</strong></label>
+                                            <input type="text" name="datepicker" id="data_entrada" class="form-control datepicker-default" placeholder="Selecione a data">
+                                        </div>
 
-                        <!-- Problema -->
-                        <div class="form-group mb-3">
-                            <label for="desc_problema" class="form-label"><strong>Problema:</strong></label>
-
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="desc_problema"
-                                    placeholder="Descreva o problema">
-                                <span class="btn btn-secondary btn-sm" onclick="novoProblema()"><i
-                                        class="bi bi-plus-circle"></i></span>
+                                        <!-- Problema -->
+                                        <div class="form-group mb-3">
+                                            <label for="desc_problema" class="form-label"><strong>Problema:</strong></label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="desc_problema" placeholder="Descreva o problema">
+                                                <span class="btn btn-secondary btn-sm" onclick="novoProblema()"><i class="bi bi-plus-circle"></i></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12" id="to-do-list"></div>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-between">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn btn-success save-event" onclick="changeEvent()">Criar Evento</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-12" id="to-do-list">
 
-                        </div>
-
-
-                        <!-- Mensagem de data selecionada -->
-                    </div>
-                    <div class="modal-footer d-flex justify-content-between">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-success save-event" onclick="changeEvent()">Criar
-                            Evento</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Modal finalizar -->
 
@@ -172,64 +162,63 @@
 
 
         <script>
-            let i = 0;
-            const novoProblema = () => {
-                i++;
-                let data = $('#desc_problema').val();
-                $('#to-do-list').append(`
-                    <div class="input-group mb-2" id="div-desc-prob-${i}">
-                        <input type="text" class="form-control" id="desc_problema_${i}    ,m "
-                            value="${data}" disabled>
-                        <span class="btn btn-danger btn-sm" onclick="excluirProblema(${i})"><i class="bi bi-trash"></i></span>
-                    </div>
-                    `);
-                $('#desc_problema').val('');
+          let i = 0;
+    const novoProblema = () => {
+        i++;
+        let data = $('#desc_problema').val();
+        $('#to-do-list').append(`
+            <div class="input-group mb-2" id="div-desc-prob-${i}">
+                <input type="text" class="form-control" id="desc_problema_${i}" value="${data}" disabled>
+                <span class="btn btn-danger btn-sm" onclick="excluirProblema(${i})"><i class="bi bi-trash"></i></span>
+            </div>
+        `);
+        $('#desc_problema').val('');
+    }
+
+    const excluirProblema = (idDiv) => {
+        $(`#div-desc-prob-${idDiv}`).remove();
+    }
+
+    function changeEvent() {
+        let local = $('#id_local').val();
+        let prioridade = $('#prioridade').is(':checked');
+        let data_entrada = $('#data_entrada').val();
+
+        let problemas = [];
+        $('#to-do-list input[type="text"]').each(function() {
+            problemas.push($(this).val());
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('atendimento.store') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'local': local,
+                'prioridade': prioridade,
+                'problemas': problemas,
+                'data_entrada': data_entrada,
+            },
+            success: function(response) {
+                iziToast.success({
+                    title: 'Cadastrado',
+                    message: 'Atendimento cadastrado com sucesso!',
+                });
+                $('#event-modal').modal('hide');
+                location.reload();
             }
-
-
-            const excluirProblema = (idDiv) => {
-                $(`#div-desc-prob-${idDiv}`).remove();
-            }
-
-            function changeEvent() {
-                let local = $('#id_local').val();
-                let prioridade = $('#prioridade').is(':checked');
-                let problema = $('#desc_problema').val();
-                let data_entrada = $('#data_entrada').val();
-
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('atendimento.store') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        'local': local,
-                        'prioridade': prioridade,
-                        'problema': problema,
-                        'data_entrada': data_entrada,
-                    },
-                    success: function(response) {
-                        iziToast.success({
-                            title: 'Cadastrado',
-                            message: 'Atendimento cadastrado com sucesso!',
-                        });
-                        $('#event-modal').modal('hide');
-
-                        location.reload();
-                    }
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    if (jqXHR.status == 500) {
-                        iziToast.error({
-                            title: 'Erro',
-                            message: 'Status: Você não tem permissão!',
-                        });
-                    }
-                    console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            if (jqXHR.status == 500) {
+                iziToast.error({
+                    title: 'Erro',
+                    message: 'Status: Você não tem permissão!',
                 });
             }
-
-
+            console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+        });
+    }
 
             document.addEventListener('DOMContentLoaded', function() {
                 var calendarEl = document.getElementById('calendar');

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Atendimentos extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'id_local', 'id_equipamento', 'id_status', 'id_user', 'prioridade', 'desc_problema', 'data', 'solucao', 'externo'];
+    protected $fillable = ['id_local', 'id_equipamento', 'id_status', 'id_user', 'prioridade', 'desc_problema', 'data', 'solucao', 'externo'];
 
     public function tecnico()
     {
@@ -29,4 +29,8 @@ class Atendimentos extends Model
         return $this->hasMany(Equipamentos::class, 'id_atendimento');
     }
 
+    public function problemas()
+    {
+        return $this->hasMany(problemaAtendimento::class, 'atendimento_id');
+    }
 }
