@@ -6,6 +6,8 @@ use App\Models\Equipamentos;
 use App\Models\Inservivel;
 use App\Models\Problema;
 use App\Models\ProtocoloEntrada;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 
 class InservivelController extends Controller
@@ -15,7 +17,7 @@ class InservivelController extends Controller
         $problemas = Problema::all();
         $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 6)->get();
         $protocolos = ProtocoloEntrada::all();
-          return view('inservivel.index', compact('equipamentos', 'protocolos', 'problemas'));
+        return view('inservivel.index', compact('equipamentos', 'protocolos', 'problemas'));
     }
 
     public function create()
@@ -26,7 +28,8 @@ class InservivelController extends Controller
         return view('inservivel.create', compact('equipamentos', 'protocolos', 'problemas'));
     }
 
-    public function store (Request $request) {
+    public function store(Request $request)
+    {
         $laudosInserviveis = Inservivel::create($request->all());
         return redirect()->back();
     }
@@ -41,14 +44,24 @@ class InservivelController extends Controller
     }
 
     public function devolver(Request $request)
-{
-    $equipamento = Equipamentos::find($request->id_equipamento);
+    {
+        $equipamento = Equipamentos::find($request->id_equipamento);
 
-    $equipamento->id_status = 3;
-    $equipamento->save();
+        $equipamento->id_status = 3;
+        $equipamento->save();
 
-    return response()->json(['message' => 'Equipamento devolvido com sucesso!'], 200);
+        return response()->json(['message' => 'Equipamento devolvido com sucesso!'], 200);
+    }
+
+    public function atualizar($id)
+    {
+        $equipamento = Equipamentos::findOrFail($id);
+        $equipamento->id_status = 3;
+        $equipamento->save();
+
+        return response()->json(['success' => 'Equipamento devolvido com sucesso!']);
+    }
+
+
+
 }
-
-}
-

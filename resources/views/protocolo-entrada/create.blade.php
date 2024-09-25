@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Descrição do Problema: <i class="fa fa-asterisk text-danger"></i></label>
-                                        <textarea cols="30" rows="3" class="form-control" type="text" id="desc" required></textarea>
+                                        <textarea cols="30" rows="3" class="form-control" type="text" id="desc" name="desc" required></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -145,7 +145,7 @@
                 let id_protocolo = $('#id_protocolo').val();
                 let tombamento = $('#tombamento').val();
                 let setor = $('#id_setor_escolas').val();
-                let problema = $('#desc').val();
+                let desc = $('#desc').val();
                 let prioridade = $('#prioridade').is(':checked');
                 let descricao_acessorio = $('#descricao_acessorio').val();
 
@@ -154,7 +154,7 @@
                     id_protocolo: id_protocolo,
                     tombamento: tombamento,
                     setor: setor,
-                    problema: problema,
+                    desc: desc,
                     prioridade: prioridade,
                     descricao_acessorio: descricao_acessorio
                 };

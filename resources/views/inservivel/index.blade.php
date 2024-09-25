@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container-fluid">
-
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
@@ -42,18 +41,19 @@
                                                 <td class="center">{{ $equipamento->created_at->format('d/m/Y') }}</td>
                                                 <td class="center">
                                                     <button class="btn btn-primary" data-bs-toggle="modal"
-                                                            data-bs-target="#modalcriarlaudo{{ $equipamento->id }}"
-                                                            data-equipamento-id="{{ $equipamento->id }}">
-                                                            <i class="bi bi-printer"></i>
-                                                        </button>
+                                                        data-bs-target="#modalcriarlaudo{{ $equipamento->id }}"
+                                                        data-equipamento-id="{{ $equipamento->id }}">
+                                                        <i class="bi bi-printer"></i>
+                                                    </button>
                                                     <button class="btn btn-warning" data-bs-toggle="modal"
-                                                            data-bs-target="#modalmostrardados{{ $equipamento->id }}"
-                                                            data-equipamento-id="{{ $equipamento->id }}">
+                                                        data-bs-target="#modalmostrardados{{ $equipamento->id }}"
+                                                        data-equipamento-id="{{ $equipamento->id }}">
                                                         <i class="bi bi-eye-fill"></i>
                                                     </button>
                                                 </td>
-                                                <td class="center">
+                                            </tr>
                                         @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -116,17 +116,53 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Fechar</button>
+                                        <button type="button" class="btn btn-primary devolver-equipamento"
+                                            data-id="{{ $equipamento->id }}" data-bs-dismiss="modal">Devolver</button>
+
+                                        <button type="button" class="btn btn-warning btn-imprimir"
+                                            data-equipamento-id="{{ $equipamento->id }}">Imprimir</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
-
                 </div>
             </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+        $('.devolver-equipamento').on('click', function() {
+            var equipamentoId = $(this).data('id');
+
+            $.ajax({
+                url: '{{ route('equipamentos.devolver', '') }}/' + equipamentoId,
+                method: 'PATCH',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    toastr.success(response.success, 'Sucesso', {
+                        closeButton: true,
+                        progressBar: true,
+                        positionClass: "toast-top-right"
+                    });
+                    location.reload();
+                },
+                error: function(xhr) {
+                    toastr.error('Ocorreu um erro ao devolver o equipamento.', 'Erro', {
+                        closeButton: true,
+                        progressBar: true,
+                        positionClass: "toast-top-right"
+                    });
+                }
+            });
+        });
+    });
+    </script>
 @endsection

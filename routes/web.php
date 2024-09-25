@@ -49,9 +49,9 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/store', [ProtocoloEntradaController::class, 'store'])->name('protocolo.store');
         Route::post('store/equipamento', [ProtocoloEntradaController::class, 'equipamentos'])->name('store.equipamento');
         Route::put('/update/{id}', [ProtocoloEntradaController::class, 'update'])->name('protocolo.update');
+        Route::patch('/devolver/{id}', [ProtocoloEntradaController::class, 'devolver'])->name('equipamentos.devolver');
         Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
         Route::post('/gerar-pdf-segundo', [PdfController::class, 'gerarprotocoloPDF'])->name('gerar.protocolo.pdf');
-
     });
 
     Route::prefix('/atendimento-interno')->group(function () {
@@ -79,7 +79,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
         Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
         Route::get('/escolas', [EstanteController::class, 'equipamento'])->name('equipamento');
-
     });
 
 
@@ -88,10 +87,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
         Route::post('/store', [InservivelController::class, 'store'])->name('inservivel.store');
         Route::post('/devolver', [InservivelController::class, 'devolver'])->name('inservivel.devolver');
+        Route::patch('/devolver/{id}', [InservivelController::class, 'atualizar'])->name('equipamentos.devolver');
         Route::post('/gerar-pdf', [PdfController::class, 'gerarPDF'])->name('gerar.pdf');
         Route::post('/verificar', [PdfController::class, 'verificarId'])->name('verificar');
-
-
     });
     Route::prefix('/graficos')->group(function () {
         Route::get('/anual', [GraficosController::class, 'anual'])->name('graficos.anual');

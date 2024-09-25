@@ -30,8 +30,9 @@ class ProtocoloEntradaController extends Controller
         return response()->json($protocolo);
     }
 
-    public function create() {
-       $tiposequipamentos = TiposEquipamentos::all();
+    public function create()
+    {
+        $tiposequipamentos = TiposEquipamentos::all();
         $setorEscolas = SetorEscola::all();
         $protocolos = Equipamentos::all();
         $escolas = Local::all();
@@ -40,6 +41,8 @@ class ProtocoloEntradaController extends Controller
 
     public function store(Request $request)
     {
+        $data = $request->all();
+
 
         $local = Local::find($request->input('local'));
 
@@ -84,22 +87,27 @@ class ProtocoloEntradaController extends Controller
             'id_local' => $request->input('local'),
             'data_entrada' => $data_formatada,
         ]);
+        $data = $request->all();
+
 
         return response()->json($protocolo->id, 201);
     }
 
 
-    public function equipamentos (Request $request) {
+    public function equipamentos(Request $request)
+    {
         $equipamentos = Equipamentos::create([
             'id_protocolo' => $request->id_protocolo,
             'tombamento' => $request->tombamento,
             'id_setor_escolas' => $request->input('setor'),
             'id_tipos_equipamentos' => $request->input('equipamentos'),
-            'desc' => $request->problema,
+            'desc' => $request->input('desc'),
             'acessorios' => $request->descricao_acessorio,
-            'prioridade' => $request->prioridade == 'on' ? 1 : 0,
+            'prioridade' => $request->input('prioridade') ? 1 : 0,
             'id_status' => 1
+
         ]);
+
         return response()->json($equipamentos, 201);
     }
 
@@ -117,6 +125,4 @@ class ProtocoloEntradaController extends Controller
             return redirect()->route('index.protocolo')->with('error', 'Protocolo não encontrado.');
         }
     }
-
-
 }

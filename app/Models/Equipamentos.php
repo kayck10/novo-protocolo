@@ -21,7 +21,8 @@ class Equipamentos extends Model
         'id_setor_escolas',
         'prioridade',
         'id_status',
-        'id_users'
+        'id_users',
+        'desc'
     ];
 
     public function protocolo()

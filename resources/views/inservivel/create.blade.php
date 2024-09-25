@@ -190,12 +190,10 @@
 <script>
     let id;
 
-    // Quando clicar para abrir a modal, capturar o ID do equipamento
     $('.abrirModal').click(function() {
         id = $(this).data('equipamento-id');
     });
 
-    // Lógica para criar o laudo e imprimir
     $('#imprimir').click(async function() {
         let campos = {
             modelo: $('#modelo').val(),
@@ -223,9 +221,8 @@
         }
     });
 
-    // Lógica para devolver o equipamento (sem campos obrigatórios)
     $('[id^="devolver-btn-"]').click(function() {
-        var equipamentoId = $(this).attr('id').split('-').pop(); // Obtém o ID do equipamento a partir do botão
+        var equipamentoId = $(this).attr('id').split('-').pop();
 
         $.ajax({
             url: '{{ route("inservivel.devolver") }}',
@@ -235,16 +232,13 @@
                 id_equipamento: equipamentoId
             },
             success: function(response) {
-                // Fechar modal
                 $('#modalcriarlaudo' + equipamentoId).modal('hide');
 
-                // Exibir mensagem de sucesso
                 iziToast.success({
                     title: 'Sucesso',
                     message: 'Equipamento devolvido com sucesso!',
                 });
 
-                // Remover o equipamento da lista (se necessário)
                 $('#list-equipamento-' + equipamentoId).remove();
             },
             error: function(xhr) {
