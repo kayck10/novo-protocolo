@@ -12,8 +12,10 @@ class InservivelController extends Controller
 {
     public function index()
     {
+        $problemas = Problema::all();
         $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 6)->get();
-        return view('inservivel.index', compact('equipamentos'));
+        $protocolos = ProtocoloEntrada::all();
+          return view('inservivel.index', compact('equipamentos', 'protocolos', 'problemas'));
     }
 
     public function create()

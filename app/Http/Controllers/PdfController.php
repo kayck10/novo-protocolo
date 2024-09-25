@@ -8,6 +8,7 @@ use App\Models\ProtocoloEntrada;
 use App\Models\Local;
 use App\Models\Setor;
 use App\Models\SetorEscola;
+use App\Models\TiposEquipamentos;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use PDF;
@@ -41,10 +42,14 @@ class PdfController extends Controller
         $local = Local::find($protocolo->id_local);
         $setor = SetorEscola::find($equipamento->id_setor_escolas);
 
+        // Buscar o nome do tipo de equipamento
+        $tipoEquipamento = TiposEquipamentos::find($equipamento->id_tipos_equipamentos);
+        $tipoNome = $tipoEquipamento ? $tipoEquipamento->desc : 'N/A';
+
         $data = [
             'local' => $local ? $local->desc : 'N/A',
             'setor' => $setor ? $setor->desc : 'N/A',
-            'tipo' => $equipamento->id_tipos_equipamentos,
+            'tipo' => $tipoNome,
             'solucao' => $equipamento->solucao,
             'num_patrimonio' => $equipamento->tombamento,
             'problema' => $problema,
@@ -57,6 +62,7 @@ class PdfController extends Controller
         return $pdf->stream('inservivel.pdf');
     }
 
+
     public function verificarId(Request $request)
     {
         $equipamento = Equipamentos::find($request->id);
@@ -66,30 +72,26 @@ class PdfController extends Controller
 
         return 1;
     }
+
+
     public function gerarprotocoloPDF(Request $request)
 {
-    // Encontra o equipamento pelo ID
     $equipamento = Equipamentos::find($request->id_equipamento);
 
-    // Verifica se o equipamento existe
     if (!$equipamento) {
         return response()->json(['error' => 'Equipamento não encontrado'], 404);
     }
 
-    // Coleta informações de local e setor
     $local = $equipamento->protocolo->local->desc ?? 'Local não definido';
     $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
 
-    // Coleta dados do equipamento
     $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
     $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
     $problemaRelatado = $equipamento->solucao ?? 'Problema não relatado';
 
-    // Verifica se o campo data_entrada é uma string ou um objeto DateTime/Carbon
     $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
     $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
 
-    // Monta o array de dados a serem passados para a view
     $data = [
         'local' => $local,
         'setor' => $setor,
@@ -101,7 +103,6 @@ class PdfController extends Controller
         'horaEntrada' => $horaEntrada,
     ];
 
-    // Gera o PDF com os dados
     $pdf = FacadePdf::loadView('protocolo-entrada.pdf', $data);
     return $pdf->stream('protocolo-entrada.pdf');
 }

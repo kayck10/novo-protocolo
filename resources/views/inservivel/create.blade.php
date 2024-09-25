@@ -151,7 +151,7 @@
                                                                 {{ $equipamento->tombamento }}</p>
                                                             <p><strong>Funcionário Responsável:</strong>
                                                                 {{ $equipamento->user->name }}</p>
-                                                            <p><strong>Problema:</strong> {{ $equipamento->desc }}</p>
+                                                            <p><strong>Problema:</strong> {{ $equipamento->d }}</p>
                                                             <p><strong>O que foi feito:</strong>
                                                                 {{ $equipamento->solucao }}</p>
                                                             <p><strong>Tipo:</strong>

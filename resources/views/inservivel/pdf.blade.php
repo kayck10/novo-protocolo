@@ -23,8 +23,6 @@
             margin-top: 20px;
         }
 
-
-
         #customers {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
@@ -60,7 +58,7 @@
     <div>
         <h4>
             <br>
-            LAUDO DE AVALIAÇÃO DE EQUIPAMENTOS DE NFORMÁTICA
+            LAUDO DE AVALIAÇÃO DE EQUIPAMENTOS DE INFORMÁTICA
             <br>
         </h4>
     </div>
@@ -73,10 +71,9 @@
             <th>Setor</th>
         </tr>
         <tr>
-            <td>{{$local}}</td>
-            <td>{{$setor}}</td>
+            <td>{{ $local }}</td>
+            <td>{{ $setor }}</td>
         </tr>
-
     </table>
 
     <h4>Dados do Equipamento</h4>
@@ -88,8 +85,6 @@
             <th>Modelo</th>
             <th>Número de Série</th>
             <th>Número de Patrimônio</th>
-
-
         </tr>
         <tr>
             <td>{{ $tipo }}</td>
@@ -97,8 +92,6 @@
             <td>{{ $modelo }}</td>
             <td>{{ $num_serie }}</td>
             <td>{{ $num_patrimonio }}</td>
-
-
         </tr>
     </table>
 
@@ -120,29 +113,22 @@
     </table>
 
     <h4>Observações</h4>
-
-    <textarea name="" id="" cols="30" rows="10">{{$solucao}}</textarea>
-
+    <textarea name="" id="" cols="30" rows="10">{{ $solucao }}</textarea>
 
     <table style="width: 100%; margin-top:20px">
         <tr>
             <td style="width: 50%; text-align: center;">
                 __________________________
-                <p>Cordenador de TI</p>
+                <p>Coordenador de TI</p>
                 <p>Data</p>
-
             </td>
             <td style="width: 50%; text-align: center;">
                 __________________________
                 <p>Técnico Responsável</p>
                 <p>Data</p>
-
             </td>
         </tr>
     </table>
 
-
-
 </body>
-
 </html>

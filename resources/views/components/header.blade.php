@@ -13,10 +13,12 @@
 
                 <ul class="navbar-nav header-right">
                     <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link bell ai-icon" href="#" role="button" data-toggle="dropdown">
+                        <a class="nav-link bell ai-icon" href="{{ route('user.edit', auth()->user()->id) }}" role="button">
                             <i class="bi bi-person-circle"></i>
                             <div class="pulse-css"></div>
                         </a>
+                    </li>
+
                         <div class="dropdown-menu dropdown-menu-right">
                             <ul class="list-unstyled">
                                 <li class="media dropdown-item">
@@ -24,7 +26,7 @@
                                     <div class="media-body">
 
                                     </div>
-                                </div>
+                        </div>
 
         </nav>
     </div>

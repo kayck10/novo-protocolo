@@ -44,13 +44,13 @@
                                                     <button class="btn btn-primary" data-bs-toggle="modal"
                                                             data-bs-target="#modalcriarlaudo{{ $equipamento->id }}"
                                                             data-equipamento-id="{{ $equipamento->id }}">
-                                                            <i class="bi bi-pencil-square"></i>
+                                                            <i class="bi bi-printer"></i>
                                                         </button>
-                                                <button class="btn btn-warning">
-                                                    <i class="bi bi-eye-fill" data-bs-toggle="modal"
-                                                    data-bs-target="#modalmostrardados{{ $equipamento->id }}"
-                                                    data-equipamento-id="{{ $equipamento->id }}"></i>
-                                                </button>
+                                                    <button class="btn btn-warning" data-bs-toggle="modal"
+                                                            data-bs-target="#modalmostrardados{{ $equipamento->id }}"
+                                                            data-equipamento-id="{{ $equipamento->id }}">
+                                                        <i class="bi bi-eye-fill"></i>
+                                                    </button>
                                                 </td>
                                                 <td class="center">
                                         @endforeach
@@ -58,9 +58,75 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Modal para mostrar os detalhes do equipamento -->
+                    @foreach ($equipamentos as $equipamento)
+                        <div class="modal fade" id="modalmostrardados{{ $equipamento->id }}" tabindex="-1" role="dialog"
+                            aria-labelledby="modalDetalhesEquipamentoLabel{{ $equipamento->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalDetalhesEquipamentoLabel{{ $equipamento->id }}">
+                                            Detalhes do Equipamento - Tombamento: {{ $equipamento->tombamento }}</h5>
+                                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <th>Tipo</th>
+                                                    <td>{{ $equipamento->tipoEquipamento->desc ?? 'N/A' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Marca</th>
+                                                    <td>{{ $equipamento->marca ?? 'N/A' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Modelo</th>
+                                                    <td>{{ $equipamento->modelo ?? 'N/A' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Número de Série</th>
+                                                    <td>{{ $equipamento->num_serie ?? 'N/A' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Número de Patrimônio</th>
+                                                    <td>{{ $equipamento->tombamento ?? 'N/A' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Local</th>
+                                                    <td>{{ $equipamento->protocolo->local->desc ?? 'N/A' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Setor</th>
+                                                    <td>{{ $equipamento->setorEscola->desc ?? 'N/A' }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Data de Criação</th>
+                                                    <td>{{ $equipamento->created_at->format('d/m/Y') }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Solução</th>
+                                                    <td>{{ $equipamento->solucao ?? 'N/A' }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Fechar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
 
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 @endsection
