@@ -113,7 +113,6 @@
                                                                 </div>
 
                                                                 <div class="modal-footer">
-                                                                    <!-- Botão de Devolver (sem obrigatoriedade de preencher campos) -->
                                                                     <button type="button" class="btn btn-danger"
                                                                         id="devolver-btn-{{ $equipamento->id }}">Devolver
                                                                         <i class="bi bi-arrow-up"></i></button>

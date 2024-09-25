@@ -63,14 +63,13 @@ class AtendimentoEscolasController extends Controller
         $atendimento = Atendimentos::create([
             'id_local' => $request->input('local'),
             'externo' => 1,
-            'desc_problema' => $request->input('desc_problema'), // Usado para outros tipos de atendimentos
             'data' => $data_formatada
         ]);
 
         foreach ($request->input('problemas') as $descricaoProblema) {
             problemaAtendimento::create([
                 'atendimento_id' => $atendimento->id,
-                'descricao' => $descricaoProblema
+                'desc_problema' => $descricaoProblema
             ]);
         }
 

@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/devolver', [InservivelController::class, 'devolver'])->name('inservivel.devolver');
         Route::patch('/devolver/{id}', [InservivelController::class, 'atualizar'])->name('equipamentos.devolver');
         Route::post('/gerar-pdf', [PdfController::class, 'gerarPDF'])->name('gerar.pdf');
+        Route::post('/pdf-inservivel', [PdfController::class, 'pdfInservivel'])->name('pdf.inservivel');
         Route::post('/verificar', [PdfController::class, 'verificarId'])->name('verificar');
     });
     Route::prefix('/graficos')->group(function () {

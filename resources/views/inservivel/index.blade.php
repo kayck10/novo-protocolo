@@ -40,12 +40,10 @@
                                                 <td class="center">{{ $equipamento->setorEscola->desc }}</td>
                                                 <td class="center">{{ $equipamento->created_at->format('d/m/Y') }}</td>
                                                 <td class="center">
+                                                    <button type="button" class="btn btn-warning" id="btnImprimir"> <i
+                                                            class="bi bi-printer"></i></button>
+
                                                     <button class="btn btn-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#modalcriarlaudo{{ $equipamento->id }}"
-                                                        data-equipamento-id="{{ $equipamento->id }}">
-                                                        <i class="bi bi-printer"></i>
-                                                    </button>
-                                                    <button class="btn btn-warning" data-bs-toggle="modal"
                                                         data-bs-target="#modalmostrardados{{ $equipamento->id }}"
                                                         data-equipamento-id="{{ $equipamento->id }}">
                                                         <i class="bi bi-eye-fill"></i>
@@ -119,9 +117,8 @@
                                         <button type="button" class="btn btn-primary devolver-equipamento"
                                             data-id="{{ $equipamento->id }}" data-bs-dismiss="modal">Devolver</button>
 
-                                        <button type="button" class="btn btn-warning btn-imprimir"
-                                            data-equipamento-id="{{ $equipamento->id }}">Imprimir</button>
-                                    </div>
+
+                                                           </div>
                                 </div>
                             </div>
                         </div>
@@ -137,32 +134,57 @@
 
     <script>
         $(document).ready(function() {
-        $('.devolver-equipamento').on('click', function() {
-            var equipamentoId = $(this).data('id');
+            $('.devolver-equipamento').on('click', function() {
+                var equipamentoId = $(this).data('id');
 
-            $.ajax({
-                url: '{{ route('equipamentos.devolver', '') }}/' + equipamentoId,
-                method: 'PATCH',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    toastr.success(response.success, 'Sucesso', {
-                        closeButton: true,
-                        progressBar: true,
-                        positionClass: "toast-top-right"
-                    });
-                    location.reload();
-                },
-                error: function(xhr) {
-                    toastr.error('Ocorreu um erro ao devolver o equipamento.', 'Erro', {
-                        closeButton: true,
-                        progressBar: true,
-                        positionClass: "toast-top-right"
-                    });
-                }
+                $.ajax({
+                    url: '{{ route('equipamentos.devolver', '') }}/' + equipamentoId,
+                    method: 'PATCH',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        toastr.success(response.success, 'Sucesso', {
+                            closeButton: true,
+                            progressBar: true,
+                            positionClass: "toast-top-right"
+                        });
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        toastr.error('Ocorreu um erro ao devolver o equipamento.', 'Erro', {
+                            closeButton: true,
+                            progressBar: true,
+                            positionClass: "toast-top-right"
+                        });
+                    }
+                });
             });
+            document.getElementById('btnImprimir').addEventListener('click', function() {
+                var data = {
+                    id_equipamento: 1,
+                    id_problema: 2,
+                    marca: 'Marca do Equipamento',
+                    modelo: 'Modelo do Equipamento',
+                    num_serie: 'Número de Série'
+                };
+
+                fetch('{{ route('pdf.inservivel') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.blob())
+                    .then(blob => {
+                        var url = window.URL.createObjectURL(blob);
+                        window.open(url);
+                    })
+                    .catch(error => console.error('Erro ao gerar PDF:', error));
+            });
+
         });
-    });
     </script>
 @endsection

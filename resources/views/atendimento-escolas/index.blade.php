@@ -104,7 +104,6 @@
                         <div class="form-group mb-3">
                             <label for="modal-event-click-escola" class="form-label"><strong>Escola:</strong></label>
                             <p id="modal-event-click-escola" class="form-control-plaintext"></p>
-                            <!-- Aqui será mostrado o nome da escola -->
                         </div>
 
                         <!-- Atribuir Técnico -->
@@ -223,7 +222,6 @@
             document.addEventListener('DOMContentLoaded', function() {
                 var calendarEl = document.getElementById('calendar');
 
-                // Carrega os eventos do backend com id_status
                 var events = {!! json_encode(
                     $eventos->map(function ($evento) {
                         $jefin = isset($evento->tecnico->name) ? $evento->tecnico->name : '';
@@ -231,13 +229,13 @@
                             'id' => $evento->id,
                             'title' => $evento->desc_problema,
                             'start' => $evento->data,
-                            'id_status' => $evento->id_status, // Certifique-se de que o status está sendo retornado
+                            'id_status' => $evento->id_status,
                             'extendedProps' => [
                                 'desc' => $evento->desc_problema,
-                                'escola' => $evento->local->desc, // Supondo que a relação esteja corretamente definida no model
-                                'solucao' => $evento->solucao, // Supondo que a relação esteja corretamente definida no model
-                                'id_user' => $evento->id_user, // Supondo que a relação esteja corretamente definida no model
-                                'tecnico_nome' => $jefin, // Supondo que a relação esteja corretamente definida no model
+                                'escola' => $evento->local->desc,
+                                'solucao' => $evento->solucao,
+                                'id_user' => $evento->id_user,
+                                'tecnico_nome' => $jefin,
                             ],
                         ];
                     }),
@@ -247,20 +245,17 @@
                     initialView: 'dayGridMonth',
                     locale: 'pt-br',
                     events: events.map(event => {
-                        // Aplica cor verde para eventos com id_status = 3
                         if (event.id_status === 3) {
-                            event.backgroundColor = '#28a745'; // Cor verde
-                            event.borderColor = '#28a745'; // Borda verde
+                            event.backgroundColor = '#28a745';
+                            event.borderColor = '#28a745';
                         }
                         return event;
                     }),
                     dateClick: function(info) {
-                        // document.getElementById('selected-date').innerText = info.dateStr;
                         $('#event-modal').modal('show');
                     },
 
                     eventClick: function(info) {
-                        // Exibir informações do evento na modal
                         $('#event-modal-click').attr('data-status-id', info.event.extendedProps
                             .id_status)
                         $('#modal-event-click-id').val(info.event.id);
@@ -268,7 +263,7 @@
                             0]);
                         $('#modal-event-click-desc').html(info.event.extendedProps.desc);
                         $('#modal-event-click-escola').html(info.event.extendedProps
-                            .escola); // Exibe o nome da escola
+                            .escola);
                         $('#event-modal-click').modal('show');
 
 
