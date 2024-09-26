@@ -15,6 +15,7 @@ class AtendimentoEscolasController extends Controller
     {
         $escolas = Local::where('externo', 1)->orderBy('desc')->get();
         $eventos = Atendimentos::with('tecnico')->where('id_status', 3)->orWhere('id_user', null)->get();
+        problemaAtendimento::all();
         $usuarios = User::where('id_funcoes', 2)->get();
 
         return view('atendimento-escolas.index', compact('escolas', 'eventos', 'usuarios'));
@@ -63,7 +64,8 @@ class AtendimentoEscolasController extends Controller
         $atendimento = Atendimentos::create([
             'id_local' => $request->input('local'),
             'externo' => 1,
-            'data' => $data_formatada
+            'data' => $data_formatada,
+            'prioridade' => $request->prioridade
         ]);
 
         foreach ($request->input('problemas') as $descricaoProblema) {

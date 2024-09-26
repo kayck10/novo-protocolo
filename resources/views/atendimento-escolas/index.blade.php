@@ -1,6 +1,8 @@
     @extends('layout.main')
 
+
     @section('content')
+
         <div class="row">
             <div class="col-lg-8 offset-1">
                 <div class="card">
@@ -33,57 +35,63 @@
 
 
 
-                        <!-- Modasl cadastro atendimento-->
+        <!-- Modasl cadastro atendimento-->
 
-                        <div class="modal fade event-modal" id="event-modal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                                <div class="modal-content shadow-lg rounded">
-                                    <div class="modal-header text-white">
-                                        <h5 class="modal-title" id="eventModalLabel">
-                                            <strong>Agendar Atendimento <i class="bi bi-calendar3"></i></strong>
-                                        </h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Escola -->
-                                        <div class="form-group mb-3">
-                                            <label for="id_local" class="form-label"><strong>Escola:</strong></label>
-                                            <select id="id_local" class="form-control">
-                                                <option value="">Selecione uma Escola</option>
-                                                @foreach ($escolas as $escola)
-                                                    <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
+        <div class="modal fade event-modal" id="event-modal" tabindex="-1" aria-labelledby="eventModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content shadow-lg rounded">
+                    <div class="modal-header text-white">
+                        <h5 class="modal-title" id="eventModalLabel">
+                            <strong>Agendar Atendimento <i class="bi bi-calendar3"></i></strong>
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Fechar"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Escola -->
+                        <div class="form-group mb-3">
+                            <label for="id_local" class="form-label"><strong>Escola:</strong></label>
+                            <select id="id_local" class="form-control">
+                                <option value="">Selecione uma Escola</option>
+                                @foreach ($escolas as $escola)
+                                    <option value="{{ $escola->id }}">{{ $escola->desc }}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-                                        <div class="form-check form-switch mb-3 ms-3"> <!-- Usando um switch para melhorar a usabilidade -->
-                                            <input class="form-check-input" type="checkbox" id="prioridade">
-                                            <label class="form-check-label" for="prioridade">Prioridade?</label>
-                                        </div>
+                        <div class="form-check form-switch mb-3 ms-3"> <!-- Usando um switch para melhorar a usabilidade -->
+                            <input class="form-check-input" type="checkbox" id="prioridade" name="prioridade">
+                            <label class="form-check-label" for="prioridade">Prioridade?</label>
+                        </div>
 
-                                        <!-- Data -->
-                                        <div class="form-group mb-3">
-                                            <label for="data_entrada" class="form-label"><strong>Data:</strong></label>
-                                            <input type="text" name="datepicker" id="data_entrada" class="form-control datepicker-default" placeholder="Selecione a data">
-                                        </div>
+                        <!-- Data -->
+                        <div class="form-group mb-3">
+                            <label for="data_entrada" class="form-label"><strong>Data:</strong></label>
+                            <input type="text" name="datepicker" id="data_entrada"
+                                class="form-control datepicker-default" placeholder="Selecione a data">
+                        </div>
 
-                                        <!-- Problema -->
-                                        <div class="form-group mb-3">
-                                            <label for="desc_problema" class="form-label"><strong>Problema:</strong></label>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" id="desc_problema" placeholder="Descreva o problema">
-                                                <span class="btn btn-secondary btn-sm" onclick="novoProblema()"><i class="bi bi-plus-circle"></i></span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12" id="to-do-list"></div>
-                                    </div>
-                                    <div class="modal-footer d-flex justify-content-between">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                                        <button type="button" class="btn btn-success save-event" onclick="changeEvent()">Criar Evento</button>
-                                    </div>
-                                </div>
+                        <!-- Problema -->
+                        <div class="form-group mb-3">
+                            <label for="desc_problema" class="form-label"><strong>Problema:</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="desc_problema"
+                                    placeholder="Descreva o problema">
+                                <span class="btn btn-secondary btn-sm" onclick="novoProblema()"><i
+                                        class="bi bi-plus-circle"></i></span>
                             </div>
                         </div>
+                        <div class="col-md-12" id="to-do-list"></div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-success save-event" onclick="changeEvent()">Criar
+                            Evento</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
         <!-- Modal finalizar -->
@@ -125,7 +133,7 @@
                         </div>
 
                         <!-- Problema -->
-                        <div class="form-group mb-3">
+                        <div id="problemas-container" class="mb-4">
                             <label class="form-label"><strong>Problema:</strong></label>
                             <p id="modal-event-click-desc" class="form-control-plaintext"></p>
                         </div>
@@ -161,63 +169,64 @@
 
 
         <script>
-          let i = 0;
-    const novoProblema = () => {
-        i++;
-        let data = $('#desc_problema').val();
-        $('#to-do-list').append(`
+            let i = 0;
+            const novoProblema = () => {
+                i++;
+                let data = $('#desc_problema').val();
+                $('#to-do-list').append(`
             <div class="input-group mb-2" id="div-desc-prob-${i}">
                 <input type="text" class="form-control" id="desc_problema_${i}" value="${data}" disabled>
                 <span class="btn btn-danger btn-sm" onclick="excluirProblema(${i})"><i class="bi bi-trash"></i></span>
             </div>
         `);
-        $('#desc_problema').val('');
-    }
-
-    const excluirProblema = (idDiv) => {
-        $(`#div-desc-prob-${idDiv}`).remove();
-    }
-
-    function changeEvent() {
-        let local = $('#id_local').val();
-        let prioridade = $('#prioridade').is(':checked');
-        let data_entrada = $('#data_entrada').val();
-
-        let problemas = [];
-        $('#to-do-list input[type="text"]').each(function() {
-            problemas.push($(this).val());
-        });
-
-        $.ajax({
-            type: "POST",
-            url: "{{ route('atendimento.store') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'local': local,
-                'prioridade': prioridade,
-                'problemas': problemas,
-                'data_entrada': data_entrada,
-            },
-            success: function(response) {
-                iziToast.success({
-                    title: 'Cadastrado',
-                    message: 'Atendimento cadastrado com sucesso!',
-                });
-                $('#event-modal').modal('hide');
-                location.reload();
+                $('#desc_problema').val('');
             }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status == 500) {
-                iziToast.error({
-                    title: 'Erro',
-                    message: 'Status: Você não tem permissão!',
+
+            const excluirProblema = (idDiv) => {
+                $(`#div-desc-prob-${idDiv}`).remove();
+            }
+
+            function changeEvent() {
+                let local = $('#id_local').val();
+                let prioridade = $('#prioridade').is(':checked') ? 1 : 0;
+                let data_entrada = $('#data_entrada').val();
+
+                let problemas = [];
+                $('#to-do-list input[type="text"]').each(function() {
+                    problemas.push($(this).val());
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.store') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'local': local,
+                        'prioridade': prioridade,
+                        'problemas': problemas,
+                        'data_entrada': data_entrada,
+                    },
+                    success: function(response) {
+                        iziToast.success({
+                            title: 'Cadastrado',
+                            message: 'Atendimento cadastrado com sucesso!',
+                        });
+                        $('#event-modal').modal('hide');
+                        location.reload();
+                    }
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status == 500) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Status: Você não tem permissão!',
+                        });
+                    }
+                    console.log("Erro na requisição AJAX:", textStatus, errorThrown);
                 });
             }
-            console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-        });
-    }
+
 
             document.addEventListener('DOMContentLoaded', function() {
                 var calendarEl = document.getElementById('calendar');
@@ -227,15 +236,17 @@
                         $jefin = isset($evento->tecnico->name) ? $evento->tecnico->name : '';
                         return [
                             'id' => $evento->id,
-                            'title' => $evento->desc_problema,
+                            'title' => $evento->local->desc,
                             'start' => $evento->data,
                             'id_status' => $evento->id_status,
+                            'prioridade' => $evento->prioridade,
                             'extendedProps' => [
                                 'desc' => $evento->desc_problema,
                                 'escola' => $evento->local->desc,
                                 'solucao' => $evento->solucao,
                                 'id_user' => $evento->id_user,
                                 'tecnico_nome' => $jefin,
+                                'problemas' => $evento->problemas,
                             ],
                         ];
                     }),
@@ -256,35 +267,44 @@
                     },
 
                     eventClick: function(info) {
-                        $('#event-modal-click').attr('data-status-id', info.event.extendedProps
-                            .id_status)
+                        $('#event-modal-click').attr('data-status-id', info.event.extendedProps.id_status);
                         $('#modal-event-click-id').val(info.event.id);
-                        $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[
-                            0]);
+                        $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[0]);
                         $('#modal-event-click-desc').html(info.event.extendedProps.desc);
-                        $('#modal-event-click-escola').html(info.event.extendedProps
-                            .escola);
+                        $('#modal-event-click-escola').html(info.event.extendedProps.escola);
+
+                        if (info.event.extendedProps.prioridade == 1) {
+                            $('#modal-event-click-desc').addClass('title-red');
+                        } else {
+                            $('#modal-event-click-desc').removeClass('title-red');
+                        }
+
                         $('#event-modal-click').modal('show');
 
+                        let problemas = info.event.extendedProps.problemas || [];
+                        let problemasContainer = $('#problemas-container');
+                        problemasContainer.empty();
+
+                        problemas.forEach(function(problema, index) {
+                            problemasContainer.append(`
+                    <div class="problem-item">
+                        <strong>Problema ${index + 1}:</strong> ${problema.desc_problema}
+                    </div>
+                `);
+                        });
 
                         if (info.event.extendedProps.id_status == 1) {
-                            console.log(info.event.extendedProps);
                             $('#select-tecnicos').show();
                             $('#btn-finalizar').show();
                             $('#btn-salvar').show();
                         }
                         if (info.event.extendedProps.id_status == 3) {
-                            console.log(info.event.extendedProps);
                             $('#select-tecnicos').hide();
                             $('#btn-finalizar').hide();
                             $('#btn-salvar').hide();
-                            $('#modal-event-click-tecnico').html(info.event.extendedProps
-                                .tecnico_nome);
-                            $('#solucao').html(info.event.extendedProps.solucao).prop('disabled',
-                                true);
+                            $('#modal-event-click-tecnico').html(info.event.extendedProps.tecnico_nome);
+                            $('#solucao').html(info.event.extendedProps.solucao).prop('disabled', true);
                         }
-
-
                     },
                 });
 
@@ -325,13 +345,6 @@
                             message: 'Atendimento finalizado com sucesso!',
                         });
 
-                        // let event = calendar.getEventById(atendimentoId);
-                        // if (event) {
-                        //     event.setProp('backgroundColor',
-                        //         '#28a745');
-                        //     event.setExtendedProp('status',
-                        //         'finalizado');
-                        // }
 
                         $('#event-modal-click').modal('hide');
                         location.reload();
