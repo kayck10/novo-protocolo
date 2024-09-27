@@ -177,7 +177,7 @@
                     <td>${response.desc}</td>
                     <td><i class="bi bi-trash3-fill text-danger"></i></td>
                 </tr>
-            `;
+            `
 
                     $('#dadosTbody').append(dados);
                     $('#tabela-equipamentos-div').show();
