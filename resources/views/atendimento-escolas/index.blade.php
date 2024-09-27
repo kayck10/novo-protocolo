@@ -256,9 +256,16 @@
                     initialView: 'dayGridMonth',
                     locale: 'pt-br',
                     events: events.map(event => {
+
+                        console.log(event.id_status)
+                        console.log(event.prioridade)
                         if (event.id_status === 3) {
                             event.backgroundColor = '#28a745';
                             event.borderColor = '#28a745';
+                        }
+                         else if (event.id_status === 1 && event.prioridade == 1) {
+                            event.backgroundColor = '#a8323e';
+                            event.borderColor = '#a8323e';
                         }
                         return event;
                     }),
