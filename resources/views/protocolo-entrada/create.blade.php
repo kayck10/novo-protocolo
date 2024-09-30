@@ -65,25 +65,30 @@
                     </div>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Equipamento</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <form id="form-protocolo">
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label class="form-label">Tombamento: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <label class="form-label">Tombamento: <i
+                                                class="fa fa-asterisk text-danger"></i></label>
                                         <input class="form-control" type="text" id="tombamento" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Tipo de Equipamento: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <label class="form-label">Tipo de Equipamento: <i
+                                                class="fa fa-asterisk text-danger"></i></label>
                                         <select id="id_tipos_equipamentos" class="form-control" required>
                                             <option value="">Selecione um Equipamento</option>
                                             @foreach ($tiposequipamentos as $tipoequipamento)
-                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}</option>
+                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -93,7 +98,8 @@
                                         <input type="hidden" name="id_protocolo" id="id_protocolo">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label mx-2">Local: <i class="fa fa-asterisk text-danger"></i></label>
+                                        <label class="form-label mx-2">Local: <i
+                                                class="fa fa-asterisk text-danger"></i></label>
                                         <select id="id_setor_escolas" class="form-control" required>
                                             <option value="">Selecione um Local</option>
                                             @foreach ($setorEscolas as $setorescolas)
@@ -106,13 +112,16 @@
                                         <input class="form-check-input mx-2" type="checkbox" id="prioridade">
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Descrição do Problema: <i class="fa fa-asterisk text-danger"></i></label>
-                                        <textarea cols="30" rows="3" class="form-control" type="text" id="desc" name="desc" required></textarea>
+                                        <label class="form-label">Descrição do Problema: <i
+                                                class="fa fa-asterisk text-danger"></i></label>
+                                        <textarea cols="30" rows="3" class="form-control" type="text" id="desc" name="desc"
+                                            required></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn" data-bs-dismiss="modal">Fechar</button>
-                                    <button type="submit" class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
+                                    <button type="submit"
+                                        class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
                                 </div>
                             </form>
                         </div>
@@ -133,7 +142,6 @@
 
 
 
-            // Adiciona o evento de clique no botão de cadastro
             $('#btnCadastrar').on('click', function() {
                 cadastrarProtocolo();
             });
@@ -175,7 +183,7 @@
                 <tr>
                     <td>${response.tombamento}</td>
                     <td>${response.desc}</td>
-                    <td><i class="bi bi-trash3-fill text-danger"></i></td>
+                    <td><i class="bi bi-trash3-fill text-danger" onclick="deleteEquipamento(${response.id})"></i></td>
                 </tr>
             `
 
@@ -183,7 +191,6 @@
                     $('#tabela-equipamentos-div').show();
                     $("#exampleModal").modal('hide');
 
-                    // Create new Datatable
                     $('#tableEquipamentos').DataTable();
 
                     iziToast.success({
@@ -201,39 +208,73 @@
             });
         });
 
-        function cadastrarProtocolo() {
-            $('#btnCadastrar').hide();
-
-            let local = $('#local').val();
-            let data = $('#data_entrada').val();
-            $.ajax({
-                type: 'POST',
-                url: '{{ route('protocolo.store') }}',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    'local': local,
-                    'data_entrada': data,
-                },
-                success: function(response) {
-                    iziToast.success({
-                        title: 'Cadastrado',
-                        message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
-                    });
-                    $('#id_protocolo').val(response);
-                    $('#btnCadastrar').hide();
-                    $('.buttons').show();
-                }
-            }).fail(function(jqXHR, textStatus, errorThrown) {
-                if (jqXHR.status == 400) {
-                    iziToast.error({
-                        title: 'Erro',
-                        message: jqXHR.responseJSON.message,
-                    });
-                }
-                $('#btnCadastrar').show();
-            });
+        function deleteEquipamento(id) {
+            if (confirm('Tem certeza que deseja excluir este equipamento?')) {
+                $.ajax({
+                    url: `/protocolo-entrada/equipamento/destroy/${id}`,
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.message === 'Equipamento excluído com sucesso!') {
+                            $(`#equipamento-${id}`).remove();
+                            iziToast.success({
+                                title: 'Sucesso',
+                                message: response.message,
+                            });
+                        } else {
+                            iziToast.error({
+                                title: 'Erro',
+                                message: 'Erro ao excluir equipamento.',
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Ocorreu um erro ao excluir o equipamento.',
+                        });
+                        console.log("Request failed: " + textStatus + ", " + errorThrown);
+                    }
+                });
+            }
         }
+
+
+                function cadastrarProtocolo() {
+                    $('#btnCadastrar').hide();
+
+                    let local = $('#local').val();
+                    let data = $('#data_entrada').val();
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('protocolo.store') }}',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            'local': local,
+                            'data_entrada': data,
+                        },
+                        success: function(response) {
+                            iziToast.success({
+                                title: 'Cadastrado',
+                                message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
+                            });
+                            $('#id_protocolo').val(response);
+                            $('#btnCadastrar').hide();
+                            $('.buttons').show();
+                        }
+                    }).fail(function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status == 400) {
+                            iziToast.error({
+                                title: 'Erro',
+                                message: jqXHR.responseJSON.message,
+                            });
+                        }
+                        $('#btnCadastrar').show();
+                    });
+                }
     </script>
 @endsection

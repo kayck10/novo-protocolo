@@ -54,7 +54,7 @@
                                     <div>
                                         <div class="form-group">
                                             <label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
-                                            <input name="data" class="datepicker-default form-control" value="{{ $atendimento->data }}" id="datepicker1">
+                                            <input name="data" class="datepicker-default form-control" value="{{ \Carbon\Carbon::parse($atendimento->data)->translatedFormat('d\ M, Y') }}" id="datepicker1">
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Problema:<i class="fa fa-asterisk text-danger"></i></label>

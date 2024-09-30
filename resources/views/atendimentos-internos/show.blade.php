@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Data:<i class="fa fa-asterisk text-danger"></i></label>
-                                <input type="text" class="form-control" value="{{ $atendimento->data }}" readonly>
+                                <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($atendimento->data)->translatedFormat('d\ M, Y') }}" readonly>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Problema:<i class="fa fa-asterisk text-danger"></i></label>

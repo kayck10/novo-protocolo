@@ -42,7 +42,7 @@
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $atendimento->setor->desc }}</td>
                                         <td>{{ $atendimento->tecnico ? $atendimento->tecnico->name : 'N/A' }}</td>
-                                        <td>{{ $atendimento->data }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($atendimento->data)->translatedFormat('d\ M, Y') }}</td>
                                         <td>
                                             <a href="{{ route('atendimentointerno.show', $atendimento->id) }}">
                                                 <button type="button" class="btn btn-sm btn-primary mx-1">

@@ -41,7 +41,7 @@
                                                 <tr>
                                                     <td>{{ $protocolo->id }}</td>
                                                     <td>{{ $protocolo->local->desc }}</td>
-                                                    <td>{{ $protocolo->data_entrada }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($protocolo->data_entrada)->translatedFormat('d\ M, Y') }}</td>
                                                     <td>
                                                         <button type="button"
                                                             class="btn btn-sm btn-primary mx-1 view-protocolo"

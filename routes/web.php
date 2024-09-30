@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/update/{id}', [ProtocoloEntradaController::class, 'update'])->name('protocolo.update');
         Route::patch('/devolver/{id}', [ProtocoloEntradaController::class, 'devolver'])->name('equipamentos.devolver');
         Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
+        Route::delete('/equipamento/destroy/{id}', [ProtocoloEntradaController::class, 'destroyEquipamento'])->name('equipamento.destroy');
         Route::post('/gerar-pdf-segundo', [PdfController::class, 'gerarprotocoloPDF'])->name('gerar.protocolo.pdf');
     });
 

@@ -9,6 +9,8 @@ use App\Models\SetorEscola;
 use App\Models\TiposEquipamentos;
 use DateTime;
 use Illuminate\Http\Request;
+\Carbon\Carbon::setLocale('pt_BR');
+
 
 class ProtocoloEntradaController extends Controller
 {
@@ -124,5 +126,18 @@ class ProtocoloEntradaController extends Controller
         } else {
             return redirect()->route('index.protocolo')->with('error', 'Protocolo não encontrado.');
         }
+    }
+
+    public function destroyEquipamento($id)
+    {
+        $equipamento = Equipamentos::find($id);
+
+        if ($equipamento) {
+            $equipamento->delete();
+
+            return response()->json(['message' => 'Equipamento excluído com sucesso!'], 200);
+        }
+
+        return response()->json(['message' => 'Equipamento não encontrado!'], 404);
     }
 }

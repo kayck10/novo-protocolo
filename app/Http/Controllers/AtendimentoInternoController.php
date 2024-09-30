@@ -8,6 +8,8 @@ use App\Models\User;
 use Brian2694\Toastr\Facades\Toastr;
 use DateTime;
 use Illuminate\Http\Request;
+\Carbon\Carbon::setLocale('pt_BR');
+
 
 class AtendimentoInternoController extends Controller
 {
@@ -17,6 +19,7 @@ class AtendimentoInternoController extends Controller
 
         $tecnicos = User::where('id_funcoes', 2)->get();
         $setores = Local::where('externo', 0)->get();
+
 
         return view('atendimentos-internos.index', compact('atendimentos', 'tecnicos', 'setores'));
     }
