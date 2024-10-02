@@ -4,9 +4,11 @@
     @endif
     <div class="col-md-3 text-center mb-4 abrirModal" data-id="{{ $equipamento->id }}">
         <div>
-            <img src="http://tiprotocolo.maracanau.ce.gov.br/imagens/estante/{{ $equipamento->id_tipos_equipamentos }}.png"
-                width="100" height="100" alt="Figura nao encontrada" class="mb-2">
+            <img src="{{ asset('img-estante/' . $equipamento->id_tipos_equipamentos . '.png') }}"
+            width="100" height="100" alt="Figura não encontrada" class="mb-2">
+
         </div>
+
         <div class="text text-center">
             <h4>
                 <span class="text-red">
