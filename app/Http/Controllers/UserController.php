@@ -71,13 +71,13 @@ class UserController extends Controller
         $user = User::with(['tipoUsuario', 'funcao', 'situacao'])->findOrFail($id);
         $tipos = TiposUsuarios::all();
         $situacoes = Situacao::all();
+
         return view('user.show', compact('user', 'funcoes', 'tipos', 'situacoes'));
     }
 
     public function update(Request $request, $id)
     {
 
-        // dd($request->all());
         $user = User::findOrFail($id);
         $user->name = $request->input('name');
         $user->usuario = $request->input('usuario');
