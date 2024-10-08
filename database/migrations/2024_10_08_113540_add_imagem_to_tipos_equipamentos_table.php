@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipos_equipamentos', function (Blueprint $table) {
-            $table->id();
-            $table->text('desc');
-            $table->binary('image')->nullable();
-            $table->timestamps();
+        Schema::table('tipos_equipamentos', function (Blueprint $table) {
+            $table->string('imagem')->nullable();
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipos_equipamentos');
+        Schema::table('tipos_equipamentos', function (Blueprint $table) {
+            $table->dropColumn('imagem');
+        });
     }
 };

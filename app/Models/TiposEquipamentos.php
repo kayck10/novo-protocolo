@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class TiposEquipamentos extends Model
 {
     use HasFactory;
-    protected $fillable = ['desc'];
+    protected $fillable = ['desc', 'imagem'];
 }

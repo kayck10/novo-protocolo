@@ -22,7 +22,8 @@
 
                 </ul>
             </li>
-            <li><a class="has-arrow" href="javascript:void()">
+            <li>
+                <a class="has-arrow" href="javascript:void()">
                     <i class="la la-building"></i>
                     <span class="nav-text">Atendimento Interno</span>
                 </a>
@@ -73,11 +74,17 @@
                     <span class="nav-text">Escolas</span>
                 </a>
             </li>
+            <li><a href="{{ route('create.equipamento') }}" aria-expanded="false">
+                <i class="bi bi-plus-square"></i>
+                <span class="nav-text">Criar Equipamentos</span>
+            </a>
+        </li>
             <li><a href="{{ route('equipamento') }}" aria-expanded="false">
                     <i class="bi bi-clock-history"></i>
                     <span class="nav-text">Histórico de Máquinas</span>
                 </a>
             </li>
+
 
     </div>
 </div>

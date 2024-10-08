@@ -4,6 +4,7 @@ use App\Http\Controllers\AtendimentoEscolasController;
 use App\Http\Controllers\AtendimentoInternoController;
 use App\Http\Controllers\AtendimentosController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EquipamentoController;
 use App\Http\Controllers\EstanteController;
 use App\Http\Controllers\GraficosController;
 use App\Http\Controllers\InservivelController;
@@ -54,6 +55,13 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
         Route::delete('/equipamento/destroy/{id}', [ProtocoloEntradaController::class, 'destroyEquipamento'])->name('equipamento.destroy');
         Route::post('/gerar-pdf-segundo', [PdfController::class, 'gerarprotocoloPDF'])->name('gerar.protocolo.pdf');
+    });
+
+    Route::prefix('/equipamento')->group(function () {
+        Route::get('/create', [EquipamentoController::class, 'create'])->name('create.equipamento');
+        Route::post('/store', [EquipamentoController::class, 'store'])->name('store.equipamento');
+
+
     });
 
     Route::prefix('/atendimento-interno')->group(function () {

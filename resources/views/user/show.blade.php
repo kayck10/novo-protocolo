@@ -53,20 +53,7 @@
                                                     <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}" readonly />
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <label class="form-label">Tipo de Usuário:</label>
-                                                <select name="id_tipos_usuarios" class="form-control selects" disabled="true">
-                                                    @foreach ($tipos as $tipo )
-                                                    @if ($tipo->id == $user->id_tipos_usuarios)
-                                                    <option selected value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
-
-                                                    @else
-                                                    <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
-
-                                                    @endif
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                           
                                         </div>
 
                                         <div class="row mb-4">
