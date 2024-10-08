@@ -28,4 +28,10 @@ class LoginController extends Controller
             return redirect()->back();
         }
     }
+    public function logout(Request $request)
+{
+    Auth::logout();
+    return redirect()->route('login')->with('message', 'Você saiu com sucesso.');
+}
+
 }

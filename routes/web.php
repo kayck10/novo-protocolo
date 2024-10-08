@@ -26,8 +26,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/login', [LoginController::class, 'create'])->name('login.create');
+Route::get('/login', [LoginController::class, 'create'])->name('login');
 Route::post('/login/store', [LoginController::class, 'store'])->name('login.store');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
 

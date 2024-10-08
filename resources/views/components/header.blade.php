@@ -1,3 +1,9 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    button:hover i {
+        transform: scale(1.1);
+    }
+</style>
 <div class="header ">
     <div class="header-content">
         <nav class="navbar navbar-expand">
@@ -17,6 +23,14 @@
                             <i class="bi bi-person-circle"></i>
                             <div class="pulse-css"></div>
                         </a>
+                        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                            @csrf
+                            <button type="submit" style="border: none; background: none; cursor: pointer; margin-left: 5px;">
+                                <i class="fas fa-sign-out-alt text-light" style="font-size: 20px; transition: transform 0.3s;"></i>
+                            </button>
+                        </form>
+
+
                     </li>
 
                         <div class="dropdown-menu dropdown-menu-right">

@@ -32,45 +32,49 @@
                 </ul>
             </li>
             <li> <a class="" href="{{ route('estante.index') }}" aria-expanded="false">
-                <i class="bi bi-columns"></i>
-                <span class="nav-text">Estante</span>
-            </a>
+                    <i class="bi bi-columns"></i>
+                    <span class="nav-text">Estante</span>
+                </a>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                <i class="bi bi-box-seam-fill"></i>
-                <span class="nav-text">Inservível</span>
-            </a>
-            <ul aria-expanded="false">
-                <li><a href="{{route('inservivel.create')}}">Criar Laudo</a></li>
-                <li><a href="{{route('inservivel.index')}}">Ver Tudo</a></li>
-            </ul>
-        </li>
+                    <i class="bi bi-box-seam-fill"></i>
+                    <span class="nav-text">Inservível</span>
+                </a>
+                <ul aria-expanded="false">
+                    <li><a href="{{ route('inservivel.create') }}">Criar Laudo</a></li>
+                    <li><a href="{{ route('inservivel.index') }}">Ver Tudo</a></li>
+                </ul>
+            </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                <i class="bi bi-clipboard-data"></i>
+                    <i class="bi bi-clipboard-data"></i>
                     <span class="nav-text">Gráficos</span>
                 </a>
                 <ul aria-expanded="false">
-                    <li><a href="{{route('graficos.anual')}}">Anual</a></li>
-                    <li><a href="{{route('graficos.inserviveis')}}">Inservíveis</a></li>
-                    <li><a href="{{route('graficos.participacoes')}}">Participações</a></li>
+                    <li><a href="{{ route('graficos.anual') }}">Anual</a></li>
+                    <li><a href="{{ route('graficos.inserviveis') }}">Inservíveis</a></li>
+                    <li><a href="{{ route('graficos.participacoes') }}">Participações</a></li>
                 </ul>
             </li>
+            @if(in_array(auth()->user()->id_tipos_usuarios, [1, 2]))
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
                 <i class="la la-users"></i>
-                    <span class="nav-text">Usuários</span>
-                </a>
-                <ul aria-expanded="false">
-                    <li><a href="{{route('user.create')}}">Adicionar Novo</a></li>
-                    <li><a href="{{route('user.index')}}">Ver Todos</a></li>
-                </ul>
+                <span class="nav-text">Usuários</span>
+            </a>
+            <ul aria-expanded="false">
+                <li><a href="{{ route('user.create') }}">Adicionar Novo</a></li>
+                <li><a href="{{ route('user.index') }}">Ver Todos</a></li>
+            </ul>
             </li>
-            <li><a href="{{route('local.create')}}" aria-expanded="false">
-                <i class="fa fa-building"></i>
+        @endif
+
+
+            <li><a href="{{ route('local.create') }}" aria-expanded="false">
+                    <i class="fa fa-building"></i>
                     <span class="nav-text">Escolas</span>
                 </a>
             </li>
-            <li><a href="{{route('equipamento')}}" aria-expanded="false">
-                <i class="bi bi-clock-history"></i>
+            <li><a href="{{ route('equipamento') }}" aria-expanded="false">
+                    <i class="bi bi-clock-history"></i>
                     <span class="nav-text">Histórico de Máquinas</span>
                 </a>
             </li>

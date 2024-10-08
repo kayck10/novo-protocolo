@@ -42,8 +42,10 @@
                             <button style=" display:none;" type="button" class="btn btn-primary buttons"
                                 data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar Equipamento <i
                                     class="bi bi-plus"></i> </button>
-                            <button style=" display:none;" type="button" class="btn btn-primary buttons">Imprimir <i
-                                    class="fa fa-print"></i></i></button>
+                                    <button id="imprimirButton" style="display:none;" type="button" class="btn btn-primary buttons">
+                                        Imprimir <i class="fa fa-print"></i>
+                                    </button>
+
                             <button id="btnCadastrar" type="button" class="btn btn-primary">Cadastrar <i
                                     class="bi bi-check color-white"></i></button>
                         </div>
@@ -207,6 +209,28 @@
                 });
             });
         });
+        $(document).ready(function() {
+        $('#imprimirButton').on('click', function() {
+            $.ajax({
+                url: "{{ route('gerar.protocolo.pdf') }}", // A rota correta
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}' // Proteção CSRF
+                },
+                xhrFields: {
+                    responseType: 'blob' // Manipular a resposta como PDF
+                },
+                success: function(response) {
+                    var blob = new Blob([response], { type: 'application/pdf' });
+                    var url = window.URL.createObjectURL(blob);
+                    window.open(url); // Abre o PDF em uma nova aba
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
 
         function deleteEquipamento(id) {
             if (confirm('Tem certeza que deseja excluir este equipamento?')) {

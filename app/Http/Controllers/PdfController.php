@@ -75,7 +75,7 @@ class PdfController extends Controller
 
     public function gerarprotocoloPDF(Request $request)
     {
-        $equipamento = Equipamentos::find($request->id_equipamento);
+        $equipamento = Equipamentos::latest()->first();
 
         if (!$equipamento) {
             return response()->json(['error' => 'Equipamento não encontrado'], 404);
@@ -83,11 +83,9 @@ class PdfController extends Controller
 
         $local = $equipamento->protocolo->local->desc ?? 'Local não definido';
         $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
-
         $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
         $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
         $problemaRelatado = $equipamento->solucao ?? 'Problema não relatado';
-
         $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
         $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
 
@@ -105,6 +103,7 @@ class PdfController extends Controller
         $pdf = FacadePdf::loadView('protocolo-entrada.pdf', $data);
         return $pdf->stream('protocolo-entrada.pdf');
     }
+
 
     public function pdfInservivel(Request $request)
     {
