@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/equipamento')->group(function () {
         Route::get('/create', [EquipamentoController::class, 'create'])->name('create.equipamento');
-        Route::post('/store', [EquipamentoController::class, 'store'])->name('store.equipamento');
+        Route::post('/store', [EquipamentoController::class, 'store'])->name('store.tipoequipamento');
 
 
     });

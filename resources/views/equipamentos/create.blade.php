@@ -25,7 +25,7 @@
                     <h5 class="card-title">Cadastrar Equipamento</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('store.equipamento') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('store.tipoequipamento') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="col-12 mx-auto p-5">
 

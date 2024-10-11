@@ -2,9 +2,9 @@
     @if ($index % 4 == 0)
         <div class="row">
     @endif
-    <div class="col-md-3 text-center mb-4 abrirModal" data-id="{{ $equipamento->id }}">
+    <div  class="col-md-3 text-center mb-4 abrirModal" data-id="{{ $equipamento->id }}">
         @if($equipamento->tiposEquipamentos->imagem)
-        <img src="{{ asset('storage/' . $equipamento->tiposEquipamentos->imagem) }}" class="card-img-top" alt="Imagem do equipamento">
+        <img style="width: 200px; height: 200px;" src="{{ asset($equipamento->tiposEquipamentos->imagem) }}" class="card-img-top" alt="Imagem do equipamento">
     @else
         <p>Sem imagem</p>
     @endif

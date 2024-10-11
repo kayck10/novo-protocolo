@@ -17,13 +17,18 @@ class EquipamentoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'equipamento' => 'string|max:255',
-            'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'problemas' => 'string|max:255',
+            'equipamento' => 'required|string|max:255',
+            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'problemas' => 'required|string|max:255',
         ]);
 
         if ($request->hasFile('imagem')) {
-            $imagePath = $request->file('imagem')->store('images', 'public');
+            $image = $request->file('imagem');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+
+            // Caminho relativo para armazenar no banco ou exibir na view
+            $imagePath = 'images/' . $imageName;
         }
 
         $tipoEquipamento = TiposEquipamentos::create([
@@ -35,6 +40,8 @@ class EquipamentoController extends Controller
             'desc' => $request->input('problemas'),
             'tipo_equipamento_id' => $tipoEquipamento->id,
         ]);
+
+
 
         return redirect()->route('create.equipamento')->with('success', 'Equipamento e problema cadastrados com sucesso!');
     }
