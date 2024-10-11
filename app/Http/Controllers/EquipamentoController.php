@@ -17,9 +17,9 @@ class EquipamentoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'equipamento' => 'required|string|max:255',
-            'imagem' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'problemas' => 'required|string|max:255',
+            'equipamento' => 'string|max:255',
+            'imagem' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'problemas' => 'string|max:255',
         ]);
 
         if ($request->hasFile('imagem')) {

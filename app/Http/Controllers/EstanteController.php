@@ -116,6 +116,7 @@ class EstanteController extends Controller
 
 
 
+
 public function pdf( $id)
 {
     $equipamento = Equipamentos::with('user', 'protocolo.local', 'tiposEquipamentos')->findOrFail($id);

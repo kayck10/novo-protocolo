@@ -3,11 +3,11 @@
         <div class="row">
     @endif
     <div class="col-md-3 text-center mb-4 abrirModal" data-id="{{ $equipamento->id }}">
-        <div>
-            <img src="{{ asset('img-estante/' . $equipamento->id_tipos_equipamentos . '.png') }}"
-            width="100" height="100" alt="Figura não encontrada" class="mb-2">
-
-        </div>
+        @if($equipamento->tiposEquipamentos->imagem)
+        <img src="{{ asset('storage/' . $equipamento->tiposEquipamentos->imagem) }}" class="card-img-top" alt="Imagem do equipamento">
+    @else
+        <p>Sem imagem</p>
+    @endif
 
         <div class="text text-center">
             <h4>
