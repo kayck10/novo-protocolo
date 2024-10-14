@@ -57,24 +57,27 @@
                                             <select name="id_funcoes" class="form-control">
                                                 <option value="">Selecione uma Função</option>
                                                 @foreach ($funcoes as $funcao)
-                                                    <option value="{{ $funcao->id }}"
-                                                        {{ old('id_funcoes') == $funcao->id ? 'selected' : '' }}>
-                                                        {{ $funcao->desc }}</option>
+                                                    <option value="{{ $funcao->id }}">
+                                                        {{ $funcao->desc }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="form-label">Tipo de Usuário:<i></i></label>
+                                            <label class="form-label">Tipo de Usuário:</label>
                                             <select name="id_tipos_usuarios" class="form-control">
                                                 <option value="">Selecione um tipo de usuário</option>
                                                 @foreach ($tipos as $tipo)
-                                                    <option value="{{ $tipo->id }}"
-                                                        {{ old('id_tipos_usuarios') == $tipo->id ? 'selected' : '' }}>
-                                                        {{ $tipo->desc }}</option>
+                                                    <option value="{{ $tipo->id }}">
+                                                        {{ $tipo->desc }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
+
+
+
                                         <div class="d-grid gap-2 col-6 mx-auto mt-5">
                                             <button type="submit" class="btn btn-primary">Cadastrar <i
                                                     class="bi bi-check color-white"></i> </button>
@@ -83,11 +86,11 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 
@@ -98,11 +101,11 @@
     <!-- Incluir Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    @if(\Illuminate\Support\Facades\Session::has('success'))
-    <script>
-        toastr.success("{{ \Illuminate\Support\Facades\Session::get('success') }}");
-    </script>
-@endif
+    @if (\Illuminate\Support\Facades\Session::has('success'))
+        <script>
+            toastr.success("{{ \Illuminate\Support\Facades\Session::get('success') }}");
+        </script>
+    @endif
 
 
     @if ($errors->any())

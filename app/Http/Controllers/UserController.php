@@ -22,11 +22,12 @@ class UserController extends Controller
 
     public function create()
     {
-        $user = User::all();
-        $funcoes = Funcoes::all();
-        $tipos = TiposUsuarios::all();
+        $funcoes = Funcoes::distinct()->get();
+        $tipos = TiposUsuarios::distinct()->get();
+
         return view('user.create', compact('funcoes', 'tipos'));
     }
+
 
     public function store(Request $request)
     {

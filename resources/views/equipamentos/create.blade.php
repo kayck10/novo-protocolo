@@ -36,8 +36,13 @@
 
                             <div class="form-group">
                                 <label class="form-label">Problemas:<i class="fa fa-asterisk text-danger"></i></label>
-                                <input type="text" name="problemas" class="form-control" required>
+                                <div class="input-group">
+                                    <input type="text" id="input-problema" class="form-control">
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="novoProblema()"><i class="bi bi-plus-lg"></i></button>
+                                </div>
                             </div>
+
+                            <div id="to-do-list" class="mt-3"></div>
 
                             <div class="form-group">
                                 <label class="form-label">Imagem:<i class="fa fa-asterisk text-danger"></i></label>
@@ -54,4 +59,29 @@
         </div>
     </div>
 </div>
+
+<script>
+    let i = 0;
+
+    const novoProblema = () => {
+        const problema = $('#input-problema').val();
+        if (problema) {
+            i++;
+            $('#to-do-list').append(`
+                <div class="input-group mb-2" id="div-problema-${i}">
+                    <input type="text" class="form-control" name="problemas[]" id="problema_${i}" value="${problema}" readonly>
+                    <span class="btn btn-danger btn-sm" onclick="excluirProblema(${i})">
+                        <i class="bi bi-trash"></i>
+                    </span>
+                </div>
+            `);
+            $('#input-problema').val('');
+        }
+    }
+
+    const excluirProblema = (idDiv) => {
+        $(`#div-problema-${idDiv}`).remove();
+    }
+</script>
+
 @endsection

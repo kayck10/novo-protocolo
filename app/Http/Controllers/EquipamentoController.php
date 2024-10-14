@@ -19,15 +19,14 @@ class EquipamentoController extends Controller
         $request->validate([
             'equipamento' => 'required|string|max:255',
             'imagem' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'problemas' => 'required|string|max:255',
+            'problemas' => 'required|array',
+            'problemas.*' => 'required|string|max:255',
         ]);
 
         if ($request->hasFile('imagem')) {
             $image = $request->file('imagem');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('images'), $imageName);
-
-            // Caminho relativo para armazenar no banco ou exibir na view
             $imagePath = 'images/' . $imageName;
         }
 
@@ -36,15 +35,16 @@ class EquipamentoController extends Controller
             'imagem' => $imagePath,
         ]);
 
-        Problema::create([
-            'desc' => $request->input('problemas'),
-            'tipo_equipamento_id' => $tipoEquipamento->id,
-        ]);
+        foreach ($request->input('problemas') as $problemaDesc) {
+            Problema::create([
+                'desc' => $problemaDesc,
+                'tipo_equipamento_id' => $tipoEquipamento->id,
+            ]);
+        }
 
-
-
-        return redirect()->route('create.equipamento')->with('success', 'Equipamento e problema cadastrados com sucesso!');
+        return redirect()->route('create.equipamento')->with('success', 'Equipamento e problemas cadastrados com sucesso!');
     }
+
 
 
 }

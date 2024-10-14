@@ -12,11 +12,6 @@ class problemaInservivel extends Seeder
      */
     public function run(): void
     {
-        Problema::create(['desc' => 'PLACA MÃE']);
-        Problema::create(['desc' => 'PROCESSADOR']);
-        Problema::create(['desc' => 'MEMÓRIA']);
-        Problema::create(['desc' => 'GABINETE']);
-        Problema::create(['desc' => 'PLACA DE REDE ETHERNET']);
-        Problema::create(['desc' => 'VÍDEO INTEGRADO']);
+
     }
 }
