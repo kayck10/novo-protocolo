@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('problemas', function (Blueprint $table) {
             $table->id();
             $table->text('desc');
-            $table->unsignedBigInteger('tipo_equipamento_id'); // Chave estrangeira
-            $table->foreign('tipo_equipamento_id')->references('id')->on('tipos_equipamentos')->onDelete('cascade'); // Relacionamento
+            $table->unsignedBigInteger('tipo_equipamento_id');
+            $table->foreign('tipo_equipamento_id')->references('id')->on('tipos_equipamentos')->onDelete('cascade');
             $table->timestamps();
         });
     }

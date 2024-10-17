@@ -109,10 +109,12 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <input type="hidden" name="prioridade" value="0">
                                     <div class="form-check">
                                         <label class="form-check-label" for="prioridade">Prioridade?</label>
-                                        <input class="form-check-input mx-2" type="checkbox" id="prioridade">
+                                        <input class="form-check-input mx-2" type="checkbox" id="prioridade" name="prioridade" value="1">
                                     </div>
+
                                     <div class="form-group">
                                         <label class="form-label">Descrição do Problema: <i
                                                 class="fa fa-asterisk text-danger"></i></label>
@@ -156,7 +158,7 @@
                 let tombamento = $('#tombamento').val();
                 let setor = $('#id_setor_escolas').val();
                 let desc = $('#desc').val();
-                let prioridade = $('#prioridade').is(':checked');
+                let prioridade = $('#prioridade').is(':checked') ? 1 : 0;
                 let descricao_acessorio = $('#descricao_acessorio').val();
 
                 let data = {
@@ -179,7 +181,7 @@
                 };
 
                 $.ajax(settings).done(function(response) {
-                    console.log(response);
+                    // console.log(response);
                     $('#tableEquipamentos').DataTable().clear().destroy();
                     let dados = `
                 <tr>
@@ -193,7 +195,7 @@
                     $('#tabela-equipamentos-div').show();
                     $("#exampleModal").modal('hide');
 
-                    $('#tableEquipamentos').DataTable();
+                    // $('#tableEquipamentos').DataTable();
 
                     iziToast.success({
                         title: 'Sucesso',

@@ -5,65 +5,104 @@
     <title>PROTOCOLO</title>
     <style>
         body {
-            text-align: center;
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         img {
             height: 100px;
-            display: block;
-            margin-right: 125px;
+            margin-bottom: 20px;
         }
 
         h4 {
             font-weight: bold;
-        }
-
-        h1 {
-            margin-top: 20px;
+            margin: 20px 0 10px;
         }
 
         #customers {
-            font-family: Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
 
-        #customers td,
+        #customers th,
+        #customers td {
+            border: 1px solid #000;
+            padding: 10px;
+            font-size: 14px;
+            text-align: left;
+        }
+
         #customers th {
-            border: 1px solid #0e0d0d;
-            padding: 8px;
+            background-color: #f4f4f4;
         }
 
         #customers tr:nth-child(even) {
-            background-color: #eee8e8;
+            background-color: #f9f9f9;
         }
 
         #customers tr:hover {
-            background-color: #ddd;
+            background-color: #f1f1f1;
         }
 
-        #customers th {
-            text-align: left;
-            background-color: #fafafa;
-            color: rgb(31, 29, 29);
+        .section-title {
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 90px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .signature-table {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .signature-table td {
+            text-align: center;
+            vertical-align: bottom;
+            padding: 20px;
+        }
+
+        .signature-line {
+            border-top: 1px solid #000;
+            margin: 0 auto;
+            width: 60%;
+        }
+
+        footer {
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
 
-    <img src="../public/logo-sme/sme.png" alt="Logo SME">
+    <header>
+        <img src="../public/logo-sme/sme.png" alt="Logo SME">
+        <h4>LAUDO DE AVALIAÇÃO DE EQUIPAMENTOS DE INFORMÁTICA</h4>
+    </header>
 
-    <div>
-        <h4>
-            <br>
-            LAUDO DE AVALIAÇÃO DE EQUIPAMENTOS DE INFORMÁTICA
-            <br>
-        </h4>
-    </div>
-
-    <h4>ORIGEM DO EQUIPAMENTO</h4>
+    <div class="section-title">ORIGEM DO EQUIPAMENTO</div>
 
     <table id="customers">
         <tr>
@@ -76,7 +115,7 @@
         </tr>
     </table>
 
-    <h4>Dados do Equipamento</h4>
+    <div class="section-title">Dados do Equipamento</div>
 
     <table id="customers">
         <tr>
@@ -95,7 +134,8 @@
         </tr>
     </table>
 
-    <h4>Condições do Equipamento</h4>
+    <div class="section-title">Condições do Equipamento</div>
+
     <table id="customers">
         <tr>
             <th>Obsoleto ( )</th>
@@ -103,7 +143,8 @@
         </tr>
     </table>
 
-    <h4>Destino Sugerido</h4>
+    <div class="section-title">Destino Sugerido</div>
+
     <table id="customers">
         <tr>
             <th>Manutenção ( )</th>
@@ -112,23 +153,28 @@
         </tr>
     </table>
 
-    <h4>Observações</h4>
-    <textarea name="" id="" cols="30" rows="10">{{ $solucao }}</textarea>
+    <div class="section-title">Observações</div>
+     <textarea readonly>O Scanner Patrimonial nº {{$num_patrimonio}} apresenta defeito de {{--{{$problemaInservivel}}. --}} Equipamento fora da garantia e sem contrato de manutenção. Uma ou mais peças foram removidas do equipamento para reserva.</textarea>
 
-    <table style="width: 100%; margin-top:20px">
+    <table class="signature-table">
         <tr>
-            <td style="width: 50%; text-align: center;">
-                __________________________
+            <td>
+                <div class="signature-line"></div>
                 <p>Coordenador de TI</p>
                 <p>Data</p>
             </td>
-            <td style="width: 50%; text-align: center;">
-                __________________________
+            <td>
+                <div class="signature-line"></div>
                 <p>Técnico Responsável</p>
                 <p>Data</p>
             </td>
         </tr>
     </table>
 
+    <footer>
+        <p>Secretaria de Educação - Sistema de Gerenciamento de Equipamentos</p>
+    </footer>
+
 </body>
+
 </html>

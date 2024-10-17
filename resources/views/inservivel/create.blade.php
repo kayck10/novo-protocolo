@@ -95,6 +95,11 @@
                                                                 </div>
 
                                                                 <div class="mb-3">
+                                                                    <label><b>Teve retirada?</b></label>
+                                                                    <input id="retirada" name="retirada" type="checkbox">
+                                                                </div>
+
+                                                                <div class="mb-3">
                                                                     <label><b>Marca:</b></label>
                                                                     <input id="marca" name="marca" type="text"
                                                                         class="form-control" required>
@@ -198,6 +203,7 @@
             modelo: $('#modelo').val(),
             marca: $('#marca').val(),
             num_serie: $('#num_serie').val(),
+            retirada: $('#retirada').val(),
             id_problema: $('#id_problema').val()
         };
 

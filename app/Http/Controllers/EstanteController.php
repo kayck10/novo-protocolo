@@ -30,10 +30,13 @@ class EstanteController extends Controller
         $usuarios = User::where('id_funcoes', 2)->get();
 
         $equipamentos = Equipamentos::where('id_status', $request->statusEq)
-        ->with(['protocolo' => function ($query) {
-            $query->orderBy('data_entrada', 'DESC');
-        }])
-        ->get();
+            ->with(['protocolo' => function ($query) {
+                $query->orderBy('data_entrada', 'DESC');
+            }])
+            ->orderBy('prioridade', 'DESC')  // Ordena pela prioridade do maior para o menor
+            ->orderBy('id', 'ASC')           // Ordena pelo ID do menor para o maior
+            ->get();
+        // dd($equipamentos);
 
         return view('estante.equipamentos-status', compact('equipamentos', 'usuarios'));
     }
@@ -56,17 +59,17 @@ class EstanteController extends Controller
 
         $equipamento = Equipamentos::find($request->id);
 
-        if($request->statusEq == 1){
+        if ($request->statusEq == 1) {
             $equipamento->update([
                 'id_status' => $request->statusEq,
                 'id_users'  => null
             ]);
-        }elseif($request->statusEq == 2){
+        } elseif ($request->statusEq == 2) {
             $equipamento->update([
                 'id_status' => $request->statusEq,
                 'id_users'  => $request->id_tecnico
             ]);
-        }elseif($request->statusEq == 3){
+        } elseif ($request->statusEq == 3) {
             $equipamento->update([
                 'id_status' => $request->statusEq,
                 'id_users'  => $request->id_tecnico,
@@ -117,43 +120,41 @@ class EstanteController extends Controller
 
 
 
-public function pdf( $id)
-{
-    $equipamento = Equipamentos::with('user', 'protocolo.local', 'tiposEquipamentos')->findOrFail($id);
+    public function pdf($id)
+    {
+        $equipamento = Equipamentos::with('user', 'protocolo.local', 'tiposEquipamentos')->findOrFail($id);
 
-     $equipamento = Equipamentos::findOrFail($id);
+        $equipamento = Equipamentos::findOrFail($id);
 
-     if (!$equipamento) {
-         return response()->json(['error' => 'Equipamento não encontrado'], 404);
-     }
+        if (!$equipamento) {
+            return response()->json(['error' => 'Equipamento não encontrado'], 404);
+        }
 
-     $local = $equipamento->protocolo->local->desc ?? 'Local não definido';
-     $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
+        $local = $equipamento->protocolo->local->desc ?? 'Local não definido';
+        $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
 
-     $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
-     $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
+        $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
+        $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
 
-     $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
-     $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
+        $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
+        $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
 
-    $tecnico = $equipamento->user->name ?? 'Técnico não definido';
+        $tecnico = $equipamento->user->name ?? 'Técnico não definido';
 
-     $data = [
-         'local' => $local,
-         'setor' => $setor,
-         'tombamento' => $equipamento->tombamento,
-         'tipoEquipamento' => $tipoEquipamento,
-         'acessorios' => $acessorios,
-         'dataEntrada' => $dataEntrada,
-         'horaEntrada' => $horaEntrada,
-         'solucao' => $equipamento->solucao,
-         'tecnico' => $tecnico,
-     ];
+        $data = [
+            'local' => $local,
+            'setor' => $setor,
+            'tombamento' => $equipamento->tombamento,
+            'tipoEquipamento' => $tipoEquipamento,
+            'acessorios' => $acessorios,
+            'dataEntrada' => $dataEntrada,
+            'horaEntrada' => $horaEntrada,
+            'solucao' => $equipamento->solucao,
+            'tecnico' => $tecnico,
+        ];
 
-    $pdf = FacadePdf::loadView('estante.pdf', $data);
+        $pdf = FacadePdf::loadView('estante.pdf', $data);
 
-    return $pdf->stream('detalhes_equipamento.pdf');
-}
-
-
+        return $pdf->stream('detalhes_equipamento.pdf');
+    }
 }

@@ -1,29 +1,28 @@
+<div class="row estanDeEquipamentos" style="margin-right: 0 !important">
 @foreach ($equipamentos as $index => $equipamento)
     @if ($index % 4 == 0)
-        <div class="row">
     @endif
-    <div  class="col-md-3 text-center mb-4 abrirModal" data-id="{{ $equipamento->id }}">
+    <div  class="col-md-2 text-center abrirModal" data-id="{{ $equipamento->id }}">
         @if($equipamento->tiposEquipamentos->imagem)
-        <img style="width: 200px; height: 200px;" src="{{ asset($equipamento->tiposEquipamentos->imagem) }}" class="card-img-top" alt="Imagem do equipamento">
+        <img  style="width: 120px; height: 120px; padding-bottom: 5px" src="{{ asset($equipamento->tiposEquipamentos->imagem) }}" class="card-img-top drop-shadown" alt="Imagem do equipamento">
     @else
         <p>Sem imagem</p>
     @endif
-
         <div class="text text-center">
             <h4>
-                <span class="text-red">
+                <span class="@if($equipamento->prioridade == 1) text-danger @endif">
                     <b>{{ $equipamento->tombamento }}</b>
                 </span>
             </h4>
-            <span class="text-red">
+            <span class="@if($equipamento->prioridade == 1) text-danger @endif">
                 <b>{{ \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/y') }}</b>
             </span>
         </div>
     </div>
     @if ($index % 4 == 3)
-        </div>
     @endif
-@endforeach
+    @endforeach
+</div>
 
 <!-- The Modal -->
 <div class="modal fade" id="equipamentos_abertos">

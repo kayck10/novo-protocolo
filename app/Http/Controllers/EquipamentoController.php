@@ -31,8 +31,10 @@ class EquipamentoController extends Controller
         }
 
         $tipoEquipamento = TiposEquipamentos::create([
+
             'desc' => $request->input('equipamento'),
             'imagem' => $imagePath,
+
         ]);
 
         foreach ($request->input('problemas') as $problemaDesc) {

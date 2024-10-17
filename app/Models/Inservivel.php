@@ -9,5 +9,5 @@ class Inservivel extends Model
 {
     use HasFactory;
     protected $table = "Inservivels";
-    protected $fillable = ['id_equipamento', 'id_problema', 'marca', 'num_serie', 'modelo'];
+    protected $fillable = ['id_equipamento', 'id_problema', 'marca', 'num_serie', 'modelo', 'retirada'];
 }

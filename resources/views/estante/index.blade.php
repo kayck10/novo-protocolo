@@ -8,13 +8,23 @@
         .itens {
             width: 100%;
         }
-
+ 
         .back-btn {
             background-color: #024f9b;
         }
 
         .hidden {
             display: none;
+        }
+
+        .drop-shadown {
+            width: 150px;
+            -webkit-filter: drop-shadow(5px 5px 5px rgb(119, 119, 119));
+            filter: drop-shadow(5px 5px 5px rgb(99, 99, 99));
+        }
+
+        .abrirModal:hover {
+            transform: scale(1.1);
         }
     </style>
 
@@ -234,7 +244,7 @@
                     let usuarios = "<option>Selecione um Técnico</option>";
 
                     let dataDeEntradaCompleta = response.protocoloEntrada.data_entrada.split(' ')[
-                    0];
+                        0];
                     let dataDeEntrada = dataDeEntradaCompleta.split('-');
 
                     $("#p-data").html(

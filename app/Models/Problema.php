@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Problema extends Model
 {
     use HasFactory;
-    protected $fillable = ['desc'];
+    protected $fillable = ['desc', 'tipo_equipamento_id'];
 }
