@@ -8,7 +8,7 @@
         .itens {
             width: 100%;
         }
- 
+
         .back-btn {
             background-color: #024f9b;
         }
@@ -23,8 +23,47 @@
             filter: drop-shadow(5px 5px 5px rgb(99, 99, 99));
         }
 
-        .abrirModal:hover {
-            transform: scale(1.1);
+        /* .abrirModal {
+                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                padding: 20px;
+                outline: 1px solid rgba(114, 110, 110, 0.048);
+                outline-offset: -10px;
+                box-shadow: initial 70px 7px 15px rgba(172, 153, 153, 0.568);
+            }
+
+            .abrirModal:hover {
+                transform: scale(1.1);
+                box-shadow: inset 0 8px 10px rgba(90, 1, 1, 0.911), 0 8px 15px rgb(236, 4, 4);
+            } */
+
+        .nicho {
+            height: 195px;
+            background: radial-gradient(circle, rgba(21, 128, 26, 0.5) 35%, #a74040 70%);
+            border-right: solid 4px #7270705b;
+            border-bottom: solid 4px #7270705b;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2),
+                inset 0 -5px -5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.1s ease-in-out, box-shadow 0.3s ease-in-out;
+            outline-offset: -10px;
+        }
+
+        .nicho:hover {
+            transform: scale(1);
+            box-shadow: inset 0 8px 10px rgba(0, 0, 0, 0.2), 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .nicho:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.1));
+            /* border-radius: 15px; */
+            z-index: 1;
         }
     </style>
 

@@ -2,7 +2,7 @@
 @foreach ($equipamentos as $index => $equipamento)
     @if ($index % 4 == 0)
     @endif
-    <div  class="col-md-2 text-center abrirModal" data-id="{{ $equipamento->id }}">
+    <div  class="col-md-2 text-center nicho" data-id="{{ $equipamento->id }}">
         @if($equipamento->tiposEquipamentos->imagem)
         <img  style="width: 120px; height: 120px; padding-bottom: 5px" src="{{ asset($equipamento->tiposEquipamentos->imagem) }}" class="card-img-top drop-shadown" alt="Imagem do equipamento">
     @else
