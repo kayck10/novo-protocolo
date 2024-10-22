@@ -74,10 +74,14 @@
                     <span class="nav-text">Escolas</span>
                 </a>
             </li>
-            <li><a href="{{ route('create.equipamento') }}" aria-expanded="false">
-                <i class="bi bi-plus-square"></i>
-                <span class="nav-text">Criar Equipamentos</span>
+            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                <i class="bi bi-clipboard-data"></i>
+                <span class="nav-text">Equipamentos</span>
             </a>
+            <ul aria-expanded="false">
+                <li><a href="{{ route('create.equipamento') }}">Criar novo</a></li>
+                <li><a href="{{ route('lista.tipoequipamento') }}">Ver Todos</a></li>
+            </ul>
         </li>
             <li><a href="{{ route('equipamento') }}" aria-expanded="false">
                     <i class="bi bi-clock-history"></i>

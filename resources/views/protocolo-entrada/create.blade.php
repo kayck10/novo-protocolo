@@ -214,18 +214,18 @@
         $(document).ready(function() {
         $('#imprimirButton').on('click', function() {
             $.ajax({
-                url: "{{ route('gerar.protocolo.pdf') }}", // A rota correta
+                url: "{{ route('gerar.protocolo.pdf') }}",
                 type: 'POST',
                 data: {
-                    _token: '{{ csrf_token() }}' // Proteção CSRF
+                    _token: '{{ csrf_token() }}'
                 },
                 xhrFields: {
-                    responseType: 'blob' // Manipular a resposta como PDF
+                    responseType: 'blob'
                 },
                 success: function(response) {
                     var blob = new Blob([response], { type: 'application/pdf' });
                     var url = window.URL.createObjectURL(blob);
-                    window.open(url); // Abre o PDF em uma nova aba
+                    window.open(url); 
                 },
                 error: function(xhr) {
                     console.error(xhr.responseText);

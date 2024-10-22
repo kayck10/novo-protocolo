@@ -60,6 +60,12 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/equipamento')->group(function () {
         Route::get('/create', [EquipamentoController::class, 'create'])->name('create.equipamento');
         Route::post('/store', [EquipamentoController::class, 'store'])->name('store.tipoequipamento');
+        Route::get('/lista', [EquipamentoController::class, 'index'])->name('lista.tipoequipamento');
+        Route::get('/{id}', [EquipamentoController::class, 'show'])->name('equipamentos.show');
+        Route::get('/{id}/edit', [EquipamentoController::class, 'edit'])->name('equipamentos.edit');
+        Route::put('/{id}', [EquipamentoController::class, 'update'])->name('equipamentos.update');
+        Route::delete('/{id}', [EquipamentoController::class, 'destroy'])->name('equipamentos.delete');
+
 
 
     });
