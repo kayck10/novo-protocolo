@@ -153,9 +153,7 @@
                         <button id="btn-excluir" type="button" class="btn btn-danger" onclick="deleteEvent()">
                             Excluir <i class="bi bi-trash3-fill"></i>
                         </button>
-                        <button id="btn-salvar" type="button" class="btn btn-info text-light">
-                            Salvar <i class="bi bi-floppy-fill"></i>
-                        </button>
+
                         <button id="btn-finalizar" type="button" class="btn btn-success text-light"
                             onclick="finalizeEvent()">
                             Finalizar <i class="bi bi-check2-circle"></i>
@@ -303,12 +301,10 @@
                         if (info.event.extendedProps.id_status == 1) {
                             $('#select-tecnicos').show();
                             $('#btn-finalizar').show();
-                            $('#btn-salvar').show();
                         }
                         if (info.event.extendedProps.id_status == 3) {
                             $('#select-tecnicos').hide();
                             $('#btn-finalizar').hide();
-                            $('#btn-salvar').hide();
                             $('#modal-event-click-tecnico').html(info.event.extendedProps.tecnico_nome);
                             $('#solucao').html(info.event.extendedProps.solucao).prop('disabled', true);
                         }

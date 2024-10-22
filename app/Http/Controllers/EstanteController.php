@@ -33,8 +33,8 @@ class EstanteController extends Controller
             ->with(['protocolo' => function ($query) {
                 $query->orderBy('data_entrada', 'DESC');
             }])
-            ->orderBy('prioridade', 'DESC')  // Ordena pela prioridade do maior para o menor
-            ->orderBy('id', 'ASC')           // Ordena pelo ID do menor para o maior
+            ->orderBy('prioridade', 'DESC')
+            ->orderBy('id', 'ASC')
             ->get();
         // dd($equipamentos);
 
@@ -113,7 +113,9 @@ class EstanteController extends Controller
 
     public function equipamento()
     {
-        $equipamentos = Equipamentos::with('protocolo', 'tiposEquipamentos')->get();
+        $equipamentos = Equipamentos::with('protocolo', 'tiposEquipamentos')
+        ->whereIn('id_status', [4, 5, 6])
+        ->get();
         return view('equipamentos.lista-equipamentos', compact('equipamentos'));
     }
 

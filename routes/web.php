@@ -68,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
+
     });
 
     Route::prefix('/atendimento-interno')->group(function () {
@@ -95,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
         Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
         Route::get('/escolas', [EstanteController::class, 'equipamento'])->name('equipamento');
+
     });
 
 
@@ -103,11 +105,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [InservivelController::class, 'create'])->name('inservivel.create');
         Route::post('/store', [InservivelController::class, 'store'])->name('inservivel.store');
         Route::post('/devolver', [InservivelController::class, 'devolver'])->name('inservivel.devolver');
-        Route::patch('/devolver/{id}', [InservivelController::class, 'atualizar'])->name('equipamentos.devolver');
+        Route::patch('/devolver/{id}', [InservivelController::class, 'atualizar'])->name('inservivel.atualizar');
         Route::post('/gerar-pdf', [PdfController::class, 'gerarPDF'])->name('gerar.pdf');
         Route::post('/pdf-inservivel', [PdfController::class, 'pdfInservivel'])->name('pdf.inservivel');
         Route::post('/verificar', [PdfController::class, 'verificarId'])->name('verificar');
     });
+
     Route::prefix('/graficos')->group(function () {
         Route::get('/anual', [GraficosController::class, 'anual'])->name('graficos.anual');
         Route::get('/participacoes', [GraficosController::class, 'participacoes'])->name('graficos.participacoes');

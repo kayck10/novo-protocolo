@@ -54,7 +54,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-xxl-3 col-sm-6">
-                <div class="widget-stat card bg-secondary">
+                <div style="background-color: #0B4C5F;" class="widget-stat card ">
                     <div class="card-body">
                         <div class="media">
                             <span class="mr-3">
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="col-xl-3 col-xxl-3 col-sm-6">
-                <div class="widget-stat card bg-danger">
+                <div style="background-color: #6c757d;" class="widget-stat card ">
                     <div class="card-body">
                         <div class="media">
                             <span class="mr-3">
@@ -102,7 +102,7 @@
                     <div class="card-header">
                         <h4 class="">Atividades do Mês</h4>
                     </div>
-                    <div class="card-body">
+                    <div style="height: 250px;" class="card-body"> <!-- Definindo altura menor -->
                         <canvas id="pie_chart"></canvas>
                     </div>
                 </div>
@@ -120,43 +120,54 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Gráfico de Atividades do Mês
-            const ctxPie = document.getElementById('pie_chart').getContext('2d');
-            const pieChart = new Chart(ctxPie, {
-                type: 'pie',
-                data: {
-                    labels: ['Atendimento a Escolas', 'Atendimentos Internos', 'Protocolos Finalizados'],
-                    datasets: [{
-                        data: [{{ $interno }}, {{ $externo }}, {{ $finalizados }}],
-                        backgroundColor: ['#007bff', '#ffc107', '#6c757d'],
-                        borderColor: ['#007bff', '#ffc107', '#6c757d'],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                }
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Gráfico de Atividades do Mês
+                const ctxPie = document.getElementById('pie_chart').getContext('2d');
+                const pieChart = new Chart(ctxPie, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Atendimento a Escolas', 'Atendimentos Internos', 'Protocolos Finalizados'],
+                        datasets: [{
+                            data: [{{ $interno }}, {{ $externo }}, {{ $finalizados }}],
+                            backgroundColor: ['#007bff', '#ffc107', '#6c757d'],
+                            borderColor: ['#007bff', '#ffc107', '#6c757d'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 2,
+                    }
+                });
+
+                // Gráfico de Status das Máquinas
+                const ctxDoughnut = document.getElementById('doughnut_chart').getContext('2d');
+                const doughnutChart = new Chart(ctxDoughnut, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Em aberto', 'Em Andamento', 'Finalizados', 'Concluídos',
+                            'Inservivel falta laudo', 'Inserviveis Laudo técnico já elaborado'
+                        ],
+                        datasets: [{
+                            data: [{{ $emAberto }}, {{ $emAndamento }}, {{ $finalizados }},
+                                {{ $concluido }}, {{ $inservivel }}, {{ $inserviveisCount }}
+                            ],
+                            backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#5882FA', '#0000FF',
+                                '#0B4C5F'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        aspectRatio: 2,
+                    }
+                });
             });
-
-            // Gráfico de Status das Máquinas
-            const ctxDoughnut = document.getElementById('doughnut_chart').getContext('2d');
-            const doughnutChart = new Chart(ctxDoughnut, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Em aberto', 'Em Andamento', 'Finalizados', 'Concluídos', 'Inservivel falta laudo', 'Inserviveis Laudo técnico já elaborado'],
-                    datasets: [{
-                        data:  [{{ $emAberto }}, {{ $emAndamento }}, {{ $finalizados }}, {{ $concluido }}, {{ $inservivel }}, {{ $inserviveisCount }}  ],
-                        backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#5882FA', '#0000FF', '#0B4C5F'],
-                        borderWidth: 1
-                    }]
-                },
-
-            });
-        });
-    </script>
-@endsection
+        </script>
+    @endsection

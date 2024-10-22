@@ -12,13 +12,21 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+
     public function index()
     {
-        $users = User::all();
+        $users = User::withCount([
+            'atendimentos',
+            'atendimentosInternos',
+            'atendimentosEscolas',
+        ])->get();
+
         $funcoes = Funcoes::all();
 
         return view('user.index', compact('users', 'funcoes'));
     }
+
 
     public function create()
     {
@@ -98,7 +106,8 @@ class UserController extends Controller
         return view('user.edit', compact('user'));
     }
 
-    public function atualizarUsuario(Request $request, $id) {
+    public function atualizarUsuario(Request $request, $id)
+    {
         $user = User::findOrFail($id);
 
         $request->validate([
@@ -125,5 +134,4 @@ class UserController extends Controller
 
         return redirect()->route('user.edit', $user->id)->with('success', 'Usuário atualizado com sucesso!');
     }
-
 }

@@ -19,7 +19,7 @@
 
         .drop-shadown {
             width: 150px;
-            -webkit-filter: drop-shadow(5px 5px 5px rgb(119, 119, 119));
+            -webkit-filter: drop-shadow(5px 5px 5px rgb(255, 255, 255));
             filter: drop-shadow(5px 5px 5px rgb(99, 99, 99));
         }
 
@@ -38,8 +38,8 @@
 
         .nicho {
             height: 195px;
-            background: radial-gradient(circle, rgba(21, 128, 26, 0.5) 35%, #a74040 70%);
-            border-right: solid 4px #7270705b;
+            background: radial-gradient(circle, rgba(162, 165, 162, 0.5) 35%, #dad7d7 70%);
+            border-right: solid 4px #ada8a85b;
             border-bottom: solid 4px #7270705b;
             position: relative;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2),

@@ -62,8 +62,20 @@ class User extends Authenticatable
         return $this->belongsTo(Funcoes::class, 'id_funcoes');
     }
 
-    public function situacao () {
+    public function situacao()
+    {
         return $this->belongsTo(Situacao::class, 'id_situacao');
     }
+
+    public function atendimentosInternos()
+    {
+        return $this->hasMany(Atendimentos::class, 'id_user')->where('externo', 0); // 0 para interno
+    }
+
+    public function atendimentosEscolas()
+    {
+        return $this->hasMany(Atendimentos::class, 'id_user')->where('externo', 1);
+    }
+
 
 }
