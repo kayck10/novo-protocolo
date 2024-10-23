@@ -67,7 +67,7 @@
                                                         <input type="text" name="problemas[]" class="form-control"
                                                             value="{{ $problema->desc }}" required>
                                                         <button type="button"
-                                                            class="btn btn-danger remove-problema">Remover</button>
+                                                            class="btn btn-danger remove-problema"><i class="bi bi-trash"></i></button>
                                                     </div>
                                                 @endforeach
                                             </div>

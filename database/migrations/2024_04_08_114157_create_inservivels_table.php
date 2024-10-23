@@ -11,6 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('inservivels');
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        // Você pode optar por não adicionar nada aqui, ou pode recriar a tabela se necessário.
         Schema::create('inservivels', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_problema')->nullable();
@@ -22,13 +31,5 @@ return new class extends Migration
             $table->text('num_serie');
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('inservivels');
     }
 };

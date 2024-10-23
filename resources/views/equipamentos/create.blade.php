@@ -13,7 +13,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
                 <li class="breadcrumb-item active"><a href="{{ route('create.equipamento') }}">Criação de
-                        equipamanetos</a></li>
+                        equipamentos</a></li>
             </ol>
         </div>
     </div>
@@ -25,7 +25,7 @@
                     <h5 class="card-title">Cadastrar Equipamento</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('store.tipoequipamento') }}" method="POST" enctype="multipart/form-data">
+                    <form id="equipamentoForm" action="{{ route('store.tipoequipamento') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="col-12 mx-auto p-5">
 
@@ -43,6 +43,8 @@
                             </div>
 
                             <div id="to-do-list" class="mt-3"></div>
+
+                            <div id="problema-error" class="text-danger mt-2" style="display: none;">É necessário adicionar pelo menos um problema.</div>
 
                             <div class="form-group">
                                 <label class="form-label">Imagem:<i class="fa fa-asterisk text-danger"></i></label>
@@ -76,12 +78,20 @@
                 </div>
             `);
             $('#input-problema').val('');
+            $('#problema-error').hide();
         }
     }
 
     const excluirProblema = (idDiv) => {
         $(`#div-problema-${idDiv}`).remove();
     }
+
+    $('#equipamentoForm').on('submit', function(e) {
+        if ($('#to-do-list').children().length === 0) {
+            e.preventDefault();
+            $('#problema-error').show();
+        }
+    });
 </script>
 
 @endsection

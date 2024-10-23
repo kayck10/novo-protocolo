@@ -75,8 +75,8 @@
                 </a>
             </li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                <i class="bi bi-clipboard-data"></i>
-                <span class="nav-text">Equipamentos</span>
+                <i class="bi bi-plus-circle"></i>
+             <span class="nav-text">Equipamentos</span>
             </a>
             <ul aria-expanded="false">
                 <li><a href="{{ route('create.equipamento') }}">Criar novo</a></li>

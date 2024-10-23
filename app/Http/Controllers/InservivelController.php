@@ -15,10 +15,14 @@ class InservivelController extends Controller
     public function index()
     {
         $problemas = Problema::all();
-        $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 6)->get();
+        $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])
+                                    ->where('id_status', 6)
+                                    ->get();
         $protocolos = ProtocoloEntrada::all();
         return view('inservivel.index', compact('equipamentos', 'protocolos', 'problemas'));
     }
+
+
 
     public function create()
     {
@@ -61,7 +65,4 @@ class InservivelController extends Controller
 
         return response()->json(['success' => 'Equipamento devolvido com sucesso!']);
     }
-
-
-
 }

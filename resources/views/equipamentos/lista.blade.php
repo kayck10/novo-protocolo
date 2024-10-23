@@ -37,11 +37,11 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $tipo->desc }}</td>
                                     <td>
-                                        <a href="{{route('equipamentos.edit', $tipo->id)}}" class="btn btn-warning">Editar</a>
+                                        <a href="{{route('equipamentos.edit', $tipo->id)}}" class="btn btn-warning"><i class="bi bi-pencil-square"></i></a>
                                         <form action="#" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este tipo de equipamento?')">Excluir</button>
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este tipo de equipamento?')"><i class="bi bi-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>

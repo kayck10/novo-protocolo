@@ -8,36 +8,36 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            text-align: center;
             width: 100%;
-        }
-
-        header {
             text-align: center;
-            margin-bottom: 30px;
         }
+        header {
+            margin-right: 80px;
+        margin-bottom: 20px;
+    }
 
-        img {
-            height: 100px;
-            margin-bottom: 20px;
-        }
+    img {
+        height: 80px;
+        margin-bottom: 10px;
+    }
 
         h4 {
+            margin-left: 80px;
             font-weight: bold;
-            margin: 20px 0 10px;
+            font-size: 14px;
         }
 
         #customers {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         #customers th,
         #customers td {
             border: 1px solid #000;
-            padding: 10px;
-            font-size: 14px;
+            padding: 5px;
+            font-size: 0.9rem;
             text-align: left;
         }
 
@@ -45,52 +45,43 @@
             background-color: #f4f4f4;
         }
 
-        #customers tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-
-        #customers tr:hover {
-            background-color: #f1f1f1;
-        }
-
         .section-title {
-            text-align: center;
             font-weight: bold;
-            margin: 20px 0;
-            font-size: 16px;
+            margin: 15px 0 10px;
+            font-size: 14px;
         }
 
         textarea {
             width: 100%;
-            height: 90px;
-            padding: 10px;
-            font-size: 14px;
+            padding: 5px;
+            font-size: 12px;
             border: 1px solid #ccc;
-            border-radius: 4px;
             resize: none;
             box-sizing: border-box;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            height: 50px;
         }
 
         .signature-table {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 80px;
         }
 
         .signature-table td {
             text-align: center;
             vertical-align: bottom;
-            padding: 20px;
+            padding: 10px;
         }
 
         .signature-line {
             border-top: 1px solid #000;
             margin: 0 auto;
-            width: 60%;
+            width: 80%;
         }
 
         footer {
-            margin-top: 10px;
+            font-size: 15px;
+            margin-top: 20px;
         }
     </style>
 </head>

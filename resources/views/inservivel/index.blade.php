@@ -40,8 +40,11 @@
                                                 <td class="center">{{ $equipamento->setorEscola->desc }}</td>
                                                 <td class="center">{{ $equipamento->created_at->format('d/m/Y') }}</td>
                                                 <td class="center">
-                                                    <button type="button" class="btn btn-warning" id="btnImprimir"> <i
-                                                            class="bi bi-printer"></i></button>
+                                                    <button type="button" class="btn btn-warning btnImprimir"
+                                                        data-equipamento-id="{{ $equipamento->id }}">
+                                                        <i class="bi bi-printer"></i>
+                                                    </button>
+
 
                                                     <button class="btn btn-primary" data-bs-toggle="modal"
                                                         data-bs-target="#modalmostrardados{{ $equipamento->id }}"
@@ -74,7 +77,7 @@
                                             <tbody>
                                                 <tr>
                                                     <th>Tipo</th>
-                                                    <td>{{ $equipamento->tipoEquipamento->desc ?? 'N/A' }}</td>
+                                                    <td>{{ $equipamento->tiposEquipamentos->desc ?? 'N/A' }}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>Marca</th>
@@ -118,7 +121,7 @@
                                             data-id="{{ $equipamento->id }}" data-bs-dismiss="modal">Devolver</button>
 
 
-                                                           </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +141,7 @@
                 var equipamentoId = $(this).data('id');
 
                 $.ajax({
-                    url: '{{ route('equipamentos.devolver', '') }}/' + equipamentoId,
+                    url: '{{ route('inservivel.atualizar', '') }}/' + equipamentoId,
                     method: 'PATCH',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -160,30 +163,38 @@
                     }
                 });
             });
-            document.getElementById('btnImprimir').addEventListener('click', function() {
-                var data = {
-                    id_equipamento: 1,
-                    id_problema: 2,
-                    marca: 'Marca do Equipamento',
-                    modelo: 'Modelo do Equipamento',
-                    num_serie: 'Número de Série'
-                };
 
-                fetch('{{ route('pdf.inservivel') }}', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                        },
-                        body: JSON.stringify(data)
-                    })
-                    .then(response => response.blob())
-                    .then(blob => {
-                        var url = window.URL.createObjectURL(blob);
-                        window.open(url);
-                    })
-                    .catch(error => console.error('Erro ao gerar PDF:', error));
+
+            document.querySelectorAll('.btnImprimir').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var equipamentoId = $(this).closest('tr').find('button[data-equipamento-id]')
+                        .data('equipamento-id');
+
+                    var data = {
+                        id_equipamento: equipamentoId,
+                        id_problema: 2,
+                        marca: 'Marca do Equipamento',
+                        modelo: 'Modelo do Equipamento',
+                        num_serie: 'Número de Série'
+                    };
+
+                    fetch('{{ route('pdf.inservivel') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => response.blob())
+                        .then(blob => {
+                            var url = window.URL.createObjectURL(blob);
+                            window.open(url);
+                        })
+                        .catch(error => console.error('Erro ao gerar PDF:', error));
+                });
             });
+
 
         });
     </script>

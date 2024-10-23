@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Equipamentos;
 use App\Models\Problema;
 use App\Models\TiposEquipamentos;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class EquipamentoController extends Controller
@@ -25,28 +26,42 @@ class EquipamentoController extends Controller
         ]);
 
         if ($request->hasFile('imagem')) {
-            $image = $request->file('imagem');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-            $imagePath = 'images/' . $imageName;
+            try {
+                $image = $request->file('imagem');
+                $imageName = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images'), $imageName);
+                $imagePath = 'images/' . $imageName;
+            } catch (\Exception $e) {
+                return redirect()->back()->withErrors(['imagem' => 'Falha no upload da imagem. Tente novamente.']);
+            }
+        } else {
+            return redirect()->back()->withErrors(['imagem' => 'Imagem não foi enviada corretamente.']);
         }
 
-        $tipoEquipamento = TiposEquipamentos::create([
-
-            'desc' => $request->input('equipamento'),
-            'imagem' => $imagePath,
-
-        ]);
-
-        foreach ($request->input('problemas') as $problemaDesc) {
-            Problema::create([
-                'desc' => $problemaDesc,
-                'tipo_equipamento_id' => $tipoEquipamento->id,
+        try {
+            $tipoEquipamento = TiposEquipamentos::create([
+                'desc' => $request->input('equipamento'),
+                'imagem' => $imagePath,
             ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['equipamento' => 'Falha ao cadastrar o equipamento.']);
         }
 
+        try {
+            foreach ($request->input('problemas') as $problemaDesc) {
+                Problema::create([
+                    'desc' => $problemaDesc,
+                    'tipo_equipamento_id' => $tipoEquipamento->id,
+                ]);
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['problemas' => 'Falha ao cadastrar os problemas.']);
+        }
+
+        Toastr::success('Equipamento cadastrado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->route('create.equipamento')->with('success', 'Equipamento e problemas cadastrados com sucesso!');
     }
+
 
     public function index()
     {
@@ -93,7 +108,7 @@ class EquipamentoController extends Controller
                 'tipo_equipamento_id' => $tipoEquipamento->id,
             ]);
         }
-
+        Toastr::success('Equipamento atualizado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->route('lista.tipoequipamento')->with('success', 'Equipamento atualizado com sucesso!');
     }
 

@@ -107,12 +107,20 @@ class PdfController extends Controller
 
     public function pdfInservivel(Request $request)
     {
+        if (!$request->has('id_equipamento')) {
+            abort(404, 'Equipamento não encontrado.');
+        }
+
         $equipamento = Equipamentos::find($request->id_equipamento);
+        if (!$equipamento) {
+            abort(404, 'Equipamento não encontrado.');
+        }
+
         $protocolo = ProtocoloEntrada::find($equipamento->id_protocolo);
         $problema = Problema::find($request->id_problema);
 
-        $local = Local::find($protocolo->id_local);
-        $setor = SetorEscola::find($equipamento->id_setor_escolas);
+        $local = Local::find($protocolo->id_local ?? null);
+        $setor = SetorEscola::find($equipamento->id_setor_escolas ?? null);
 
         $tipoEquipamento = TiposEquipamentos::find($equipamento->id_tipos_equipamentos);
         $tipoNome = $tipoEquipamento ? $tipoEquipamento->desc : 'N/A';
@@ -133,6 +141,7 @@ class PdfController extends Controller
 
         return $pdf->stream('inservivel.pdf', ['Attachment' => false]);
     }
+
 
     }
 

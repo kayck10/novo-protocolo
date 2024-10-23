@@ -39,8 +39,8 @@
         .nicho {
             height: 195px;
             background: radial-gradient(circle, rgba(162, 165, 162, 0.5) 35%, #dad7d7 70%);
-            border-right: solid 4px #ada8a85b;
-            border-bottom: solid 4px #7270705b;
+            border-right: solid 3px #ada8a85b;
+            border-bottom: solid 3px #7270705b;
             position: relative;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2),
                 inset 0 -5px -5px rgba(0, 0, 0, 0.1);
