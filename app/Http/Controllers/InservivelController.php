@@ -6,9 +6,11 @@ use App\Models\Equipamentos;
 use App\Models\Inservivel;
 use App\Models\Problema;
 use App\Models\ProtocoloEntrada;
+use App\Models\TiposEquipamentos;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class InservivelController extends Controller
 {
@@ -16,27 +18,40 @@ class InservivelController extends Controller
     {
         $problemas = Problema::all();
         $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])
-                                    ->where('id_status', 6)
-                                    ->get();
+            ->where('id_status', 6)
+            ->get();
         $protocolos = ProtocoloEntrada::all();
         return view('inservivel.index', compact('equipamentos', 'protocolos', 'problemas'));
     }
 
-
-
     public function create()
     {
-        $problemas = Problema::all();
-        $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])->where('id_status', 5)->get();
+        $equipamentos = Equipamentos::with(['setorEscola', 'user', 'tiposEquipamentos', 'protocolo'])
+            ->where('id_status', 5)
+            ->get();
+
         $protocolos = ProtocoloEntrada::all();
-        return view('inservivel.create', compact('equipamentos', 'protocolos', 'problemas'));
+
+        return view('inservivel.create', compact('equipamentos', 'protocolos'));
     }
 
     public function store(Request $request)
     {
-        $laudosInserviveis = Inservivel::create($request->all());
-        return redirect()->back();
+        $retirada = $request->has('retirada') ? 1 : 0;
+
+        $equipamento = Equipamentos::find($request->id_equipamento);
+
+        $equipamento->retirada = $retirada;
+
+        $equipamento->marca = $request->input('marca');
+        $equipamento->modelo = $request->input('modelo');
+        $equipamento->num_serie = $request->input('num_serie');
+        $equipamento->save();
+
+        return redirect()->back()->with('success', 'Equipamento atualizado com sucesso!');
     }
+
+
 
     public function show($id)
     {
@@ -52,6 +67,7 @@ class InservivelController extends Controller
         $equipamento = Equipamentos::find($request->id_equipamento);
 
         $equipamento->id_status = 3;
+        $equipamento->retirada = 0;
         $equipamento->save();
 
         return response()->json(['message' => 'Equipamento devolvido com sucesso!'], 200);

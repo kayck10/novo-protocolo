@@ -56,6 +56,7 @@
                                             </tr>
 
                                             <!-- Modal Criar Laudo -->
+                                            <!-- Modal Criar Laudo -->
                                             <div class="modal fade" id="modalcriarlaudo{{ $equipamento->id }}"
                                                 tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                                                 <div class="modal-dialog">
@@ -74,8 +75,7 @@
                                                             </div>
 
                                                             <form id="form-laudo-{{ $equipamento->id }}"
-                                                                action="{{ route('gerar.pdf') }}"
-                                                                method="POST">
+                                                                action="{{ route('gerar.pdf') }}" method="POST">
                                                                 @csrf
                                                                 <input type="hidden" name="id_equipamento"
                                                                     value="{{ $equipamento->id }}">
@@ -87,7 +87,7 @@
                                                                         class="form-control" required>
                                                                         <option value="">Selecione um Problema
                                                                         </option>
-                                                                        @foreach ($problemas as $problema)
+                                                                        @foreach ($equipamento->tiposEquipamentos->problemas as $problema)
                                                                             <option value="{{ $problema->id }}">
                                                                                 {{ $problema->desc }}</option>
                                                                         @endforeach
@@ -96,7 +96,8 @@
 
                                                                 <div class="mb-3">
                                                                     <label><b>Teve retirada?</b></label>
-                                                                    <input id="retirada" name="retirada" type="checkbox">
+                                                                    <input id="retirada" name="retirada" type="checkbox"
+                                                                        value="1">
                                                                 </div>
 
                                                                 <div class="mb-3">
@@ -123,15 +124,15 @@
                                                                         <i class="bi bi-arrow-up"></i></button>
 
                                                                     <!-- Botão de Criar Laudo -->
-                                                                    <button type="submit" class="btn btn-primary">
-                                                                        Imprimir <i
-                                                                            class="bi bi-printer-fill"></i></button>
+                                                                    <button type="submit" class="btn btn-primary">Imprimir
+                                                                        <i class="bi bi-printer-fill"></i></button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+
 
 
                                             <!-- Modal Equipamento -->
@@ -155,7 +156,7 @@
                                                                 {{ $equipamento->tombamento }}</p>
                                                             <p><strong>Funcionário Responsável:</strong>
                                                                 {{ $equipamento->user->name }}</p>
-                                                            <p><strong>Problema:</strong> {{ $equipamento->d }}</p>
+                                                            <p><strong>Problema:</strong> {{ $equipamento->desc }}</p>
                                                             <p><strong>O que foi feito:</strong>
                                                                 {{ $equipamento->solucao }}</p>
                                                             <p><strong>Tipo:</strong>
@@ -186,74 +187,94 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-</script>
-<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
 
-<script>
-    let id;
+    <script>
+        let id;
 
-    $('.abrirModal').click(function() {
-        id = $(this).data('equipamento-id');
-    });
+        $('.abrirModal').click(function() {
+            id = $(this).data('equipamento-id');
+        });
 
-    $('#imprimir').click(async function() {
-        let campos = {
-            modelo: $('#modelo').val(),
-            marca: $('#marca').val(),
-            num_serie: $('#num_serie').val(),
-            retirada: $('#retirada').val(),
-            id_problema: $('#id_problema').val()
-        };
+        $('#imprimir').click(async function() {
+            let campos = {
+                modelo: $('#modelo').val(),
+                marca: $('#marca').val(),
+                num_serie: $('#num_serie').val(),
+                retirada: $('#retirada').val(),
+                id_problema: $('#id_problema').val()
+            };
 
-        let validador = true;
-        for (let key in campos) {
-            if (campos[key].trim() === '') {
-                validador = false;
-                break;
+            let validador = true;
+            for (let key in campos) {
+                if (campos[key].trim() === '') {
+                    validador = false;
+                    break;
+                }
             }
-        }
 
-        if (validador == true) {
-            $(`#modalcriarlaudo${id}`).modal('hide');
-            $(`#list-equipamento-${id}`).remove();
+            if (validador == true) {
+                $(`#modalcriarlaudo${id}`).modal('hide');
+                $(`#list-equipamento-${id}`).remove();
 
-            iziToast.success({
-                title: 'Excluído',
-                message: 'Registro excluído com sucesso!',
-            });
-        }
-    });
+                try {
+                    const response = await $.ajax({
+                        url: '/gerar-pdf',
+                        method: 'POST',
+                        data: campos,
+                        xhrFields: {
+                            responseType: 'blob'
+                        }
+                    });
 
-    $('[id^="devolver-btn-"]').click(function() {
-        var equipamentoId = $(this).attr('id').split('-').pop();
+                    const url = window.URL.createObjectURL(response);
+                    window.open(url);
 
-        $.ajax({
-            url: '{{ route("inservivel.devolver") }}',
-            type: 'POST',
-            data: {
-                _token: '{{ csrf_token() }}',
-                id_equipamento: equipamentoId
-            },
-            success: function(response) {
-                $('#modalcriarlaudo' + equipamentoId).modal('hide');
-
-                iziToast.success({
-                    title: 'Sucesso',
-                    message: 'Equipamento devolvido com sucesso!',
-                });
-
-                $('#list-equipamento-' + equipamentoId).remove();
-            },
-            error: function(xhr) {
-                iziToast.error({
-                    title: 'Erro',
-                    message: 'Erro ao devolver o equipamento. Tente novamente.',
-                });
+                    iziToast.success({
+                        title: 'Excluído',
+                        message: 'Registro excluído com sucesso!',
+                    });
+                } catch (error) {
+                    console.error('Erro ao gerar PDF:', error);
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Não foi possível gerar o PDF.',
+                    });
+                }
             }
         });
-    });
-</script>
 
+
+        $('[id^="devolver-btn-"]').click(function() {
+            var equipamentoId = $(this).attr('id').split('-').pop();
+
+            $.ajax({
+                url: '{{ route('inservivel.devolver') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id_equipamento: equipamentoId
+                },
+                success: function(response) {
+                    $('#modalcriarlaudo' + equipamentoId).modal('hide');
+
+                    iziToast.success({
+                        title: 'Sucesso',
+                        message: 'Equipamento devolvido com sucesso!',
+                    });
+
+                    $('#list-equipamento-' + equipamentoId).remove();
+                },
+                error: function(xhr) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Erro ao devolver o equipamento. Tente novamente.',
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

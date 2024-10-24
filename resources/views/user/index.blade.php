@@ -37,6 +37,10 @@
                                 <span class="mb-0">Consertos de Máquinas</span>
                                 <strong class="text-muted">{{ $user->consertos_maquinas_count }}</strong>
                             </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                            <a href="{{route('user.show', $user->id)}}">    <span class="mb-0">Ver mais </span>
+                                <strong class="text-muted">{{ $user->consertos_maquinas_count }}</strong></a>
+                            </li>
                         </ul>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>PROTOCOLO</title>
+    <title>Laudo Inservível</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,15 +11,16 @@
             width: 100%;
             text-align: center;
         }
+
         header {
             margin-right: 80px;
-        margin-bottom: 20px;
-    }
+            margin-bottom: 20px;
+        }
 
-    img {
-        height: 80px;
-        margin-bottom: 10px;
-    }
+        img {
+            height: 80px;
+            margin-bottom: 10px;
+        }
 
         h4 {
             margin-left: 80px;
@@ -59,7 +60,7 @@
             resize: none;
             box-sizing: border-box;
             margin-bottom: 10px;
-            height: 50px;
+            height: 60px;
         }
 
         .signature-table {
@@ -145,19 +146,33 @@
     </table>
 
     <div class="section-title">Observações</div>
-     <textarea readonly>O Scanner Patrimonial nº {{$num_patrimonio}} apresenta defeito de {{--{{$problemaInservivel}}. --}} Equipamento fora da garantia e sem contrato de manutenção. Uma ou mais peças foram removidas do equipamento para reserva.</textarea>
+    @if ($equipamento->retirada == 1)
+        <textarea readonly>
+        O Scanner Patrimonial nº {{ $num_patrimonio }} apresenta defeito de {{ $problema->desc ?? 'Descrição não disponível' }}.
+        Equipamento fora da garantia e sem contrato de manutenção.
+        Uma ou mais peças foram removidas do equipamento para reserva.
+    </textarea>
+    @else
+        <textarea readonly>
+        O Scanner Patrimonial nº {{ $num_patrimonio }} apresenta defeito de {{ $problema->desc ?? 'Descrição não disponível' }}.
+        Equipamento fora da garantia e sem contrato de manutenção.
+    </textarea>
+    @endif
+
+
+
 
     <table class="signature-table">
         <tr>
             <td>
                 <div class="signature-line"></div>
                 <p>Coordenador de TI</p>
-                <p>Data</p>
+                <p>Data __/__/___</p>
             </td>
             <td>
                 <div class="signature-line"></div>
                 <p>Técnico Responsável</p>
-                <p>Data</p>
+                <p>Data __/__/___</p>
             </td>
         </tr>
     </table>

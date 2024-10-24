@@ -9,4 +9,9 @@ class Problema extends Model
 {
     use HasFactory;
     protected $fillable = ['desc', 'tipo_equipamento_id'];
+
+    public function tipoEquipamento()
+    {
+        return $this->belongsTo(TiposEquipamentos::class, 'tipo_equipamento_id');
+    }
 }

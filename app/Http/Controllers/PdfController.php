@@ -6,7 +6,6 @@ use App\Models\Equipamentos;
 use App\Models\Problema;
 use App\Models\ProtocoloEntrada;
 use App\Models\Local;
-use App\Models\Setor;
 use App\Models\SetorEscola;
 use App\Models\TiposEquipamentos;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
@@ -19,26 +18,25 @@ class PdfController extends Controller
     {
         $equipamento = Equipamentos::find($request->id_equipamento);
 
+        if (!$equipamento) {
+            return response()->json(['error' => 'Equipamento não encontrado'], 404);
+        }
+
         if ($equipamento->id_status == 5) {
             $equipamento->modelo = $request->modelo;
             $equipamento->marca = $request->marca;
             $equipamento->num_serie = $request->num_serie;
             $equipamento->id_status = 6;
+            $equipamento->retirada = $request->has('retirada') ? 1 : 0;
             $equipamento->save();
         }
 
-        if (!$equipamento) {
-            return response()->json(['error' => 'Equipamento não encontrado'], 404);
-        }
-
         $protocolo = ProtocoloEntrada::find($equipamento->id_protocolo);
-
         if (!$protocolo) {
             return response()->json(['error' => 'Protocolo não encontrado'], 404);
         }
 
         $problema = Problema::find($request->id_problema);
-
         $local = Local::find($protocolo->id_local);
         $setor = SetorEscola::find($equipamento->id_setor_escolas);
 
@@ -55,6 +53,8 @@ class PdfController extends Controller
             'marca' => $request->marca,
             'modelo' => $request->modelo,
             'num_serie' => $request->num_serie,
+            'equipamento' => $equipamento,
+
         ];
 
         $pdf = FacadePdf::loadView('inservivel.pdf', $data);
