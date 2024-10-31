@@ -70,7 +70,7 @@
 
 
             <li><a href="{{ route('local.create') }}" aria-expanded="false">
-                    <i class="fa fa-building"></i>
+                    <i class="bi bi-bank"></i>
                     <span class="nav-text">Escolas</span>
                 </a>
             </li>

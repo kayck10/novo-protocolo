@@ -142,6 +142,52 @@ class PdfController extends Controller
         return $pdf->stream('inservivel.pdf', ['Attachment' => false]);
     }
 
+    public function indexProtocolo(Request $request)
+    {
+        $equipamentoId = $request->input('id_equipamento');
+        $equipamentos = Equipamentos::with('tiposEquipamentos', 'protocolo.local', 'setorEscola')->where('id_protocolo', $equipamentoId)->get();
 
+
+
+        if (!$equipamentos) {
+            return response()->json(['error' => 'Equipamento não encontrado'], 404);
+        }
+
+        $local = $equipamentos->first()->protocolo->local->desc ?? 'Local não definido';
+
+        $arrayEquipamentos = [];
+
+        foreach($equipamentos as $equipamento){
+            $tombamento = $equipamento->tombamento ?? 'Tombamento não definido';
+            $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
+            $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
+            $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
+            $problemaRelatado = $equipamento->solucao ?? 'Problema não relatado';
+
+            $arrayEquipamentos[] = [
+                'tombamento'        => $tombamento,
+                'setor'             => $setor,
+                'tipoEquipamento'   => $tipoEquipamento,
+                'acessorios'        => $acessorios,
+                'problemaRelatado'  => $problemaRelatado
+            ];
+
+        }
+
+        $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
+        $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
+
+
+        $data = [
+            'local' => $local,
+            'dataEquipamentos' => $arrayEquipamentos,
+            'dataEntrada' => $dataEntrada,
+            'horaEntrada' => $horaEntrada,
+            'tombamento'  => $tombamento,
+        ];
+
+
+        $pdf = FacadePdf::loadView('protocolo-entrada.index-pdf', $data);
+        return $pdf->stream('protocolo-entrada.index-pdf');
     }
-
+}

@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/destroy/{id}', [ProtocoloEntradaController::class, 'destroy'])->name('protocolo.destroy');
         Route::delete('/equipamento/destroy/{id}', [ProtocoloEntradaController::class, 'destroyEquipamento'])->name('equipamento.destroy');
         Route::post('/gerar-pdf-segundo', [PdfController::class, 'gerarprotocoloPDF'])->name('gerar.protocolo.pdf');
+        Route::post('/gerar-pdf', [PdfController::class, 'indexProtocolo'])->name('indexProtocolo.pdf');
+
     });
 
     Route::prefix('/equipamento')->group(function () {
@@ -124,6 +126,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
         Route::put('/update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::post('/reset-password/{id}', [UserController::class, 'resetPassword'])->name('user.reset.password');
         Route::put('/atualizar/{id}', [UserController::class, 'atualizarUsuario'])->name('user.atualizar');
     });
     Route::prefix('/local')->group(function () {

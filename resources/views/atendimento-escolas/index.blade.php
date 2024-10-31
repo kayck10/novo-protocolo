@@ -165,7 +165,7 @@
 
 
 
-
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
             let i = 0;
             const novoProblema = () => {
@@ -316,92 +316,83 @@
 
 
 
-            function finalizeEvent() {
-                let atendimentoId = $('#modal-event-click-id').val();
-                if (!atendimentoId) {
-                    iziToast.error({
-                        title: 'Erro',
-                        message: 'ID do atendimento não encontrado!',
-                    });
-                    return;
-                }
+             function finalizeEvent() {
+        let atendimentoId = $('#modal-event-click-id').val();
+        if (!atendimentoId) {
+            iziToast.error({
+                title: 'Erro',
+                message: 'ID do atendimento não encontrado!',
+            });
+            return;
+        }
 
-                let userId = $('#select-tecnicos').val();
-                let solucao = $('#solucao').val();
+        let userId = $('#select-tecnicos').val();
+        let solucao = $('#solucao').val();
 
-                console.log("Finalizando evento com ID:", atendimentoId);
-
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('atendimento.finalize') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        'id': atendimentoId,
-                        'id_user': userId,
-                        'solucao': solucao
-                    },
-                    success: function(response) {
-                        iziToast.success({
-                            title: 'Finalizado',
-                            message: 'Atendimento finalizado com sucesso!',
-                        });
-
-
-                        $('#event-modal-click').modal('hide');
-                        location.reload();
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        iziToast.error({
-                            title: 'Erro',
-                            message: 'Ocorreu um erro ao tentar finalizar o atendimento. Verifique os dados e tente novamente.',
-                        });
-                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                    }
+        $.ajax({
+            type: "POST",
+            url: "{{ route('atendimento.finalize') }}",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'id': atendimentoId,
+                'id_user': userId,
+                'solucao': solucao
+            },
+            success: function(response) {
+                iziToast.success({
+                    title: 'Finalizado',
+                    message: 'Atendimento finalizado com sucesso!',
                 });
-            }
-
-            function deleteEvent() {
-                let atendimentoId = $('#modal-event-click-id').val();
-                if (!atendimentoId) {
-                    iziToast.error({
-                        title: 'Erro',
-                        message: 'ID do atendimento não encontrado!',
-                    });
-                    return;
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('atendimento.delete') }}",
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data: {
-                        'id': atendimentoId
-                    },
-                    success: function(response) {
-                        iziToast.error({
-                            title: 'Excluído',
-                            message: 'Atendimento excluído com sucesso!',
-                        });
-
-                        let event = calendar.getEventById(atendimentoId);
-                        if (event) {
-                            event.remove(); // Remove o evento do calendário
-                        }
-
-                        $('#event-modal-click').modal('hide');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        iziToast.error({
-                            title: 'Erro',
-                            message: 'Ocorreu um erro ao tentar excluir o atendimento. Tente novamente.',
-                        });
-                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
-                    }
+                $('#event-modal-click').modal('hide');
+                location.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                iziToast.error({
+                    title: 'Erro',
+                    message: 'Ocorreu um erro ao tentar finalizar o atendimento. Verifique os dados e tente novamente.',
                 });
+                console.log("Erro na requisição AJAX:", textStatus, errorThrown);
             }
+        });
+    }
+
+    function deleteEvent() {
+        let atendimentoId = $('#modal-event-click-id').val();
+        if (!atendimentoId) {
+            iziToast.error({
+                title: 'Erro',
+                message: 'ID do atendimento não encontrado!',
+            });
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "{{ route('atendimento.delete') }}", // certifique-se de que esta rota está correta
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                'id': atendimentoId
+            },
+            success: function(response) {
+                iziToast.success({
+                    title: 'Excluído',
+                    message: 'Atendimento excluído com sucesso!',
+                });
+                $('#event-modal-click').modal('hide');
+                location.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                iziToast.error({
+                    title: 'Erro',
+                    message: 'Não foi possível excluir o atendimento. Tente novamente.',
+                });
+                console.log("Erro na exclusão AJAX:", textStatus, errorThrown);
+            }
+        });
+    }
         </script>
     @endsection

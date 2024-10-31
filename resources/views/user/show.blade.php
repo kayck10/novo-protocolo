@@ -53,7 +53,7 @@
                                                     <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}" readonly />
                                                 </div>
                                             </div>
-                                           
+
                                         </div>
 
                                         <div class="row mb-4">
@@ -63,6 +63,15 @@
                                                     <option value="{{$user->id_funcoes}}">{{$user->funcao->desc}}</option>
                                                     @foreach ($funcoes as $funcao)
                                                         <option value="{{ $funcao->id }}">{{ $funcao->desc }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <label class="form-label">Tipo de Usuário:</label>
+                                                <select name="id_tipos_usuarios" class="form-control">
+                                                    <option value="{{$user->id_tipos}}">{{$user->tipoUsuario->desc}}</option>
+                                                    @foreach ($tipos as $tipo)
+                                                        <option value="{{ $tipo->id }}">{{ $tipo->desc }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -77,9 +86,20 @@
                                             </div>
                                         </div>
 
-                                        <button type="button" class="btn btn-primary mt-3" id="edit-button">Editar <i class="bi bi-pencil-square"></i></button>
-                                        <button type="submit" class="btn btn-warning mt-3" id="reset-button">Resetar Senha <i class="bi bi-arrow-clockwise"></i></button>
-                                        <button type="submit" class="btn btn-success mt-3" id="update-button" style="display: none;">Atualizar <i class="bi bi-check2-all"></i></button>
+                                        <button type="button" class="btn btn-primary mt-3" id="edit-button">
+                                            Editar <i class="bi bi-pencil-square"></i>
+                                        </button>
+
+                                        <button type="submit" class="btn btn-success mt-3" id="update-button" style="display: none;" onclick="document.getElementById('user-form').submit();">
+                                            Atualizar <i class="bi bi-check2-all"></i>
+                                        </button>
+
+                                        <form action="{{ route('user.reset.password', $user->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-warning mt-3" id="reset-button">
+                                                Resetar Senha <i class="bi bi-arrow-clockwise"></i>
+                                            </button>
+                                        </form>
                                     </form>
                                 </div>
                             </div>
@@ -93,22 +113,22 @@
     @section('scripts')
 
     <script>
-        $('#edit-button').on('click', function() {
-            var inputs = $('#user-form input');
-            var selects = $('.selects');
+   $('#edit-button').on('click', function() {
+    var inputs = $('#user-form input');
+    var selects = $('.selects');
 
-            inputs.each(function() {
-                $(this).removeAttr('readonly');
-            });
+    inputs.each(function() {
+        $(this).removeAttr('readonly');
+    });
 
-            selects.each(function() {
-                $(this).removeAttr('disabled');
-            });
+    selects.each(function() {
+        $(this).removeAttr('disabled');
+    });
 
-            $('#reset-button').hide();
-            $('#update-button').show();
-            $('#edit-button').hide();
-        });
+    $('#update-button').show();
+    $('#edit-button').hide();
+});
+
 
         function updateSelectOptions() {
             var selectedValues = [];
@@ -131,7 +151,6 @@
 
         $('.selects').on('change', updateSelectOptions);
 
-        // Trigger change event to initialize the options hiding correctly on page load
         $(document).ready(function() {
             updateSelectOptions();
         });

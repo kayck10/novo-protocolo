@@ -86,16 +86,22 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $user = User::findOrFail($id);
+
         $user->name = $request->input('name');
         $user->usuario = $request->input('usuario');
         $user->email = $request->input('email');
-        $user->id_tipos_usuarios = $request->input('id_tipos_usuarios');
-        $user->id_funcoes = $request->input('id_funcoes');
-        $user->id_situacao = $request->input('id_situacao');
+
+        if ($request->has('id_funcoes')) {
+            $user->id_funcoes = $request->input('id_funcoes');
+        }
+
+        if ($request->has('id_situacao')) {
+            $user->id_situacao = $request->input('id_situacao');
+        }
 
         $user->save();
+
         Toastr::success('Usuário atualizado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->back();
     }
@@ -134,4 +140,20 @@ class UserController extends Controller
 
         return redirect()->route('user.edit', $user->id)->with('success', 'Usuário atualizado com sucesso!');
     }
+
+    public function resetPassword($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'Usuário não encontrado.');
+        }
+
+        $user->update([
+            'password' => '$2a$12$n7fLncjyhEg.pdchlD11wOtOCiohWohA8UZmjKhoUuhUCyWEOBrey'
+        ]);
+
+        return redirect()->back()->with('success', 'Senha resetada com sucesso.');
+    }
+
 }
