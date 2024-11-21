@@ -39,11 +39,11 @@
         </div>
 
         <div class="formulario">
-            <form action="{{route('login.store')}}" method="POST" class="p-3 border border-bottom-0">
+            <form action="{{ route('login.store') }}" method="POST" class="p-3 border border-bottom-0">
                 @csrf
                 <p class="text-center login-box-msg">Entre para iniciar uma nova sessão</p>
                 <div class="mb-3">
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="E-mail"  aria-describedby="emailHelp">
+                    <input type="text" name="login" class="form-control" placeholder="E-mail ou Nome de Usuário" aria-describedby="loginHelp">
                 </div>
                 <div class="mb-3">
                     <input type="password" name="password" class="form-control" placeholder="Senha" id="exampleInputPassword1">

@@ -56,7 +56,6 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/equipamento/destroy/{id}', [ProtocoloEntradaController::class, 'destroyEquipamento'])->name('equipamento.destroy');
         Route::post('/gerar-pdf-segundo', [PdfController::class, 'gerarprotocoloPDF'])->name('gerar.protocolo.pdf');
         Route::post('/gerar-pdf', [PdfController::class, 'indexProtocolo'])->name('indexProtocolo.pdf');
-
     });
 
     Route::prefix('/equipamento')->group(function () {
@@ -67,10 +66,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/edit', [EquipamentoController::class, 'edit'])->name('equipamentos.edit');
         Route::put('/{id}', [EquipamentoController::class, 'update'])->name('equipamentos.update');
         Route::delete('/{id}', [EquipamentoController::class, 'destroy'])->name('equipamentos.delete');
-
-
-
-
     });
 
     Route::prefix('/atendimento-interno')->group(function () {
@@ -85,8 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/estante')->group(function () {
         Route::get('/index', [EstanteController::class, 'index'])->name('estante.index');
         Route::get('/equipamentos', [EstanteController::class, 'status'])->name('estante.equipamentos');
-        Route::get('/pesquisa', [EstanteController::class, 'pesquisa']);
-        Route::post('/filtros', [EstanteController::class, 'filtros']);
+        Route::get('/pesquisar-tombamento', [EstanteController::class, 'pesquisarPorTombamento'])->name('estante.pesquisarTombamento');
         Route::get('/show/{id}', [EstanteController::class, 'show']);
         Route::get('/status', [EstanteController::class, 'getStatus'])->name('estante.status');
         Route::get('/status/modal', [EstanteController::class, 'getStatusModal'])->name('estante.status.modal');
@@ -98,7 +92,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
         Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
         Route::get('/escolas', [EstanteController::class, 'equipamento'])->name('equipamento');
-
     });
 
 

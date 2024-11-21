@@ -1,5 +1,5 @@
 <!-- resources/views/user/edit.blade.php -->
-@extends('layout.main') <!-- Supondo que você tenha um layout principal -->
+@extends('layout.main')
 
 @section('content')
 <div class="container">
@@ -7,8 +7,7 @@
 
     <form action="{{ route('user.atualizar', $user->id) }}" method="POST">
         @csrf
-        @method('PUT') <!-- Método para atualização -->
-
+        @method('PUT')
         <div class="form-group">
             <label for="name">Nome:</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" required>
@@ -37,7 +36,14 @@
         <div class="form-group">
             <label for="password">Senha:</label>
             <input type="password" class="form-control" id="password" name="password">
-            <small>Deixe em branco para manter a senha atual.</small>
+            <small>
+                Deixe em branco para manter a senha atual. A nova senha deve ter:
+                <ul>
+                    <li>Entre 6 e 15 caracteres</li>
+                    <li>Ao menos uma letra maiúscula</li>
+                    <li>Ao menos um dos seguintes caracteres especiais: $ * & @ #</li>
+                </ul>
+            </small>
         </div>
 
         <button type="submit" class="btn btn-primary">Atualizar</button>

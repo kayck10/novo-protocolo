@@ -23,6 +23,7 @@ class AtendimentoEscolasController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $request->validate([
             'local' => 'required|exists:local,id',
             'problemas' => 'required|array',
@@ -53,18 +54,18 @@ class AtendimentoEscolasController extends Controller
             }
         }
 
-        $data = DateTime::createFromFormat('j F, Y', $data_entrada);
+        $data = DateTime::createFromFormat('Y-m-d H:i', $data_entrada);
 
         if ($data === false) {
             return response()->json(["error" => true, "message" => "Informe uma data válida!"], 400);
         }
 
-        $data_formatada = $data->format('y/m/d');
+        // $data_formatada = $data->format('y/m/d');
 
         $atendimento = Atendimentos::create([
             'id_local' => $request->input('local'),
             'externo' => 1,
-            'data' => $data_formatada,
+            'data' => $data,
             'prioridade' => $request->prioridade
         ]);
 

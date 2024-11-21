@@ -1,8 +1,8 @@
     @extends('layout.main')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 
     @section('content')
-
         <div class="row">
             <div class="col-lg-8 offset-1">
                 <div class="card">
@@ -68,9 +68,10 @@
                         <!-- Data -->
                         <div class="form-group mb-3">
                             <label for="data_entrada" class="form-label"><strong>Data:</strong></label>
-                            <input type="text" name="datepicker" id="data_entrada"
-                                class="form-control datepicker-default" placeholder="Selecione a data">
+                            <input type="text" name="datepicker" id="data_entrada" class="form-control"
+                                placeholder="Selecione a data">
                         </div>
+
 
                         <!-- Problema -->
                         <div class="form-group mb-3">
@@ -164,25 +165,29 @@
         </div>
 
 
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+        </script>
         <script>
             let i = 0;
             const novoProblema = () => {
                 i++;
                 let data = $('#desc_problema').val();
                 $('#to-do-list').append(`
-            <div class="input-group mb-2" id="div-desc-prob-${i}">
-                <input type="text" class="form-control" id="desc_problema_${i}" value="${data}" disabled>
-                <span class="btn btn-danger btn-sm" onclick="excluirProblema(${i})"><i class="bi bi-trash"></i></span>
-            </div>
-        `);
+                <div class="input-group mb-2" id="div-desc-prob-${i}">
+                    <input type="text" class="form-control" id="desc_problema_${i}" value="${data}" disabled>
+                    <span class="btn btn-danger btn-sm" onclick="excluirProblema(${i})"><i class="bi bi-trash"></i></span>
+                </div>
+            `);
                 $('#desc_problema').val('');
-            }
+            };
 
             const excluirProblema = (idDiv) => {
                 $(`#div-desc-prob-${idDiv}`).remove();
-            }
+            };
 
             function changeEvent() {
                 let local = $('#id_local').val();
@@ -225,9 +230,14 @@
                 });
             }
 
-
             document.addEventListener('DOMContentLoaded', function() {
                 var calendarEl = document.getElementById('calendar');
+
+                flatpickr("#data_entrada", {
+                    dateFormat: "Y-m-d H:i",
+                    locale: flatpickr.l10ns.pt, // Aplica o idioma carregado
+                    enableTime: true,
+                });
 
                 var events = {!! json_encode(
                     $eventos->map(function ($evento) {
@@ -254,14 +264,11 @@
                     initialView: 'dayGridMonth',
                     locale: 'pt-br',
                     events: events.map(event => {
-
-                        console.log(event.id_status)
-                        console.log(event.prioridade)
+                        // console.log(event);
                         if (event.id_status === 3) {
                             event.backgroundColor = '#28a745';
                             event.borderColor = '#28a745';
-                        }
-                         else if (event.id_status === 1 && event.prioridade == 1) {
+                        } else if (event.id_status === 1 && event.prioridade == 1) {
                             event.backgroundColor = '#a8323e';
                             event.borderColor = '#a8323e';
                         }
@@ -292,10 +299,10 @@
 
                         problemas.forEach(function(problema, index) {
                             problemasContainer.append(`
-                    <div class="problem-item">
-                        <strong>Problema ${index + 1}:</strong> ${problema.desc_problema}
-                    </div>
-                `);
+                            <div class="problem-item">
+                                <strong>Problema ${index + 1}:</strong> ${problema.desc_problema}
+                            </div>
+                        `);
                         });
 
                         if (info.event.extendedProps.id_status == 1) {
@@ -314,85 +321,83 @@
                 calendar.render();
             });
 
+            function finalizeEvent() {
+                let atendimentoId = $('#modal-event-click-id').val();
+                if (!atendimentoId) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'ID do atendimento não encontrado!',
+                    });
+                    return;
+                }
 
+                let userId = $('#select-tecnicos').val();
+                let solucao = $('#solucao').val();
 
-             function finalizeEvent() {
-        let atendimentoId = $('#modal-event-click-id').val();
-        if (!atendimentoId) {
-            iziToast.error({
-                title: 'Erro',
-                message: 'ID do atendimento não encontrado!',
-            });
-            return;
-        }
-
-        let userId = $('#select-tecnicos').val();
-        let solucao = $('#solucao').val();
-
-        $.ajax({
-            type: "POST",
-            url: "{{ route('atendimento.finalize') }}",
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'id': atendimentoId,
-                'id_user': userId,
-                'solucao': solucao
-            },
-            success: function(response) {
-                iziToast.success({
-                    title: 'Finalizado',
-                    message: 'Atendimento finalizado com sucesso!',
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.finalize') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'id': atendimentoId,
+                        'id_user': userId,
+                        'solucao': solucao
+                    },
+                    success: function(response) {
+                        iziToast.success({
+                            title: 'Finalizado',
+                            message: 'Atendimento finalizado com sucesso!',
+                        });
+                        $('#event-modal-click').modal('hide');
+                        location.reload();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Ocorreu um erro ao tentar finalizar o atendimento. Verifique os dados e tente novamente.',
+                        });
+                        console.log("Erro na requisição AJAX:", textStatus, errorThrown);
+                    }
                 });
-                $('#event-modal-click').modal('hide');
-                location.reload();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                iziToast.error({
-                    title: 'Erro',
-                    message: 'Ocorreu um erro ao tentar finalizar o atendimento. Verifique os dados e tente novamente.',
-                });
-                console.log("Erro na requisição AJAX:", textStatus, errorThrown);
             }
-        });
-    }
 
-    function deleteEvent() {
-        let atendimentoId = $('#modal-event-click-id').val();
-        if (!atendimentoId) {
-            iziToast.error({
-                title: 'Erro',
-                message: 'ID do atendimento não encontrado!',
-            });
-            return;
-        }
+            function deleteEvent() {
+                let atendimentoId = $('#modal-event-click-id').val();
+                if (!atendimentoId) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'ID do atendimento não encontrado!',
+                    });
+                    return;
+                }
 
-        $.ajax({
-            type: "POST",
-            url: "{{ route('atendimento.delete') }}", // certifique-se de que esta rota está correta
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'id': atendimentoId
-            },
-            success: function(response) {
-                iziToast.success({
-                    title: 'Excluído',
-                    message: 'Atendimento excluído com sucesso!',
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('atendimento.delete') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        'id': atendimentoId
+                    },
+                    success: function(response) {
+                        iziToast.success({
+                            title: 'Excluído',
+                            message: 'Atendimento excluído com sucesso!',
+                        });
+                        $('#event-modal-click').modal('hide');
+                        location.reload();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Não foi possível excluir o atendimento. Tente novamente.',
+                        });
+                        console.log("Erro na exclusão AJAX:", textStatus, errorThrown);
+                    }
                 });
-                $('#event-modal-click').modal('hide');
-                location.reload();
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                iziToast.error({
-                    title: 'Erro',
-                    message: 'Não foi possível excluir o atendimento. Tente novamente.',
-                });
-                console.log("Erro na exclusão AJAX:", textStatus, errorThrown);
             }
-        });
-    }
         </script>
     @endsection

@@ -1,4 +1,4 @@
-<div class="row estanDeEquipamentos" style="margin-right: 0 !important">
+<div class="row estanDeEquipamentos"  style="margin-right: 0 !important">
 @foreach ($equipamentos as $index => $equipamento)
     @if ($index % 4 == 0)
     @endif

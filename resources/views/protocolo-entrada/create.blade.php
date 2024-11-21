@@ -42,9 +42,10 @@
                             <button style=" display:none;" type="button" class="btn btn-primary buttons"
                                 data-bs-toggle="modal" data-bs-target="#exampleModal">Adicionar Equipamento <i
                                     class="bi bi-plus"></i> </button>
-                                    <button id="imprimirButton" style="display:none;" type="button" class="btn btn-primary buttons">
-                                        Imprimir <i class="bi bi-printer-fill"></i>
-                                    </button>
+                            <button id="imprimirButton" style="display:none;" type="button"
+                                class="btn btn-primary buttons">
+                                Imprimir <i class="bi bi-printer-fill"></i>
+                            </button>
 
                             <button id="btnCadastrar" type="button" class="btn btn-primary">Cadastrar <i
                                     class="bi bi-check color-white"></i></button>
@@ -112,7 +113,8 @@
                                     <input type="hidden" name="prioridade" value="0">
                                     <div class="form-check">
                                         <label class="form-check-label" for="prioridade">Prioridade?</label>
-                                        <input class="form-check-input mx-2" type="checkbox" id="prioridade" name="prioridade" value="1">
+                                        <input class="form-check-input mx-2" type="checkbox" id="prioridade"
+                                            name="prioridade" value="1">
                                     </div>
 
                                     <div class="form-group">
@@ -140,48 +142,89 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-   <script>
-    $(document).ready(function() {
-        // Inicialmente desabilita o botão imprimir
-        $('#imprimirButton').prop('disabled', true);
-
-        $('#btnCadastrar').on('click', function() {
-            cadastrarProtocolo();
-        });
-
-        $("#form-protocolo").on("submit", function(e) {
-            e.preventDefault();
-
-            let equipamentos = $('#id_tipos_equipamentos').val();
-            let id_protocolo = $('#id_protocolo').val();
-            let tombamento = $('#tombamento').val();
-            let setor = $('#id_setor_escolas').val();
-            let desc = $('#desc').val();
-            let prioridade = $('#prioridade').is(':checked') ? 1 : 0;
-            let descricao_acessorio = $('#descricao_acessorio').val();
-
-            let data = {
-                equipamentos: equipamentos,
-                id_protocolo: id_protocolo,
-                tombamento: tombamento,
-                setor: setor,
-                desc: desc,
-                prioridade: prioridade,
-                descricao_acessorio: descricao_acessorio
-            };
-
-            let settings = {
-                url: '{{ route('store.equipamento') }}',
+    <script>
+        let protocoloId;
+        const imprimirProtocolo = (protocoloId) => {
+            $.ajax({
+                url: "{{ route('indexProtocolo.pdf') }}",
                 method: 'POST',
-                data: data,
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            };
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id_protocolo: protocoloId
+                },
+                success: function(response) {
+                    // Cria o blob a partir do base64 recebido
+                    const byteCharacters = atob(response.pdf); // Converte base64 para bytes
+                    const byteArrays = [];
 
-            $.ajax(settings).done(function(response) {
-                // Atualiza a tabela com o novo equipamento
-                let dados = `
+                    for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
+                        const slice = byteCharacters.slice(offset, offset + 1024);
+                        const byteNumbers = new Array(slice.length);
+
+                        for (let i = 0; i < slice.length; i++) {
+                            byteNumbers[i] = slice.charCodeAt(i);
+                        }
+                        const byteArray = new Uint8Array(byteNumbers);
+                        byteArrays.push(byteArray);
+                    }
+                    const blob = new Blob(byteArrays, {
+                        type: 'application/pdf'
+                    });
+                    // Cria um link para abrir o PDF em uma nova aba
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.target = '_blank';
+                    link.click();
+                },
+                error: function(error) {
+
+                    console.error('Erro:', error);
+                }
+            });
+        };
+
+
+        $(document).ready(function() {
+            // Inicialmente desabilita o botão imprimir
+            $('#imprimirButton').prop('disabled', true);
+
+            $('#btnCadastrar').on('click', function() {
+                cadastrarProtocolo();
+            });
+
+            $("#form-protocolo").on("submit", function(e) {
+                e.preventDefault();
+
+                let equipamentos = $('#id_tipos_equipamentos').val();
+                let id_protocolo = $('#id_protocolo').val();
+                let tombamento = $('#tombamento').val();
+                let setor = $('#id_setor_escolas').val();
+                let desc = $('#desc').val();
+                let prioridade = $('#prioridade').is(':checked') ? 1 : 0;
+                let descricao_acessorio = $('#descricao_acessorio').val();
+
+                let data = {
+                    equipamentos: equipamentos,
+                    id_protocolo: id_protocolo,
+                    tombamento: tombamento,
+                    setor: setor,
+                    desc: desc,
+                    prioridade: prioridade,
+                    descricao_acessorio: descricao_acessorio
+                };
+
+                let settings = {
+                    url: '{{ route('store.equipamento') }}',
+                    method: 'POST',
+                    data: data,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                };
+
+                $.ajax(settings).done(function(response) {
+                    // Atualiza a tabela com o novo equipamento
+                    let dados = `
                     <tr>
                         <td>${response.tombamento}</td>
                         <td>${response.desc}</td>
@@ -189,113 +232,99 @@
                     </tr>
                 `;
 
-                $('#dadosTbody').append(dados);
-                $('#tabela-equipamentos-div').show();
-                $("#exampleModal").modal('hide');
+                    $('#dadosTbody').append(dados);
+                    $('#tabela-equipamentos-div').show();
+                    $("#exampleModal").modal('hide');
 
-                // Habilita o botão de imprimir após o cadastro
-                $('#imprimirButton').prop('disabled', false);
+                    // Habilita o botão de imprimir após o cadastro
+                    $('#imprimirButton').prop('disabled', false);
 
-                iziToast.success({
-                    title: 'Sucesso',
-                    message: 'Equipamento cadastrado com sucesso!',
+                    iziToast.success({
+                        title: 'Sucesso',
+                        message: 'Equipamento cadastrado com sucesso!',
+                    });
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Ocorreu um erro ao cadastrar o equipamento.',
+                    });
                 });
-            }).fail(function(jqXHR, textStatus, errorThrown) {
-                iziToast.error({
-                    title: 'Erro',
-                    message: 'Ocorreu um erro ao cadastrar o equipamento.',
-                });
+            });
+
+            $('#imprimirButton').on('click', function() {
+                imprimirProtocolo(protocoloId)
             });
         });
 
-        $('#imprimirButton').on('click', function() {
+
+
+
+        function deleteEquipamento(id) {
+            if (confirm('Tem certeza que deseja excluir este equipamento?')) {
+                $.ajax({
+                    url: `/protocolo-entrada/equipamento/destroy/${id}`,
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.message === 'Equipamento excluído com sucesso!') {
+                            $(`#equipamento-${id}`).remove();
+                            iziToast.success({
+                                title: 'Sucesso',
+                                message: response.message,
+                            });
+                        } else {
+                            iziToast.error({
+                                title: 'Erro',
+                                message: 'Erro ao excluir equipamento.',
+                            });
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        iziToast.error({
+                            title: 'Erro',
+                            message: 'Ocorreu um erro ao excluir o equipamento.',
+                        });
+                    }
+                });
+            }
+        }
+
+        function cadastrarProtocolo() {
+            $('#btnCadastrar').hide();
+
+            let local = $('#local').val();
+            let data = $('#data_entrada').val();
             $.ajax({
-                url: "{{ route('gerar.protocolo.pdf') }}",
                 type: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}'
-                },
-                xhrFields: {
-                    responseType: 'blob'
-                },
-                success: function(response) {
-                    var blob = new Blob([response], { type: 'application/pdf' });
-                    var url = window.URL.createObjectURL(blob);
-                    window.open(url);
-                },
-                error: function(xhr) {
-                    console.error(xhr.responseText);
-                }
-            });
-        });
-    });
-
-    function deleteEquipamento(id) {
-        if (confirm('Tem certeza que deseja excluir este equipamento?')) {
-            $.ajax({
-                url: `/protocolo-entrada/equipamento/destroy/${id}`,
-                method: 'DELETE',
+                url: '{{ route('protocolo.store') }}',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
-                    if (response.message === 'Equipamento excluído com sucesso!') {
-                        $(`#equipamento-${id}`).remove();
-                        iziToast.success({
-                            title: 'Sucesso',
-                            message: response.message,
-                        });
-                    } else {
-                        iziToast.error({
-                            title: 'Erro',
-                            message: 'Erro ao excluir equipamento.',
-                        });
-                    }
+                data: {
+                    'local': local,
+                    'data_entrada': data,
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                success: function(response) {
+                    protocoloId = response;
+                    iziToast.success({
+                        title: 'Cadastrado',
+                        message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
+                    });
+                    $('#id_protocolo').val(response);
+                    $('#btnCadastrar').hide();
+                    $('.buttons').show();
+                }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                if (jqXHR.status == 400) {
                     iziToast.error({
                         title: 'Erro',
-                        message: 'Ocorreu um erro ao excluir o equipamento.',
+                        message: jqXHR.responseJSON.message,
                     });
                 }
+                $('#btnCadastrar').show();
             });
         }
-    }
-
-    function cadastrarProtocolo() {
-        $('#btnCadastrar').hide();
-
-        let local = $('#local').val();
-        let data = $('#data_entrada').val();
-        $.ajax({
-            type: 'POST',
-            url: '{{ route('protocolo.store') }}',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                'local': local,
-                'data_entrada': data,
-            },
-            success: function(response) {
-                iziToast.success({
-                    title: 'Cadastrado',
-                    message: 'Datas e locais cadastrados com sucesso! Insira os equipamentos',
-                });
-                $('#id_protocolo').val(response);
-                $('#btnCadastrar').hide();
-                $('.buttons').show();
-            }
-        }).fail(function(jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status == 400) {
-                iziToast.error({
-                    title: 'Erro',
-                    message: jqXHR.responseJSON.message,
-                });
-            }
-            $('#btnCadastrar').show();
-        });
-    }
-</script>
-
+    </script>
 @endsection

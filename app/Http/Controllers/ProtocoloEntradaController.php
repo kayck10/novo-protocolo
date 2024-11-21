@@ -16,7 +16,7 @@ class ProtocoloEntradaController extends Controller
 {
     public function index()
     {
-        $protocolos = ProtocoloEntrada::with('local')->get();
+        $protocolos = ProtocoloEntrada::with('local')->orderBy('data_entrada', 'DESC')->get();
         $locais = Local::whereHas('protocoloEntrada')->distinct()->get();
         return view('protocolo-entrada.index', compact('protocolos', 'locais'));
     }

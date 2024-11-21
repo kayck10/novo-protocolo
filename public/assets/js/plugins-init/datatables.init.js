@@ -96,6 +96,7 @@ let dataSet = [
         paging: true, // Desativa a paginação
         ordering: true, // Desativa a ordenação
         info: true,
+        "order": [],
         language: {
             "decimal": ",",
             "thousands": ".",

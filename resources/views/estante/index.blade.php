@@ -24,17 +24,17 @@
         }
 
         /* .abrirModal {
-                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-                padding: 20px;
-                outline: 1px solid rgba(114, 110, 110, 0.048);
-                outline-offset: -10px;
-                box-shadow: initial 70px 7px 15px rgba(172, 153, 153, 0.568);
-            }
+                                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                                padding: 20px;
+                                outline: 1px solid rgba(114, 110, 110, 0.048);
+                                outline-offset: -10px;
+                                box-shadow: initial 70px 7px 15px rgba(172, 153, 153, 0.568);
+                            }
 
-            .abrirModal:hover {
-                transform: scale(1.1);
-                box-shadow: inset 0 8px 10px rgba(90, 1, 1, 0.911), 0 8px 15px rgb(236, 4, 4);
-            } */
+                            .abrirModal:hover {
+                                transform: scale(1.1);
+                                box-shadow: inset 0 8px 10px rgba(90, 1, 1, 0.911), 0 8px 15px rgb(236, 4, 4);
+                            } */
 
         .nicho {
             height: 195px;
@@ -113,16 +113,17 @@
                                 aria-controls="contact" aria-selected="false">Finalizado
                             </button>
                         </li>
+                        <li class="nav-item" role="presentation">
+
+
+                            <div class="input-group mb-3">
+                                <input id="pesquisa" data-bs-toggle="tab" data-bs-target="#search" role="tab"
+                                    aria-controls="search" aria-selected="false" type="text"
+                                    class="form-control nav-link tab-estante" placeholder="Pesquisa">
+                                <i class="bi bi-search btn btn-primary" ></i>
+                            </div>
+                        </li>
                     </ul>
-                    <div class="row">
-                        <div class="col-sm-3 offset-md-1 mt-3">
-                            <input id="pesquisa" type="text" class="form-control" placeholder="Pesquisa">
-                        </div>
-                        <div class="col-sm-3 mt-3">
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#modalFiltros"
-                                class="btn btn-outline-dark">Filtros <i class="bi bi-sliders"></i></button>
-                        </div>
-                    </div>
                     <div class="tab-content mb-5 mt-3 ms-3" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="row">
@@ -145,6 +146,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-pane fade" id="search" role="tabpanel" aria-labelledby="pesquisa">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="tbody_equipamentos_search" class="col-12">
+                                        <p class="text-center text-muted"> Informe o tombamento para iniciar a pesquisa </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -160,7 +170,52 @@
     <script>
         $(document).ready(function() {
             pegarEquipamentos(1);
+            $('#pesquisa').on('input', function() {
+                const termoPesquisa = $(this).val();
+                console.log(termoPesquisa);
+                if(termoPesquisa < 1){
+                    $('#tbody_equipamentos_search').empty().html('<p class="text-center text-muted"> Informe o tombamento para iniciar a pesquisa </p>')
+                }else{
+                    pesquisarEquipamentoPorTombamento(termoPesquisa);
+                }
+            });
         });
+
+        const ligaligaliga = () => {
+            $("abrirModal").on('click', function(e) {
+                abrirModal($(this).data('id'));
+            });
+        }
+
+        function pesquisarEquipamentoPorTombamento(tombamento) {
+            let _token = $('#_token').val();
+            $.ajax({
+                type: "get",
+                url: "{{ route('estante.pesquisarTombamento') }}",
+                data: {
+                    tombamento,
+                    _token
+                },
+                success: function(response) {
+                    $('#tbody_equipamentos').empty();
+                    $('#tbody_equipamentos_andamento').empty();
+                    $('#contact').empty();
+                    $('#tbody_equipamentos_search').empty().html(response);
+                    $(".abrirModal").off('click').on('click', function(e) {
+                        abrirModal($(this).data('id'));
+                    });
+
+                    $("#fechar-modal").off('click').on('click', function(e) {
+                        $("#equipamentos_abertos").modal('hide');
+                    });
+                },
+                error: function(error) {
+                    console.error('Erro ao pesquisar tombamento:', error);
+                    alert('Erro ao buscar equipamento: ' + error.responseText);
+                }
+            });
+        }
+
 
         const passarStatus = (idStatus) => {
             let id = getIdEquipamento();
@@ -203,10 +258,13 @@
                         $('#tbody_equipamentos').empty().html('');
                         $('#contact').empty().html(response);
                     }
-
-                    $(".abrirModal").off('click').on('click', function(e) {
+                    $(".abrirModal").on('click', function(e) {
                         abrirModal($(this).data('id'));
                     });
+
+                    // $(".abrirModal").off('click').on('click', function(e) {
+                    //     abrirModal($(this).data('id'));
+                    // });
 
                     $("#fechar-modal").off('click').on('click', function(e) {
                         $("#equipamentos_abertos").modal('hide');
@@ -278,6 +336,7 @@
                     id
                 },
                 success: function(response) {
+                    console.log(response)
                     $('#div-solucao').empty();
                     $('#div-botoes-status').empty();
                     let usuarios = "<option>Selecione um Técnico</option>";
@@ -359,6 +418,7 @@
 
                     $("#select-tecnicos").html(usuarios);
                     $("#equipamentos_abertos").modal('show');
+                    console.log('jasasajs');
                 },
                 error: function(error) {
                     iziToast.error({

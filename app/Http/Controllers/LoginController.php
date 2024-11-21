@@ -13,25 +13,31 @@ class LoginController extends Controller
         return view('login.login');
     }
 
-    public function teste(Request $request)
-    {
-
-        return response()->json(['error' => false,'message' => $request->evento]);
-    }
 
     public function store(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        $credentials = ['password' => $request->password];
+
+        if (filter_var($request->login, FILTER_VALIDATE_EMAIL)) {
+            $credentials['email'] = $request->login;
+        } else {
+            $credentials['usuario'] = $request->login;
+        }
+
+        if (Auth::attempt($credentials)) {
             return redirect()->route('dashboard');
         } else {
             Toastr::error('Dados incorretos!', 'Erro');
             return redirect()->back();
         }
     }
-    public function logout(Request $request)
-{
-    Auth::logout();
-    return redirect()->route('login')->with('message', 'Você saiu com sucesso.');
-}
 
+
+
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('login')->with('message', 'Você saiu da sua conta.');
+    }
 }

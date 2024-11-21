@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Protocolo de Entrada</title>
     <style>
@@ -58,7 +57,7 @@
     <div>
         <h4>
             <br>
-            PROTOCOLO DE ENTRADA DO EQUIPAMENTO Nº:
+            PROTOCOLO DE ENTRADA Nº: {{ $protocoloId }}
             <br>
         </h4>
     </div>
@@ -108,7 +107,6 @@
                 ___________________________________
                 <p><b>Secretaria de Educação</b></p>
                 <p><b>Setor de Tecnologia da Informação</b></p>
-
             </td>
         </tr>
     </table>

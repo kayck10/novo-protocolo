@@ -127,6 +127,10 @@ class UserController extends Controller
                 'regex:/[A-Z]/',
                 'regex:/[$*&@#]/'
             ],
+        ], [
+            'password.min' => 'A senha deve ter no mínimo 6 caracteres.',
+            'password.max' => 'A senha deve ter no máximo 15 caracteres.',
+            'password.regex' => 'A senha deve conter ao menos uma letra maiúscula e um dos seguintes caracteres especiais: $ * & @ #.',
         ]);
 
         $user->name = $request->name;
@@ -137,9 +141,10 @@ class UserController extends Controller
         }
 
         $user->save();
-
+        Toastr::success('Usuário atualizado com sucesso!', 'Concluído!', ["positionClass" => "toast-bottom-right"]);
         return redirect()->route('user.edit', $user->id)->with('success', 'Usuário atualizado com sucesso!');
     }
+
 
     public function resetPassword($id)
     {

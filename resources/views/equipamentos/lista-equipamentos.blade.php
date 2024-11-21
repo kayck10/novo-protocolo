@@ -49,7 +49,7 @@
                                                         <i class="bi bi-eye-fill"></i>
                                                     </button>
                                                         <button class="btn btn-danger">
-                                                            <i class="fa fa-close"></i>
+                                                            <i class="bi bi-trash"></i>
                                                         </button>
                                                     </td>
 

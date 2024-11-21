@@ -5,7 +5,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Listagem de Protocolos</h4>
+                    <h4>Listagem de protocolos</h4>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -23,14 +23,14 @@
                     <div id="list-view" class="tab-pane fade active show col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Listagem de Protocolos</h4>
+                                <h4 class="card-title">Listagem de protocolos</h4>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table id="listProtocolos" class="display" style="min-width: 845px">
                                         <thead>
                                             <tr>
-                                                <th>#</th>
+                                                <th>Nº Protocolo</th>
                                                 <th>Escola | Setor</th>
                                                 <th>Data</th>
                                                 <th>Opções</th>
@@ -38,9 +38,11 @@
                                         </thead>
                                         <tbody>
                                             @foreach ($protocolos as $protocolo)
-                                                {{-- {{dd($protocolo)}} --}}
+                                                @php
+                                                    $ano = $protocolo->created_at->format('Y');
+                                                @endphp
                                                 <tr>
-                                                    <td>{{ $protocolo->id }}</td>
+                                                    <td>{{ $ano . $protocolo->id }}</td>
                                                     <td>{{ $protocolo->local->desc }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($protocolo->data_entrada)->translatedFormat('d\ M, Y') }}
                                                     </td>
@@ -82,7 +84,8 @@
                                         <div class="modal-dialog modal-lg">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">VISUALIZAR REGISTROS
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">VISUSALIZAR
+                                                        REGISTROS
                                                         DO PROTOCOLO</h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
@@ -123,91 +126,82 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+@endsection
 
+
+@section('scripts')
     <script>
         const imprimirProtocolo = (protocoloId) => {
+            $.ajax({
+                url: "{{ route('indexProtocolo.pdf') }}",
+                method: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id_protocolo: protocoloId
+                },
+                success: function(response) {
+                    // Cria o blob a partir do base64 recebido
+                    const byteCharacters = atob(response.pdf); // Converte base64 para bytes
+                    const byteArrays = [];
 
-            // console.log('oi');
+                    for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
+                        const slice = byteCharacters.slice(offset, offset + 1024);
+                        const byteNumbers = new Array(slice.length);
+
+                        for (let i = 0; i < slice.length; i++) {
+                            byteNumbers[i] = slice.charCodeAt(i);
+                        }
+                        const byteArray = new Uint8Array(byteNumbers);
+                        byteArrays.push(byteArray);
+                    }
+                    const blob = new Blob(byteArrays, {
+                        type: 'application/pdf'
+                    });
+                    // Cria um link para abrir o PDF em uma nova aba
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.target = '_blank';
+                    link.click();
+                },
+                error: function(error) {
+
+                    console.error('Erro:', error);
+                }
+            });
+        };
 
 
-            var form = document.createElement('form');
-            form.method = 'POST';
-            form.action = "{{ route('indexProtocolo.pdf') }}";
-            form.target = '_blank';
 
-            var csrfInput = document.createElement('input');
-            csrfInput.type = 'hidden';
-            csrfInput.name = '_token';
-            csrfInput.value = "{{ csrf_token() }}";
-            form.appendChild(csrfInput);
+        $(document).ready(function() {
+            // Delegação de evento para elementos gerados dinamicamente
+            $(document).on('click', '.view-protocolo', function() {
+                var protocoloId = $(this).data('id');
+                $.ajax({
+                    url: '/protocolo-entrada/show/' + protocoloId,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        var tbody = $('#protocolo-details');
+                        tbody.empty(); // Limpar os dados anteriores
 
-            var idInput = document.createElement('input');
-            idInput.type = 'hidden';
-            idInput.name = 'id_equipamento';
-            idInput.value = protocoloId;
-            form.appendChild(idInput);
-
-            document.body.appendChild(form);
-            form.submit();
-
-            document.body.removeChild(form);
-
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Evento para exibir detalhes do protocolo na modal
-            document.querySelectorAll('.view-protocolo').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var protocoloId = this.getAttribute('data-id');
-                    fetch('/protocolo-entrada/show/' + protocoloId)
-                        .then(response => response.json())
-                        .then(data => {
-                            var tbody = document.getElementById('protocolo-details');
-                            tbody.innerHTML = '';
-                            data.equipamentos.forEach(function(equipamento) {
-                                var tr = document.createElement('tr');
-                                tr.innerHTML = `
-                                <td>${equipamento.tombamento}</td>
-                                <td>${equipamento.user ? equipamento.user.name : ''}</td>
-                                <td>${equipamento.status ? equipamento.status.desc : ''}</td>
-                                <td>${equipamento.desc}</td>
-                            `;
-                                tbody.appendChild(tr);
-                            });
-                        })
-                        .catch(error => console.error('Erro:', error));
+                        data.equipamentos.forEach(function(equipamento) {
+                            console.log(equipamento);
+                            var tr = `
+                        <tr>
+                            <td>${equipamento.tombamento}</td>
+                            <td>${equipamento.user ? equipamento.user.name : ''}</td>
+                            <td>${equipamento.status ? equipamento.status.desc : ''}</td>
+                            <td>${equipamento.desc}</td>
+                        </tr>
+                    `;
+                            tbody.append(tr);
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Erro:', error);
+                    }
                 });
             });
-
-            document.querySelectorAll('.btn-imprimir').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    var protocoloId = this.getAttribute('data-id');
-                    // console.log(protocoloId);
-
-                    var form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = "{{ route('indexProtocolo.pdf') }}";
-                    form.target = '_blank';
-
-                    var csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = "{{ csrf_token() }}";
-                    form.appendChild(csrfInput);
-
-                    var idInput = document.createElement('input');
-                    idInput.type = 'hidden';
-                    idInput.name = 'id_equipamento';
-                    idInput.value = protocoloId;
-                    form.appendChild(idInput);
-
-                    document.body.appendChild(form);
-                    form.submit();
-
-                    document.body.removeChild(form);
-                });
-            });
-
         });
     </script>
 @endsection

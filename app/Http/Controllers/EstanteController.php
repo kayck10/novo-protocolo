@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipamentos;
 use App\Models\ProtocoloEntrada;
+use App\Models\TiposEquipamentos;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Carbon\Carbon;
@@ -13,6 +14,7 @@ class EstanteController extends Controller
 {
     public function index()
     {
+        $tiposequipamentos = TiposEquipamentos::all();
         $protocoloEntrada = ProtocoloEntrada::all();
         $ativos = Equipamentos::where('id_status', 1)->count();
         $emManutencao = Equipamentos::where('id_status', 2)->count();
@@ -22,7 +24,7 @@ class EstanteController extends Controller
 
         $usuarios = User::where('id_situacao', 1)->orderBy('name', 'asc')->get();
 
-        return view('estante.index', compact('equipamentos', 'usuarios', 'ativos', 'emManutencao', 'inativos', 'protocoloEntrada'));
+        return view('estante.index', compact('equipamentos', 'usuarios', 'ativos', 'emManutencao', 'inativos', 'protocoloEntrada', 'tiposequipamentos'));
     }
 
     public function getStatus(Request $request)
@@ -159,4 +161,13 @@ class EstanteController extends Controller
 
         return $pdf->stream('detalhes_equipamento.pdf');
     }
+    public function pesquisarPorTombamento(Request $request)
+{
+    $tombamento = $request->input('tombamento');
+
+    $equipamentos = Equipamentos::where('tombamento', 'like', '%' . $tombamento . '%')->get();
+
+    return view('estante.equipamentos-status', compact('equipamentos'));
+}
+
 }

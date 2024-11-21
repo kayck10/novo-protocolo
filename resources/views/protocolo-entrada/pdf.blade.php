@@ -58,7 +58,7 @@
     <div>
         <h4>
             <br>
-            PROTOCOLO DE ENTRADA DO EQUIPAMENTO Nº: {{$tombamento}}
+            PROTOCOLO DE ENTRADA DO EQUIPAMENTO Nº:  {{$protocoloId}}
             <br>
         </h4>
     </div>
