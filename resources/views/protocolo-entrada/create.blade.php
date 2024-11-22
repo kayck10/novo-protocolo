@@ -70,64 +70,107 @@
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content shadow-lg border-0">
+                            <div class="modal-header text-white">
                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Adicionar Equipamento</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
                             <form id="form-protocolo">
                                 <div class="modal-body">
-                                    <div class="form-group">
-                                        <label class="form-label">Tombamento: <i
-                                                class="fa fa-asterisk text-danger"></i></label>
-                                        <input class="form-control" type="text" id="tombamento" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Tipo de Equipamento: <i
-                                                class="fa fa-asterisk text-danger"></i></label>
-                                        <select id="id_tipos_equipamentos" class="form-control" required>
-                                            <option value="">Selecione um Equipamento</option>
-                                            @foreach ($tiposequipamentos as $tipoequipamento)
-                                                <option value="{{ $tipoequipamento->id }}">{{ $tipoequipamento->desc }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Descrição do Acessório:</label>
-                                        <textarea cols="20" rows="3" class="form-control" id="descricao_acessorio"></textarea>
-                                        <input type="hidden" name="id_protocolo" id="id_protocolo">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label mx-2">Local: <i
-                                                class="fa fa-asterisk text-danger"></i></label>
-                                        <select id="id_setor_escolas" class="form-control" required>
-                                            <option value="">Selecione um Local</option>
-                                            @foreach ($setorEscolas as $setorescolas)
-                                                <option value="{{ $setorescolas->id }}">{{ $setorescolas->desc }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <input type="hidden" name="prioridade" value="0">
-                                    <div class="form-check">
-                                        <label class="form-check-label" for="prioridade">Prioridade?</label>
-                                        <input class="form-check-input mx-2" type="checkbox" id="prioridade"
-                                            name="prioridade" value="1">
-                                    </div>
+                                    <div class="row g-3">
+                                        <!-- Tombamento -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Tombamento: <i
+                                                        class="fa fa-asterisk text-danger"></i></label>
+                                                <input class="form-control" type="text" id="tombamento" required>
+                                            </div>
+                                        </div>
 
-                                    <div class="form-group">
-                                        <label class="form-label">Descrição do Problema: <i
-                                                class="fa fa-asterisk text-danger"></i></label>
-                                        <textarea cols="30" rows="3" class="form-control" type="text" id="desc" name="desc"
-                                            required></textarea>
+                                        <!-- Tipo de Equipamento -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Tipo de Equipamento: <i
+                                                        class="fa fa-asterisk text-danger"></i></label>
+                                                <select id="id_tipos_equipamentos" class="form-control" required>
+                                                    <option value="">Selecione um Equipamento</option>
+                                                    @foreach ($tiposequipamentos as $tipoequipamento)
+                                                        <option value="{{ $tipoequipamento->id }}">
+                                                            {{ $tipoequipamento->desc }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Descrição do Acessório -->
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Descrição do Acessório:</label>
+                                                <textarea cols="30" rows="2" class="form-control" id="descricao_acessorio"></textarea>
+                                                <input type="hidden" name="id_protocolo" id="id_protocolo">
+                                            </div>
+                                        </div>
+
+                                        <!-- Local -->
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="form-label">Local: <i
+                                                        class="fa fa-asterisk text-danger"></i></label>
+                                                <select id="id_setor_escolas" class="form-control" required>
+                                                    <option value="">Selecione um Local</option>
+                                                    @foreach ($setorEscolas as $setorescolas)
+                                                        <option value="{{ $setorescolas->id }}">{{ $setorescolas->desc }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- Checkboxes: Prioridade e Peças em Falta -->
+                                        <div class="col-md-6">
+                                            <div class="form-group d-flex align-items-center">
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="checkbox" id="prioridade"
+                                                        name="prioridade" value="1">
+                                                    <label class="form-check-label" for="prioridade">Prioridade?</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="pecas_falta"
+                                                        name="pecas_falta" value="1">
+                                                    <label class="form-check-label" for="pecas_falta">Peças em
+                                                        falta?</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Textarea: Descrição de Peças em Falta -->
+                                        <div class="col-12" id="textarea-container" style="display: none;">
+                                            <div class="form-group">
+                                                <label class="form-label">Descreva as peças em falta separadas por vírgula:
+                                                    <i class="fa fa-asterisk text-danger"></i>
+                                                </label>
+                                                <textarea cols="30" rows="2" class="form-control" id="desc_pecas" name="desc_pecas"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- Descrição do Problema -->
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Descrição do Problema:</label>
+                                                <textarea cols="30" rows="2" class="form-control" id="problema_desc" name="problema_desc" required></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn" data-bs-dismiss="modal">Fechar</button>
+
+                                <!-- Modal Footer -->
+                                <div class="modal-footer bg-light">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Fechar</button>
                                     <button type="submit"
-                                        class="btn btn-success save-event waves-effect waves-light">Criar Evento</button>
+                                        class="btn btn-success text-light save-event">Criar Evento</button>
                                 </div>
                             </form>
                         </div>
@@ -135,6 +178,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    </div>
     </div>
 @endsection
 
@@ -153,8 +198,7 @@
                     id_protocolo: protocoloId
                 },
                 success: function(response) {
-                    // Cria o blob a partir do base64 recebido
-                    const byteCharacters = atob(response.pdf); // Converte base64 para bytes
+                    const byteCharacters = atob(response.pdf);
                     const byteArrays = [];
 
                     for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
@@ -170,7 +214,6 @@
                     const blob = new Blob(byteArrays, {
                         type: 'application/pdf'
                     });
-                    // Cria um link para abrir o PDF em uma nova aba
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
                     link.target = '_blank';
@@ -183,9 +226,17 @@
             });
         };
 
+        document.getElementById('pecas_falta').addEventListener('change', function() {
+            const textareaContainer = document.getElementById('textarea-container');
+            if (this.checked) {
+                textareaContainer.style.display = 'block';
+            } else {
+                textareaContainer.style.display = 'none';
+            }
+        });
+
 
         $(document).ready(function() {
-            // Inicialmente desabilita o botão imprimir
             $('#imprimirButton').prop('disabled', true);
 
             $('#btnCadastrar').on('click', function() {
@@ -202,6 +253,8 @@
                 let desc = $('#desc').val();
                 let prioridade = $('#prioridade').is(':checked') ? 1 : 0;
                 let descricao_acessorio = $('#descricao_acessorio').val();
+                let desc_pecas = $('#desc_pecas').val();
+
 
                 let data = {
                     equipamentos: equipamentos,
@@ -210,7 +263,8 @@
                     setor: setor,
                     desc: desc,
                     prioridade: prioridade,
-                    descricao_acessorio: descricao_acessorio
+                    descricao_acessorio: descricao_acessorio,
+                    desc_pecas: desc_pecas,
                 };
 
                 let settings = {
@@ -223,7 +277,6 @@
                 };
 
                 $.ajax(settings).done(function(response) {
-                    // Atualiza a tabela com o novo equipamento
                     let dados = `
                     <tr>
                         <td>${response.tombamento}</td>
@@ -236,7 +289,6 @@
                     $('#tabela-equipamentos-div').show();
                     $("#exampleModal").modal('hide');
 
-                    // Habilita o botão de imprimir após o cadastro
                     $('#imprimirButton').prop('disabled', false);
 
                     iziToast.success({
