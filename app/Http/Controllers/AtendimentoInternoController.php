@@ -15,7 +15,7 @@ class AtendimentoInternoController extends Controller
 {
     public function index()
     {
-        $atendimentos = Atendimentos::where('id_user', '!=', null)->with(['tecnico', 'setor'])->get();
+        $atendimentos = Atendimentos::where('desc_problema', '!=', null)->with(['tecnico', 'setor'])->get();
 
         $tecnicos = User::where('id_funcoes', 2)->get();
         $setores = Local::where('externo', 0)->get();

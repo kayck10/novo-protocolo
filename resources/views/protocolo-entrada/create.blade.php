@@ -148,10 +148,10 @@
                                         <!-- Textarea: Descrição de Peças em Falta -->
                                         <div class="col-12" id="textarea-container" style="display: none;">
                                             <div class="form-group">
-                                                <label class="form-label">Descreva as peças em falta separadas por vírgula:
+                                                <label class="form-label">Liste as peças ausentes, separando-as por vírgulas:
                                                     <i class="fa fa-asterisk text-danger"></i>
                                                 </label>
-                                                <textarea cols="30" rows="2" class="form-control" id="desc_pecas" name="desc_pecas"></textarea>
+                                                <textarea cols="30" rows="2" class="form-control" id="faltamPecas" name="faltamPecas"></textarea>
                                             </div>
                                         </div>
 
@@ -159,7 +159,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label class="form-label">Descrição do Problema:</label>
-                                                <textarea cols="30" rows="2" class="form-control" id="problema_desc" name="problema_desc" required></textarea>
+                                                <textarea cols="30" rows="2" class="form-control" id="desc" name="desc" required></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -169,8 +169,8 @@
                                 <div class="modal-footer bg-light">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Fechar</button>
-                                    <button type="submit"
-                                        class="btn btn-success text-light save-event">Criar Evento</button>
+                                    <button type="submit" class="btn btn-success text-light save-event">Criar
+                                        Evento</button>
                                 </div>
                             </form>
                         </div>
@@ -179,8 +179,8 @@
             </div>
         </div>
     </div>
-    </div>
-    </div>
+
+
 @endsection
 
 @section('scripts')
@@ -253,7 +253,7 @@
                 let desc = $('#desc').val();
                 let prioridade = $('#prioridade').is(':checked') ? 1 : 0;
                 let descricao_acessorio = $('#descricao_acessorio').val();
-                let desc_pecas = $('#desc_pecas').val();
+                let faltamPecas = $('#faltamPecas').val();
 
 
                 let data = {
@@ -264,7 +264,7 @@
                     desc: desc,
                     prioridade: prioridade,
                     descricao_acessorio: descricao_acessorio,
-                    desc_pecas: desc_pecas,
+                    faltamPecas: faltamPecas,
                 };
 
                 let settings = {

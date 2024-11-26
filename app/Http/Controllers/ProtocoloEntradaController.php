@@ -106,7 +106,8 @@ class ProtocoloEntradaController extends Controller
             'desc' => $request->input('desc'),
             'acessorios' => $request->descricao_acessorio,
             'prioridade' => $request->input('prioridade') ? 1 : 0,
-            'id_status' => 1
+            'id_status' => 1,
+            'faltamPecas' => $request->faltamPecas,
 
         ]);
 

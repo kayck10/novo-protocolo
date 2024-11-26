@@ -22,7 +22,8 @@ class Equipamentos extends Model
         'prioridade',
         'id_status',
         'id_users',
-        'desc'
+        'desc',
+        'faltamPecas'
     ];
 
     public function protocolo()

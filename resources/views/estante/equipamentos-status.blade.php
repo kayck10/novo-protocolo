@@ -39,6 +39,7 @@
                     <p id="p-data"><b>Data de Entrada:</b> <span id="equipamento_data"></span></p>
                     <p id="p-tombamento"><b>Tombamento|NS:</b> <span id="equipamento_tombamento"></span></p>
                     <p id="p-problema"><b>Problema:</b> <span id="equipamento_problema"></span></p>
+                    <p id="p-pecas"><b>Peças em Falta:</b> <span id="equipamento_problema"></span></p>
                     <p id="p-acessorio"><b>Acessório:</b> <span id="acessorio"></span></p>
 
                     <div class="form-group">

@@ -352,6 +352,7 @@
                     $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
                     $("#p-acessorio").html(`<b>Acessório: </b> ${response.equipamento.acessorios}`);
                     $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
+                    $("#p-pecas").html(`<b>Peças em Falta:</b> ${response.equipamento.faltamPecas ?? 'Não há peças em falta'}`);
                     $("#p-local").html(`<b>Local:</b> ${response.equipamento.protocolo.local.desc}`);
 
                     $.each(response.usuarios, function(indexInArray, valueOfElement) {

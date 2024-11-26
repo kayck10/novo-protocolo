@@ -85,7 +85,7 @@ class PdfController extends Controller
         $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
         $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
         $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
-        $problemaRelatado = $equipamento->solucao ?? 'Problema não relatado';
+        $problemaRelatado = $equipamento->desc ?? 'Problema não relatado';
         $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
         $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
 
@@ -133,10 +133,11 @@ class PdfController extends Controller
             'solucao' => $equipamento->solucao,
             'num_patrimonio' => $equipamento->tombamento,
             'problema' => $problema ? $problema->descricao : 'N/A',
-            'marca' => $request->marca,
-            'modelo' => $request->modelo,
-            'num_serie' => $request->num_serie,
+            'marca' => $equipamento->marca ?? 'N/A',
+            'modelo' => $equipamento->modelo ?? 'N/A',
+            'num_serie' => $equipamento->num_serie ?? 'N/A',
         ];
+
 
         $pdf = FacadePdf::loadView('inservivel.pdf', $data);
 
@@ -149,22 +150,20 @@ class PdfController extends Controller
 
         $requestProtocolo = $request->input('id_protocolo');
 
-        // Certifique-se de que o relacionamento protocolo existe e está correto
         $equipamentos = Equipamentos::with('tiposEquipamentos', 'protocolo.local', 'setorEscola')
-            ->where('id_protocolo', $requestProtocolo) // Busca pelo ID do equipamento
+            ->where('id_protocolo', $requestProtocolo)
             ->get();
 
         if ($equipamentos->isEmpty()) {
             return response()->json(['error' => 'Equipamento não encontrado'], 404);
         }
 
-        // Assumindo que cada equipamento tenha um único protocolo de entrada
         $protocolo = $equipamentos->first()->protocolo;
         if (!$protocolo) {
             return response()->json(['error' => 'Protocolo de entrada não encontrado'], 404);
         }
         $ano = $protocolo->created_at->format('Y');
-        $protocoloId = $ano . $protocolo->id;  // Captura o ID do protocolo
+        $protocoloId = $ano . $protocolo->id;
         $local = $protocolo->local->desc ?? 'Local não definido';
 
         $arrayEquipamentos = [];
@@ -174,7 +173,7 @@ class PdfController extends Controller
             $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
             $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
             $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
-            $problemaRelatado = $equipamento->solucao ?? 'Problema não relatado';
+            $problemaRelatado = $equipamento->desc ?? 'Problema não relatado';
 
             $arrayEquipamentos[] = [
                 'tombamento'        => $tombamento,
@@ -194,17 +193,14 @@ class PdfController extends Controller
             'dataEntrada' => $dataEntrada,
             'horaEntrada' => $horaEntrada,
             'tombamento' => $tombamento,
-            'protocoloId' => $protocoloId,  // Adiciona o ID do protocolo
+            'protocoloId' => $protocoloId,
         ];
 
-        // Cria o PDF
         $pdf = FacadePdf::loadView('protocolo-entrada.index-pdf', $data);
 
-        // Converte o PDF para base64
-        $pdfContent = $pdf->output();  // Pega o conteúdo binário do PDF
-        $base64Pdf = base64_encode($pdfContent);  // Converte para base64
+        $pdfContent = $pdf->output();
+        $base64Pdf = base64_encode($pdfContent);
 
-        // Retorna o PDF em base64 como resposta JSON
         return response()->json([
             'pdf' => $base64Pdf
         ]);
