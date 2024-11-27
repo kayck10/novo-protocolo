@@ -235,7 +235,7 @@
 
                 flatpickr("#data_entrada", {
                     dateFormat: "Y-m-d H:i",
-                    locale: flatpickr.l10ns.pt, // Aplica o idioma carregado
+                    locale: flatpickr.l10ns.pt,
                     enableTime: true,
                 });
 
@@ -281,7 +281,15 @@
                     eventClick: function(info) {
                         $('#event-modal-click').attr('data-status-id', info.event.extendedProps.id_status);
                         $('#modal-event-click-id').val(info.event.id);
-                        $('#modal-event-click-date').html(info.event.start.toISOString().split('T')[0]);
+                        let eventDate = new Date(info.event.start);
+
+                        let formattedDateTime =
+                            ('0' + eventDate.getDate()).slice(-2) + '/' +
+                            ('0' + (eventDate.getMonth() + 1)).slice(-2) + '/' +
+                            eventDate.getFullYear() + ' ' +
+                            ('0' + eventDate.getHours()).slice(-2) + ':' +
+                            ('0' + eventDate.getMinutes()).slice(-2);
+                            $('#modal-event-click-date').text(formattedDateTime);
                         $('#modal-event-click-desc').html(info.event.extendedProps.desc);
                         $('#modal-event-click-escola').html(info.event.extendedProps.escola);
 

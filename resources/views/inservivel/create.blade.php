@@ -75,7 +75,7 @@
                                                             </div>
 
                                                             <form id="form-laudo-{{ $equipamento->id }}"
-                                                                action="{{ route('gerar.pdf') }}" method="POST">
+                                                                action="{{ route('gerar.pdf') }}" method="POST" target="_blank">
                                                                 @csrf
                                                                 <input type="hidden" name="id_equipamento"
                                                                     value="{{ $equipamento->id }}">
@@ -205,7 +205,8 @@
                 marca: $('#marca').val(),
                 num_serie: $('#num_serie').val(),
                 retirada: $('#retirada').val(),
-                id_problema: $('#id_problema').val()
+                id_problema: $('#id_problema').val(),
+                id_equipamento: id
             };
 
             let validador = true;
@@ -216,22 +217,33 @@
                 }
             }
 
-            if (validador == true) {
+            if (validador) {
                 $(`#modalcriarlaudo${id}`).modal('hide');
                 $(`#list-equipamento-${id}`).remove();
 
                 try {
+                    // Abre uma nova janela em branco
+                    const newWindow = window.open('', '_blank');
+
                     const response = await $.ajax({
                         url: '/gerar-pdf',
                         method: 'POST',
-                        data: campos,
+                        data: {
+                            ...campos,
+                            _token: '{{ csrf_token() }}'
+                        },
                         xhrFields: {
                             responseType: 'blob'
                         }
                     });
 
-                    const url = window.URL.createObjectURL(response);
-                    window.open(url);
+                    // Cria uma URL temporária para o PDF
+                    const blob = new Blob([response], {
+                        type: 'application/pdf'
+                    });
+                    const url = window.URL.createObjectURL(blob);
+
+                    newWindow.location.href = url;
 
                     iziToast.success({
                         title: 'Excluído',
@@ -243,9 +255,14 @@
                         title: 'Erro',
                         message: 'Não foi possível gerar o PDF.',
                     });
+
+                    if (newWindow) {
+                        newWindow.close();
+                    }
                 }
             }
         });
+
 
 
         $('[id^="devolver-btn-"]').click(function() {
