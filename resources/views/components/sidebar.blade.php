@@ -83,7 +83,7 @@
                 <li><a href="{{ route('lista.tipoequipamento') }}">Ver Todos</a></li>
             </ul>
         </li>
-            <li><a href="{{ route('equipamento') }}" aria-expanded="false">
+            <li><a href="{{ route('historico') }}" aria-expanded="false">
                     <i class="bi bi-clock-history"></i>
                     <span class="nav-text">Histórico de Máquinas</span>
                 </a>

@@ -62,10 +62,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/create', [EquipamentoController::class, 'create'])->name('create.equipamento');
         Route::post('/store', [EquipamentoController::class, 'store'])->name('store.tipoequipamento');
         Route::get('/lista', [EquipamentoController::class, 'index'])->name('lista.tipoequipamento');
-        Route::get('/{id}', [EquipamentoController::class, 'show'])->name('equipamentos.show');
         Route::get('/{id}/edit', [EquipamentoController::class, 'edit'])->name('equipamentos.edit');
         Route::put('/{id}', [EquipamentoController::class, 'update'])->name('equipamentos.update');
         Route::delete('/{id}', [EquipamentoController::class, 'destroy'])->name('equipamentos.delete');
+        Route::get('/historico', [EquipamentoController::class, 'historico'])->name('historico');
+
     });
 
     Route::prefix('/atendimento-interno')->group(function () {
@@ -91,7 +92,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/inservivel', [EstanteController::class, 'inservivel'])->name('estante.inservivel');
         Route::get('/create', [EstanteController::class, 'create'])->name('estante.create');
         Route::get('/pdf/{id}', [EstanteController::class, 'pdf'])->name('estante.pdf');
-        Route::get('/escolas', [EstanteController::class, 'equipamento'])->name('equipamento');
     });
 
 

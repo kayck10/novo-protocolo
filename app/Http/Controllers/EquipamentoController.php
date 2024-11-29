@@ -120,4 +120,14 @@ class EquipamentoController extends Controller
     return redirect()->route('lista.tipoequipamento')->with('success', 'Equipamento excluído com sucesso!');
 }
 
+public function historico()
+{
+    $equipamentos = Equipamentos::with('protocolos', 'tiposEquipamentos')
+                                ->whereIn('id_status', [4, 5, 6])
+                                ->get();
+
+    return view('equipamentos.lista-equipamentos', compact('equipamentos'));
+}
+
+
 }

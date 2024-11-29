@@ -13,7 +13,7 @@ class ProtocoloEntrada extends Model
     protected $fillable = ['id_local', 'data_entrada'];
     protected $dates = ['data_entrada'];
 
-    
+
     public function local()
     {
         return $this->belongsTo(Local::class, 'id_local');
@@ -23,4 +23,10 @@ class ProtocoloEntrada extends Model
     {
         return $this->hasMany(Equipamentos::class, 'id_protocolo', 'id');
     }
+
+    public function historico()
+{
+    return $this->hasMany(Historico::class, 'protocolo_entrada_id');
+}
+
 }

@@ -26,7 +26,7 @@ class Equipamentos extends Model
         'faltamPecas'
     ];
 
-    public function protocolo()
+    public function protocolos()
     {
         return $this->belongsTo(ProtocoloEntrada::class, 'id_protocolo', 'id');
     }
@@ -55,4 +55,10 @@ class Equipamentos extends Model
     {
         return $this->belongsTo(Atendimentos::class, 'id_atendimento');
     }
+
+    public function historico()
+{
+    return $this->hasMany(Historico::class, 'equipamento_id');
+}
+
 }

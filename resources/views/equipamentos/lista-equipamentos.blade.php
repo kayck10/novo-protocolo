@@ -5,13 +5,13 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Listagem de Equipamentos</h4>
+                    <h4>Histórico de Máquinas</h4>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="{{ route('equipamento') }}">Equipamentos</a></li>
+                    <li class="breadcrumb-item active"><a href="{{ route('historico') }}">Equipamentos</a></li>
                 </ol>
             </div>
         </div>
@@ -32,17 +32,14 @@
                                                 <th>Tipo</th>
                                                 <th>Data de Entrada</th>
                                                 <th>Opções</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach ($equipamentos as $equipamento)
                                                 <tr>
                                                     <td>{{ $equipamento->tombamento }}</td>
-                                                    <td>{{ $equipamento->tiposEquipamentos ? $equipamento->tiposEquipamentos->desc : 'N/A' }}
-                                                    </td>
-                                                    <td>{{ $equipamento->protocolo ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'N/A' }}
-                                                    </td>
+                                                    <td>{{ $equipamento->tiposEquipamentos ? $equipamento->tiposEquipamentos->desc : 'N/A' }}</td>
+                                                    <td></td>
                                                     <td>
                                                         <button type="button" class="btn btn-primary text-light" data-bs-toggle="modal"
                                                         data-bs-target="#modalEquipamento{{ $equipamento->id }}">
@@ -52,40 +49,46 @@
                                                             <i class="bi bi-trash"></i>
                                                         </button>
                                                     </td>
-
                                                 </tr>
-                                                <div class="modal fade" id="modalEquipamento{{ $equipamento->id }}"
-                                                    tabindex="-1"
-                                                    aria-labelledby="modalEquipamentoLabel{{ $equipamento->id }}"
-                                                    aria-hidden="true">
+
+                                                <!-- Modal de Detalhes -->
+                                                <div class="modal fade" id="modalEquipamento{{ $equipamento->id }}" tabindex="-1"
+                                                    aria-labelledby="modalEquipamentoLabel{{ $equipamento->id }}" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title"
-                                                                    id="modalEquipamentoLabel{{ $equipamento->id }}">Detalhes
-                                                                    do Equipamento</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                <h5 class="modal-title" id="modalEquipamentoLabel{{ $equipamento->id }}">Detalhes do Equipamento</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <p><strong>Origem:</strong>
-                                                                    {{ $equipamento->protocolo->local->desc }}</p>
-                                                                <p><strong>Tombamento / NS:</strong>
-                                                                    {{ $equipamento->tombamento }}</p>
+                                                                <p><strong>Origem:</strong> {{ $equipamento->protocolo->local->desc ?? 'N/A' }}</p>
+                                                                <p><strong>Tombamento / NS:</strong> {{ $equipamento->tombamento }}</p>
                                                                 <p><strong>Problema:</strong> {{ $equipamento->desc }}</p>
-                                                                <p><strong>Solução:</strong>
-                                                                    {{ $equipamento->solucao }}</p>
+                                                                <p><strong>Solução:</strong> {{ $equipamento->solucao }}</p>
+                                                                <p></p>
 
-                                                                <p><strong>Data da Entrada:</strong>
-                                                                    {{ \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/y') }}
-                                                                </p>
+                                                                <hr>
 
-
-
+                                                                <h5>Protocolos Relacionados</h5>
+                                                                <button class="btn btn-secondary" type="button" data-bs-toggle="collapse"
+                                                                    data-bs-target="#collapseProtocolo{{ $equipamento->id }}" aria-expanded="false"
+                                                                    aria-controls="collapseProtocolo{{ $equipamento->id }}">
+                                                                    Mostrar Protocolos
+                                                                </button>
+                                                                <div class="collapse" id="collapseProtocolo{{ $equipamento->id }}">
+                                                                    <div class="card card-body mt-3">
+                                                                        @foreach ($equipamento->protocolos as $protocolo)
+                                                                            <div class="mb-2">
+                                                                                <strong>Protocolo #</strong><br>
+                                                                                <strong>Data de Entrada:</strong> {{ \Carbon\Carbon::parse($protocolo->data_entrada)->format('d/m/Y') }} <br>
+                                                                                <strong>Local:</strong> {{ $protocolo->local->desc ?? 'N/A' }}<br>
+                                                                            </div>
+                                                                        @endforeach
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Fechar</button>
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
                                                             </div>
                                                         </div>
                                                     </div>
