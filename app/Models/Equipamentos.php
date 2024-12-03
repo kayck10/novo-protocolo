@@ -9,6 +9,8 @@ class Equipamentos extends Model
 {
     use HasFactory;
 
+    protected $table = "equipamentos";
+
     protected $fillable = [
         'id_tipos_equipamentos',
         'id_protocolo',
@@ -26,7 +28,7 @@ class Equipamentos extends Model
         'faltamPecas'
     ];
 
-    public function protocolos()
+    public function protocolo()
     {
         return $this->belongsTo(ProtocoloEntrada::class, 'id_protocolo', 'id');
     }

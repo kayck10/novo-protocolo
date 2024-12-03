@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipamentos;
 use App\Models\Problema;
+use App\Models\ProtocoloEntrada;
 use App\Models\TiposEquipamentos;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
@@ -122,9 +123,9 @@ class EquipamentoController extends Controller
 
 public function historico()
 {
-    $equipamentos = Equipamentos::with('protocolos', 'tiposEquipamentos')
-                                ->whereIn('id_status', [4, 5, 6])
-                                ->get();
+    $equipamentos = Equipamentos::with(['protocolo', 'tiposEquipamentos'])
+        ->whereIn('id_status', [4, 5, 6])
+        ->get();
 
     return view('equipamentos.lista-equipamentos', compact('equipamentos'));
 }
