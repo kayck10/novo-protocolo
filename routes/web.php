@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AtendimentoEscolasController;
 use App\Http\Controllers\AtendimentoInternoController;
-use App\Http\Controllers\AtendimentosController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EquipamentoController;
 use App\Http\Controllers\EstanteController;
@@ -13,7 +12,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ProtocoloEntradaController;
 use App\Http\Controllers\UserController;
-use App\Models\ProtocoloEntrada;
 use Illuminate\Support\Facades\Route;
 
 /*

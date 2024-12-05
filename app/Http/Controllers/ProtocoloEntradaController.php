@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipamentos;
+use App\Models\Historico;
 use App\Models\Local;
 use App\Models\ProtocoloEntrada;
 use App\Models\SetorEscola;
@@ -38,6 +39,7 @@ class ProtocoloEntradaController extends Controller
         $setorEscolas = SetorEscola::all();
         $protocolos = Equipamentos::all();
         $escolas = Local::all();
+        $historicos = Historico::all();
         return view('protocolo-entrada.create', compact('escolas', 'protocolos', 'setorEscolas', 'tiposequipamentos'));
     }
 
@@ -98,21 +100,29 @@ class ProtocoloEntradaController extends Controller
 
     public function equipamentos(Request $request)
     {
+
         $equipamentos = Equipamentos::create([
-            'id_protocolo' => $request->id_protocolo,
             'tombamento' => $request->tombamento,
-            'id_setor_escolas' => $request->input('setor'),
             'id_tipos_equipamentos' => $request->input('equipamentos'),
-            'desc' => $request->input('desc'),
-            'acessorios' => $request->descricao_acessorio,
             'prioridade' => $request->input('prioridade') ? 1 : 0,
             'id_status' => 1,
-            'faltamPecas' => $request->faltamPecas,
+        ]);
 
+
+
+        $historico = Historico::create([
+            'equipamento_id' => $equipamentos->id,
+            'id_protocolo' => $request->id_protocolo,
+            'faltamPecas' => $request->faltamPecas,
+            'desc' => $request->input('desc'),
+            'id_setor_escolas' => (int) $request->setor,
+            'acessorios' => $request->descricao_acessorio,
         ]);
 
         return response()->json($equipamentos, 201);
     }
+
+
 
     public function destroy($id)
     {

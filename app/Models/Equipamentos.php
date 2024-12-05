@@ -13,19 +13,13 @@ class Equipamentos extends Model
 
     protected $fillable = [
         'id_tipos_equipamentos',
-        'id_protocolo',
-        'tombamento',
-        'solucao',
         'id_local',
-        'acessorios',
+        'tombamento',
         'inservivel',
-        'data_entrada',
         'id_setor_escolas',
         'prioridade',
         'id_status',
-        'id_users',
-        'desc',
-        'faltamPecas'
+
     ];
 
     public function protocolo()

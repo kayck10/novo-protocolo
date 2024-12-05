@@ -110,6 +110,7 @@
                                                 <label class="form-label">Descrição do Acessório:</label>
                                                 <textarea cols="30" rows="2" class="form-control" id="descricao_acessorio"></textarea>
                                                 <input type="hidden" name="id_protocolo" id="id_protocolo">
+
                                             </div>
                                         </div>
 
@@ -148,7 +149,8 @@
                                         <!-- Textarea: Descrição de Peças em Falta -->
                                         <div class="col-12" id="textarea-container" style="display: none;">
                                             <div class="form-group">
-                                                <label class="form-label">Liste as peças ausentes, separando-as por vírgulas:
+                                                <label class="form-label">Liste as peças ausentes, separando-as por
+                                                    vírgulas:
                                                     <i class="fa fa-asterisk text-danger"></i>
                                                 </label>
                                                 <textarea cols="30" rows="2" class="form-control" id="faltamPecas" name="faltamPecas"></textarea>
@@ -179,8 +181,6 @@
             </div>
         </div>
     </div>
-
-
 @endsection
 
 @section('scripts')
@@ -254,6 +254,7 @@
                 let prioridade = $('#prioridade').is(':checked') ? 1 : 0;
                 let descricao_acessorio = $('#descricao_acessorio').val();
                 let faltamPecas = $('#faltamPecas').val();
+                let equipamento_id = $('#equipamento_id').val();
 
 
                 let data = {
@@ -265,6 +266,7 @@
                     prioridade: prioridade,
                     descricao_acessorio: descricao_acessorio,
                     faltamPecas: faltamPecas,
+                    equipamento_id: equipamento_id,
                 };
 
                 let settings = {
