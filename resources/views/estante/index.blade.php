@@ -400,12 +400,10 @@
                             atualizarStatusEspecial(id, 'inservivel');
                         });
 
-                        // Atualização do botão Imprimir
-                        $('#btn-imprimir').off('click').on('click', function() {
+                         $('#btn-imprimir').off('click').on('click', function() {
                             var equipamentoId = getIdEquipamento();
                             var url = '/estante/pdf/' + equipamentoId;
 
-                            // Abre a URL do PDF em uma nova aba
                             window.open(url, '_blank');
                         });
 

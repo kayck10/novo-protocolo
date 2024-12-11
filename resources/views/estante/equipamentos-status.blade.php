@@ -14,9 +14,12 @@
                     <b>{{ $equipamento->tombamento }}</b>
                 </span>
             </h4>
+            @foreach ($historicos as $index => $historico)
             <span class="@if($equipamento->prioridade == 1) text-danger @endif">
-                <b>{{ \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/y') }}</b>
+                <b>{{ \Carbon\Carbon::parse($historico->protocolo->data_entrada)->format('d/m/y') }}</b>
             </span>
+            @endforeach
+
         </div>
     </div>
     @if ($index % 4 == 3)

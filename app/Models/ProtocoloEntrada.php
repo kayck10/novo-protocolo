@@ -26,7 +26,7 @@ class ProtocoloEntrada extends Model
 
     public function historico()
 {
-    return $this->hasMany(Historico::class, 'protocolo_entrada_id');
+    return $this->hasMany(Historico::class, 'id_protocolo');
 }
 
 }

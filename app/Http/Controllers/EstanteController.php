@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Equipamentos;
+use App\Models\Historico;
 use App\Models\ProtocoloEntrada;
 use App\Models\TiposEquipamentos;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EstanteController extends Controller
@@ -16,6 +16,7 @@ class EstanteController extends Controller
     {
         $tiposequipamentos = TiposEquipamentos::all();
         $protocoloEntrada = ProtocoloEntrada::all();
+        $historico = Historico::all();
         $ativos = Equipamentos::where('id_status', 1)->count();
         $emManutencao = Equipamentos::where('id_status', 2)->count();
         $inativos = Equipamentos::where('id_status', 3)->count();
@@ -24,32 +25,34 @@ class EstanteController extends Controller
 
         $usuarios = User::where('id_situacao', 1)->orderBy('name', 'asc')->get();
 
-        return view('estante.index', compact('equipamentos', 'usuarios', 'ativos', 'emManutencao', 'inativos', 'protocoloEntrada', 'tiposequipamentos'));
+        return view('estante.index', compact('equipamentos', 'usuarios', 'ativos', 'emManutencao', 'inativos', 'protocoloEntrada', 'tiposequipamentos', 'historico'));
     }
 
     public function getStatus(Request $request)
     {
         $usuarios = User::where('id_funcoes', 2)->get();
 
-        $equipamentos = Equipamentos::where('id_status', $request->statusEq)
-            ->with(['protocolo' => function ($query) {
-                $query->orderBy('data_entrada', 'DESC');
-            }])
-            ->orderBy('prioridade', 'DESC')
+        $equipamentos = Equipamentos::where('id_status', $request->statusEq)->orderBy('prioridade', 'DESC')
             ->orderBy('id', 'ASC')
             ->get();
-        // dd($equipamentos);
 
-        return view('estante.equipamentos-status', compact('equipamentos', 'usuarios'));
+            $historicos = Historico::with(['protocolo' => function ($query) {
+                $query->orderBy('data_entrada', 'DESC');
+            }])
+            ->get();
+
+        return view('estante.equipamentos-status', compact('equipamentos', 'usuarios', 'historicos'));
     }
 
     public function getStatusModal(Request $request)
     {
-        $equipamento = Equipamentos::with('protocolo.local')->find($request->id);
+        $equipamento = Equipamentos::all();
+        $historico = Historico::with('protocolo.local')->find($request->id);
         $protocoloEntrada = ProtocoloEntrada::find($equipamento->id_protocolo);
         $usuarios = User::where('id_funcoes', 2)->get();
 
         return response()->json([
+            'historico' => $historico,
             'equipamento' => $equipamento,
             'protocoloEntrada' => $protocoloEntrada,
             'usuarios' => $usuarios
@@ -151,6 +154,7 @@ class EstanteController extends Controller
 
         return $pdf->stream('detalhes_equipamento.pdf');
     }
+
     public function pesquisarPorTombamento(Request $request)
 {
     $tombamento = $request->input('tombamento');

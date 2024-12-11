@@ -11,10 +11,10 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
 
-    <link rel="stylesheet" href="{{asset('assets/css/toastr.min.css')}}">
     <link href="{{asset('assets/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
     {{-- <link rel="stylesheet" href="{{asset('/assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}">  SELECT-BUG--}}
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{asset('/assets/vendor/pickadate/themes/default.css')}}">
@@ -134,11 +134,13 @@
         Scripts
     ***********************************-->
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
 
 
     <!-- Required vendors -->
     <script src="{{asset('assets/js/jquery-2.2.4.min.js')}}"></script>
-    <script src="{{asset('assets/js/toastr.min.js')}}"></script>
 
 
 
@@ -199,7 +201,7 @@
 
     <script src='{{asset('assets/js/index.global.min.js')}}'></script>
     <script src='{{asset('assets/js/core/locales-all.global.min.js')}}'></script>
-    <script src="{{asset('assets/js/iziToast.min.js')}}" integrity="sha512-Zq9o+E00xhhR/7vJ49mxFNJ0KQw1E1TMWkPTxrWcnpfEFDEXgUiwJHIKit93EW/XxE31HSI5GEOW06G6BF1AtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
     {!! Toastr::message() !!}
     @yield('scripts')
 </body>

@@ -23,9 +23,9 @@ class Historico extends Model
         return $this->belongsTo(Equipamentos::class, 'equipamento_id');
     }
 
-    public function protocoloEntrada()
+    public function protocolo()
     {
-        return $this->belongsTo(ProtocoloEntrada::class, 'protocolo_id');
+        return $this->belongsTo(ProtocoloEntrada::class, 'id_protocolo');
     }
 
     use HasFactory;

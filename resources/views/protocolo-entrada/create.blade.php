@@ -59,6 +59,7 @@
                                             <th>Tombamento</th>
                                             <th>Problema</th>
                                             <th>Excluir</th>
+                                            <th>Ver detalhes</th>
                                     </thead>
                                     <tbody id="dadosTbody">
                                     </tbody>
@@ -175,6 +176,29 @@
                                         Evento</button>
                                 </div>
                             </form>
+
+                            <!-- Modal detalhes -->
+                            <div class="modal fade" id="equipamentoDetalhesModal" tabindex="-1"
+                                aria-labelledby="equipamentoDetalhesLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="equipamentoDetalhesLabel">Detalhes do Equipamento
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Detalhes do equipamento serão preenchidos aqui -->
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Fechar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -184,9 +208,7 @@
 @endsection
 
 @section('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+
     <script>
         let protocoloId;
         const imprimirProtocolo = (protocoloId) => {
@@ -225,6 +247,35 @@
                 }
             });
         };
+
+        $(document).ready(function() {
+            // Função de clique no botão de visualizar detalhes
+            $(document).on('click', '.view-details', function() {
+                const equipamentoId = $(this).data('id'); // Obtém o ID do equipamento
+                carregarDetalhesEquipamento(equipamentoId);
+            });
+
+        });
+
+        function carregarDetalhesEquipamento(id) {
+            $.ajax({
+                url: `/protocolo-entrada/equipamento/${id}`,
+                method: 'GET',
+                success: function(response) {
+                    $('#equipamentoDetalhesModal .modal-body').html(`
+            `);
+                    const modal = new bootstrap.Modal(document.getElementById('equipamentoDetalhesModal'));
+                    modal.show();
+                },
+                error: function() {
+                    iziToast.error({
+                        title: 'Erro',
+                        message: 'Erro ao carregar os detalhes do equipamento.',
+                    });
+                }
+            });
+        }
+
 
         document.getElementById('pecas_falta').addEventListener('change', function() {
             const textareaContainer = document.getElementById('textarea-container');
@@ -284,6 +335,8 @@
                         <td>${response.tombamento}</td>
                         <td>${response.desc}</td>
                         <td><i class="bi bi-trash3-fill text-danger" onclick="deleteEquipamento(${response.id})"></i></td>
+                        <td><i class="bi bi-eye-fill text-dark view-details" data-id="${response.id}"></i></td>
+
                     </tr>
                 `;
 

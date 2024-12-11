@@ -15,4 +15,9 @@ class Funcoes extends Model
     {
         return $this->hasMany(User::class, 'id_funcoes');
     }
+
+    public function protocolo()
+    {
+        return $this->belongsTo(ProtocoloEntrada::class, 'id_protocolo', 'id');
+    }
 }
