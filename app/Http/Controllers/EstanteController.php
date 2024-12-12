@@ -41,6 +41,8 @@ class EstanteController extends Controller
             }])
             ->get();
 
+            // dd($historicos);
+
         return view('estante.equipamentos-status', compact('equipamentos', 'usuarios', 'historicos'));
     }
 
@@ -86,17 +88,7 @@ class EstanteController extends Controller
 
         return response()->json(['success' => 'Equipamento atualizado com sucesso!']);
     }
-    // public function saida(Request $request)
-    // {
-    //     $equipamento = Equipamentos::find($request->id);
-    //     $equipamento->update([
-    //         'id_status' => 3,
-    //         'solucao'   => $request->solucao,
-    //         'id_users'  => $request->id_tecnico
-    //     ]);
 
-    //     return response()->json(['success' => 'Equipamento atualizado com sucesso!']);
-    // }
 
     public function retirar(Request $request)
     {
@@ -119,24 +111,24 @@ class EstanteController extends Controller
 
     public function pdf($id)
     {
-        $equipamento = Equipamentos::with('user', 'protocolo.local', 'tiposEquipamentos')->findOrFail($id);
+        $historico = Historico::with('user', 'protocolo.local')->findOrFail($id);
 
-        $equipamento = Equipamentos::findOrFail($id);
+        $equipamento = Equipamentos::with('tiposEquipamentos')->findOrFail($id);
 
         if (!$equipamento) {
             return response()->json(['error' => 'Equipamento não encontrado'], 404);
         }
 
-        $local = $equipamento->protocolo->local->desc ?? 'Local não definido';
-        $setor = $equipamento->setorEscola->desc ?? 'Setor não definido';
+        $local = $historico->protocolo->local->desc ?? 'Local não definido';
+        $setor = $historico->setorEscola->desc ?? 'Setor não definido';
 
         $tipoEquipamento = $equipamento->tiposEquipamentos->desc ?? 'Tipo de equipamento não definido';
-        $acessorios = $equipamento->acessorios ?? 'Sem acessórios';
+        $acessorios = $historico->acessorios ?? 'Sem acessórios';
 
-        $dataEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
-        $horaEntrada = $equipamento->protocolo->data_entrada ? \Carbon\Carbon::parse($equipamento->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
+        $dataEntrada = $historico->protocolo->data_entrada ? \Carbon\Carbon::parse($historico->protocolo->data_entrada)->format('d/m/Y') : 'Data não definida';
+        $horaEntrada = $historico->protocolo->data_entrada ? \Carbon\Carbon::parse($historico->protocolo->data_entrada)->format('H:i') : 'Hora não definida';
 
-        $tecnico = $equipamento->user->name ?? 'Técnico não definido';
+        $tecnico = $historico->user->name ?? 'Técnico não definido';
 
         $data = [
             'local' => $local,
@@ -146,7 +138,7 @@ class EstanteController extends Controller
             'acessorios' => $acessorios,
             'dataEntrada' => $dataEntrada,
             'horaEntrada' => $horaEntrada,
-            'solucao' => $equipamento->solucao,
+            'solucao' => $historico->solucao,
             'tecnico' => $tecnico,
         ];
 

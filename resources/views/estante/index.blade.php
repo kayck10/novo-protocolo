@@ -23,18 +23,6 @@
             filter: drop-shadow(5px 5px 5px rgb(99, 99, 99));
         }
 
-        /* .abrirModal {
-                                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-                                padding: 20px;
-                                outline: 1px solid rgba(114, 110, 110, 0.048);
-                                outline-offset: -10px;
-                                box-shadow: initial 70px 7px 15px rgba(172, 153, 153, 0.568);
-                            }
-
-                            .abrirModal:hover {
-                                transform: scale(1.1);
-                                box-shadow: inset 0 8px 10px rgba(90, 1, 1, 0.911), 0 8px 15px rgb(236, 4, 4);
-                            } */
 
         .nicho {
             height: 195px;
@@ -350,13 +338,13 @@
                     );
 
                     $("#p-tombamento").html(`<b>Tombamento|NS: </b> ${response.equipamento.tombamento}`);
-                    $("#p-acessorio").html(`<b>Acessório: </b> ${response.equipamento.acessorios}`);
-                    $("#p-problema").html(`<b>Problema:</b> ${response.equipamento.desc}`);
-                    $("#p-pecas").html(`<b>Peças em Falta:</b> ${response.equipamento.faltamPecas ?? 'Não há peças em falta'}`);
-                    $("#p-local").html(`<b>Local:</b> ${response.equipamento.protocolo.local.desc}`);
+                    $("#p-acessorio").html(`<b>Acessório: </b> ${response.historico.acessorios}`);
+                    $("#p-problema").html(`<b>Problema:</b> ${response.historico.desc}`);
+                    $("#p-pecas").html(`<b>Peças em Falta:</b> ${response.historico.faltamPecas ?? 'Não há peças em falta'}`);
+                    $("#p-local").html(`<b>Local:</b> ${response.historico.protocolo.local.desc}`);
 
                     $.each(response.usuarios, function(indexInArray, valueOfElement) {
-                        if (response.equipamento.id_users == valueOfElement.id) {
+                        if (response.historico.id_users == valueOfElement.id) {
                             usuarios +=
                                 `<option value="${valueOfElement.id}" selected>${valueOfElement.name}</option>`;
                         } else {
